@@ -1,0 +1,21 @@
+{
+  "suggest.autoTrigger": "always",
+  "suggest.maxCompleteItemCount": 10,
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snippets",
+  "snippets.priority" : 100,
+  "coc.preferences.formatOnSaveFiletypes": ["dart","ruby","rust", "python","javascript","html","css", "scss"],
+
+  "solargraph.autoformat": true,
+  "solargraph.formatting": true,
+  "solargraph.hover": true,
+
+  "pyright.enable": true,
+  "python.linting.enabled":false,
+  "python.linting.pylintEnabled":false,
+  "python.formatting.provider" : "black",
+  "python.formatting.blackPath": "~/.local/bin/black",
+  "rust-client.disableRustup": true,
+
+  "coc.source.dictionary.filetypes": ["markdown", "text"],
+  "coc.source.dictionary.priority": 2
+}

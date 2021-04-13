@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+a=(Time.now.to_i/900-3)/2%24
+puts""<<128336+a/2+a%2*12

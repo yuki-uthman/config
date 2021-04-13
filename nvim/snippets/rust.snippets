@@ -1,0 +1,25 @@
+snippet fn
+	fn ${1:main}(${2}){
+	    ${3}
+	}
+
+snippet fn-
+	fn ${1}(${2}) -> ${3}{
+	    ${4}
+	}
+snippet println!
+	println!( "${1}{${2}}", ${3} );
+
+snippet type_of
+	fn type_of<T>(_: T) -> &'static str {
+			std::any::type_name::<T>()
+	}
+
+snippet vec
+	Vec<${1:_}> ${2}
+
+snippet collect
+	collect::<Vec<${1:_}>>();
+
+snippet ae
+	assert_eq!(${1}, ${2});

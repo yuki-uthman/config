@@ -1,0 +1,23 @@
+name: config
+root: ~/
+
+windows:
+  - nvim:
+      root: ~/.config/nvim
+      panes:
+        - 
+
+  - fish: 
+      root: ~/.config/fish
+      panes:
+        -
+
+  - tmux: 
+      panes: 
+        - nvim ~/.tmux.conf
+
+  - tmuxinator:
+      root: ~/.config/tmuxinator
+      panes: 
+        - 
+

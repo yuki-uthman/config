@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+starting_dir = ARGV.empty? ? "~" : ARGV[0]
+directories = `find #{starting_dir} -maxdepth 1 -type d`.split(/\n/)
+
+# remove the current directory
+directories.shift
+
+# remove exceptions
+ignores = []
+File.open("#{Dir.home}/.ignore") do |file|
+  ignores = file.readlines.map(&:chomp)
+end
+
+directories.reject! do |dir|
+  ignores.any? do |to_ignore|
+    dir.include? to_ignore
+  end
+end
+
+# do not use _home_directories
+# problems with space in file name
+dir = `find #{directories.join(" ")} -type d -print 2> /dev/null | fzf +m`
+`__append_cd_history #{dir.chomp}`
+puts dir

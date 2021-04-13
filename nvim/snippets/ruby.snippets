@@ -1,0 +1,72 @@
+snippet do
+	do |${1:x}|
+		${2}
+	end
+
+snippet do
+	do |${1:key},${2:value}|
+		${3}
+	end
+
+snippet each
+	each do |${1}|
+		${2}
+	end
+
+snippet init
+	def initialize(${1})
+		${2}
+	end
+
+snippet setup
+	def setup
+		${1}
+	end
+
+snippet test
+	test '${1}' do
+		${2}
+	end
+
+snippet rt
+	redirected_to ${1}
+
+snippet ae
+	assert_equal ${1}
+
+snippet ar
+	assert_redirected_to ${1}
+
+snippet as
+	assert_select ${1}
+
+snippet at
+	assert_template ${1}
+
+# rspec
+snippet ex
+	expect(${1:actual}).to ${2:eq} ${3:expected}
+
+snippet desc 
+	describe "${1:#method}" do
+		${2}
+	end
+
+
+snippet con
+	context "when ${1}" do
+		${2}
+	end
+
+snippet it 
+	it "${1:description}" do 
+		${2}
+	end
+
+snippet subject
+	subject { ${1} }
+
+snippet let
+	let(:${1}) { ${2} }
+
+

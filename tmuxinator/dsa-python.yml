@@ -1,0 +1,16 @@
+# /Users/Yuki/.config/tmuxinator/dsa-python.yml
+
+name: dsa-python
+root: ~/Programming/python/dsa_uia
+
+
+windows:
+  - editor:
+      layout: main-horizontal
+      panes:
+        - 
+        - 
+
+  - test: 
+
+  - terminal: 

@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/Users/Yuki/Programming/ruby/gems/rpn_uia/spec/rpn_uia'
+let g:netrw_dirhist_5='/Users/Yuki/.rbenv/versions/2.6.6/lib/ruby/gems/2.6.0/gems/tty-table-0.5.0'
+let g:netrw_dirhist_4='/Users/Yuki/Programming/ruby/gems/mini_computer'
+let g:netrw_dirhist_3='/Users/Yuki/.rbenv'
+let g:netrw_dirhist_2='/Users/Yuki/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1'
+let g:netrw_dirhist_1='/Users/Yuki/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/data_structures-0.1.0/lib/data_structures'
+let g:netrw_dirhist_0='/Users/Yuki/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/data_structures-0.1.0/lib'
+let g:netrw_dirhist_9='/Users/Yuki/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/data_structures-0.1.0'
+let g:netrw_dirhist_8='/Users/Yuki/Programming/ruby/activerecord'
+let g:netrw_dirhist_7='/Users/Yuki/Programming/rust/euler'

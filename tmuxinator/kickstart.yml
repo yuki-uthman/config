@@ -1,0 +1,21 @@
+
+name: kickstart
+root: ~/Programming/ruby/koans/kickstart
+
+windows: 
+  - main:
+      layout: even-vertical
+      panes:
+        - nvim
+        - 
+  - pry:
+      layout: even-vertical
+      panes: 
+        - nvim pry.rb
+        - pry
+  - ri:
+      pane:
+        - ri
+  - git:
+      pane:
+        - git status

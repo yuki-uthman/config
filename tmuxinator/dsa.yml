@@ -1,0 +1,24 @@
+name: dsa
+root: ~/Programming/ruby/gems/dsa
+
+windows:
+  - main:
+      layout: even-horizontal
+      panes: 
+        -
+        -
+
+  - terminal:
+
+  - guard: 
+      panes:
+        - 
+
+  - pry: 
+      layout: main-horizontal
+      panes: 
+        -
+        - 
+
+  - snippets: nvim ~/.config/nvim/snippets/ruby.snippets
+
