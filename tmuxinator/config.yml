@@ -1,7 +1,10 @@
 name: config
-root: ~/
+root: ~/.config
 
 windows:
+  - git:
+      panes:
+        -
   - nvim:
       root: ~/.config/nvim
       panes:
