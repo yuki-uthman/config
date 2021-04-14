@@ -20,3 +20,4 @@ set -gx PYTHONPATH '/Users/Yuki/Programming/python/dsa'
 # Alias
 alias tx='tmuxinator'
 alias anonymous='tx anonymous'
+alias gstatus='nvim -c Gstatus'
