@@ -2,6 +2,8 @@
 # VERSION: 3.0
 SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr_mux:tmuxinator
+SETUVAR _fisher_jorgebucaran_2F_fisher_files:/Users/Yuki/\x2econfig/fish/functions/fisher\x2efish\x1e/Users/Yuki/\x2econfig/fish/completions/fisher\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:005fd7
