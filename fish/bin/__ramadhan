@@ -5,4 +5,4 @@ require "hijri"
 
 today = Hijri::Date.today.day
 
-puts 30 - today
+puts "#[fg=colour200]#{today}#[fg=default]"
