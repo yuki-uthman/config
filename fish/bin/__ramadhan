@@ -1,8 +1,0 @@
-#!/usr/bin/env ruby
-# frozen_string_literal: true
-
-require "hijri"
-
-today = Hijri::Date.today.day
-
-puts "#[fg=colour200]#{today}#[fg=default]"
