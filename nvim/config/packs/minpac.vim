@@ -67,6 +67,7 @@ function! PackInit() abort
 
   " HTML & CSS
   call minpac#add('mattn/emmet-vim', { 'type' : 'opt' })
+  call minpac#add('chrisbra/Colorizer')
 
 endfunction
 
