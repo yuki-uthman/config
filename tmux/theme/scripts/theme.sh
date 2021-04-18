@@ -65,7 +65,7 @@ main()
   tmux setw -g window-status-separator ""
   tmux setw -g window-status-current-style "fg=${black},bg=${current_window_color}"
   tmux setw -g window-status-current-format "#{?window_zoomed_flag,#[bg=${zoom_window_color}],#[fg=${black}]} #I:#W "
-  tmux setw -g window-status-format "#{?window_last_flag,#[fg=${last_window_color}],#[fg=default]} #I:#W "
+  tmux setw -g window-status-format "#{?window_last_flag,#[fg=${last_window_color}]#[bold],#[fg=default]} #I:#W "
 
   # Pane style
   tmux set-option -g pane-active-border-style "fg=${light_purple}"
