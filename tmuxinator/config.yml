@@ -2,6 +2,10 @@ name: config
 root: ~/.config
 
 windows:
+  - now!:
+      panes: 
+        -
+
   - git:
       panes:
         -
