@@ -20,27 +20,24 @@ main()
   white='#f8f8f2'
   gray='#44475a'
   dark_gray='#282a36'
-  light_purple='#bd93f9'
-  dark_purple='#6272a4'
+  dark_purple='#633aa9'
   cyan='#8be9fd'
-  green='#50fa7b'
   orange='#ffb86c'
   pink='#ff79c6'
   yellow='#f1fa8c'
 
   black="#000000"
-  red='#ff5555'
   red="#cd5c5c"
   gray='#444444'
   white='#ffffff'
-  purple="#8600ff"
-  dark_purple="#5f00ff"
-  dracula_purple='#bb52fd'
+  dracula_purple="#b65fff"
+  dark_purple='#634aa9'
   light_purple='#bd93f9'
   plum="#ffafff"
   fuchsia="#ff00ff"
 
-  theme_color=$(get_tmux_option "@theme-color" $purple)
+
+  theme_color=$(get_tmux_option "@theme-color" $dark_purple)
   status_left_color=$(get_tmux_option "@status-left-color" $dracula_purple)
   current_window_color=$(get_tmux_option "@current-window-color" $light_purple)
   last_window_color=$(get_tmux_option "@last-window-color" $cyan)
