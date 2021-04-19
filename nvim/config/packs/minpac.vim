@@ -15,7 +15,6 @@ function! PackInit() abort
   call minpac#add('tpope/vim-surround')
   call minpac#add('tpope/vim-unimpaired')
   call minpac#add('tpope/vim-repeat')
-  call minpac#add('airblade/vim-gitgutter')
 
 
   " Editor
@@ -69,32 +68,38 @@ function! PackInit() abort
   call minpac#add('mattn/emmet-vim', { 'type' : 'opt' })
   call minpac#add('chrisbra/Colorizer')
 
+  " Markdown
+  call minpac#add('junegunn/goyo.vim', { 'type' : 'opt' })
+  call minpac#add('gabrielelana/vim-markdown', { 'type' : 'opt' })
+
+
 endfunction
 
 " vimwiki should be set before packadd!
-runtime config/packs/vimwiki.vim
+" runtime config/packs/vimwiki.vim
 runtime config/packs/coc.vim
 runtime config/packs/codi.vim
 runtime config/packs/emmet.vim
 runtime config/packs/netrw.vim
 runtime config/packs/peekaboo.vim
-runtime config/packs/gitgutter.vim
 runtime config/packs/vim-test.vim
 runtime config/packs/ale.vim
 runtime config/packs/cutlass.vim
 runtime config/packs/snipmate.vim
-runtime config/packs/ri.vim
 runtime config/packs/tmux.vim
 runtime config/packs/vifm.vim
+runtime config/packs/markdown.vim
 
+
+" packadd vimwiki
+" packadd calendar-vim
 packadd targets.vim
 packadd emmet-vim
 packadd ale
-packadd vimwiki
 packadd coc.nvim
 packadd codi.vim
-packadd calendar-vim
 packadd files
 packadd vim-cutlass
 packadd vim-ReplaceWithRegister
 packadd vim-test
+packadd vim-markdown
