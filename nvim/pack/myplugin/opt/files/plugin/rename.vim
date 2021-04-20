@@ -8,7 +8,7 @@ function! Rename(name, bang)
     let ext = expand("%:e")
     let curfile = expand("%:p")
     let curfilepath = expand("%:p:h")
-    let newname = curfilepath . "/" . a:name . '.' . ext
+    let newname = curfilepath . "/" . a:name 
     let v:errmsg = ""
     silent! exe "saveas" . a:bang . " " . newname
     if v:errmsg =~# '^$\|^E329'
@@ -23,4 +23,4 @@ function! Rename(name, bang)
     endif
 endfunction
 cnoreabbrev <expr> rename  (getcmdtype() ==# ':' && getcmdline() ==# 'rename')  ?
-      \ "Rename \<C-R>=expand(\"%:t:r\")\<CR>\<C-R>=Eatchar(' ')\<CR>"  : 'rename'
+      \ "Rename \<C-R>=expand(\"%:t\")\<CR>\<C-R>=Eatchar(' ')\<CR>"  : 'rename'
