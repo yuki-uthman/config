@@ -38,10 +38,6 @@ function! PackInit() abort
   call minpac#add('christoomey/vim-tmux-navigator')
   call minpac#add('christoomey/vim-tmux-runner')
 
-  " Vimwiki
-  call minpac#add('vimwiki/vimwiki', { 'type' : 'opt' })
-  call minpac#add('mattn/calendar-vim', { 'type' : 'opt' })
-
   " File manager
   call minpac#add('vifm/vifm.vim')
 
@@ -75,8 +71,6 @@ function! PackInit() abort
 
 endfunction
 
-" vimwiki should be set before packadd!
-" runtime config/packs/vimwiki.vim
 runtime config/packs/coc.vim
 runtime config/packs/codi.vim
 runtime config/packs/emmet.vim
@@ -91,15 +85,16 @@ runtime config/packs/vifm.vim
 runtime config/packs/markdown.vim
 
 
-" packadd vimwiki
-" packadd calendar-vim
 packadd targets.vim
 packadd emmet-vim
 packadd ale
 packadd coc.nvim
 packadd codi.vim
-packadd files
 packadd vim-cutlass
 packadd vim-ReplaceWithRegister
 packadd vim-test
 packadd vim-markdown
+
+" My plugin
+packadd files
+packadd dictionary
