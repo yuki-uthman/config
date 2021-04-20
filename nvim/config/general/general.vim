@@ -5,10 +5,7 @@ let g:python_host_prog  = '/usr/bin/python'
 " include fzf in the runtimepath
 set rtp+=~/.fzf
 
-" set path+=~/.zettel
-
-" set path+=**
-
+" set config files directories 
 set path+=~/.config/nvim
 set path+=~/.config/nvim/after/ftplugin
 set path+=~/.config/nvim/config/*
@@ -19,6 +16,7 @@ set path+=~/.config/nvim/plugin/*
 set path+=$PWD/app/**
 set path+=$PWD/db/**
 set path+=$PWD/test/**
+
 " ignore node_modules in rails project
 set wildignore+=**/node_modules/** 
 set wildignore+=**/.git/** 
