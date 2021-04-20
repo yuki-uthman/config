@@ -209,7 +209,7 @@ command! -bang -nargs=* ZetLinkPreview
                         \                                   'border': 'left',
                         \                                  },
                         \                       'dir': '~/.zettel',
-                        \                       'sink': 'HandleFZF' },
+                        \                       'sink': function('s:insertLink') },
                         \                       'up', 'ctrl-/'),
                         \ <bang>0)
 
@@ -232,22 +232,6 @@ command! -range -bang -nargs=* ZetConvertIntoLink
                         \                       'up',  'ctrl-/'),
                         \ <bang>0)
 
-" if there is a visually selected text use it as the text between [ ]
-"/Users/Yuki/.zettel/2012252045_visual_selection_as_arguments.vim
-function! s:get_visual_selection()
-    let [line_start, column_start] = getpos("'<")[1:2]
-    let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
-    endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    " let @a = join(lines,"\n")
-    return join(lines, "\n")
-endfunction
-
-
 
 " include bang!
 function! HandleFZF(file)
@@ -263,13 +247,36 @@ endfunction
 command! -nargs=1 HandleFZF          :call HandleFZF(<f-args>)
 
 
+" for normal mode sink
 " /Users/Yuki/.zettel/2012261729_extract_filename_ripgrep.vim:1
+function! s:insertLink(match)
+    let l:filename = matchstr(a:match, '.\{-}\ze:\d\+:\d\+:')
+    let mdlink = "[](". g:zettelkasten . l:filename .")"
+    execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
+endfunction
+
+" if there is a visually selected text use it as the text between [ ]
+"/Users/Yuki/.zettel/2012252045_visual_selection_as_arguments.vim
+function! s:get_visual_selection()
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    " let @a = join(lines,"\n")
+    return join(lines, "\n")
+endfunction
+
 " for visual mode sink
+" /Users/Yuki/.zettel/2012261729_extract_filename_ripgrep.vim:1
 function! s:convertIntoLink(match)
     let l:filename = matchstr(a:match, '.\{-}\ze:\d\+:\d\+:')
     let l:selection = s:get_visual_selection()
     exec "normal! gvd"
-    let mdlink = "[". l:selection ."](". l:filename .")"
+    let mdlink = "[". l:selection ."](". g:zettelkasten .l:filename .")"
     execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
 endfunction
 
