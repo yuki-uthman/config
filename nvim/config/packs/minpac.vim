@@ -98,3 +98,5 @@ packadd vim-markdown
 " My plugin
 packadd files
 packadd dictionary
+packadd zettel
+
