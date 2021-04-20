@@ -4,6 +4,12 @@
 
 command! -nargs=* -complete=file -bang Rename :call Rename("<args>", "<bang>")
 
+
+func! Eatchar(pat)
+   let c = nr2char(getchar(0))
+   return (c =~ a:pat) ? '' : c
+endfunc
+
 function! Rename(name, bang)
     let ext = expand("%:e")
     let curfile = expand("%:p")
