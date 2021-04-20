@@ -16,6 +16,6 @@
   "python.formatting.blackPath": "~/.local/bin/black",
   "rust-client.disableRustup": true,
 
-  "coc.source.dictionary.filetypes": ["vimwiki.markdown.pandoc", "text"],
+  "coc.source.dictionary.filetypes": ["markdown", "text"],
   "coc.source.dictionary.priority": 2
 }
