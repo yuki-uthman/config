@@ -12,7 +12,7 @@ set rtp+=~/.fzf
 set path+=~/.config/nvim
 set path+=~/.config/nvim/after/ftplugin
 set path+=~/.config/nvim/config/*
-set path+=~/.config/nvim/config/minpac
+set path+=~/.config/nvim/config/packs
 set path+=~/.config/nvim/plugin/*
 
 " set directories for Rails
