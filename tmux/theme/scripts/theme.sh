@@ -59,6 +59,7 @@ main()
   tmux set-option -g  status-right "#[fg=${dark_gray},bg=${pink}] #($current_dir/battery.rb) "
 	tmux set-option -ga status-right "#[fg=${dark_gray},bg=${cyan}] #($current_dir/ram_info.sh) "
 	tmux set-option -ga status-right "#[fg=${dark_gray},bg=${orange}] #($current_dir/cpu_info.sh) "
+	tmux set-option -ga status-right "#[fg=${dark_gray},bg=${red}] #($current_dir/deadline.rb)"
   tmux set-option -ga status-right "#[bg=${theme_color}]#[fg=default] #($current_dir/quran.sh) #($current_dir/ramadhan.sh) #(date '+%a %d %b %I:%M') #($current_dir/day_or_night.sh) "
 
   # Window
