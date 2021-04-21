@@ -13,7 +13,7 @@ endfunction
 command! -bang -range -nargs=* ZetNew <line1>,<line2>call ZetNew(<bang>0, <f-args>)
 cnoreabbrev <expr> zn  (getcmdtype() ==# ':' && getcmdline() ==# 'zn')  ? 'ZetNew'  : 'zn'
 nnoremap zn :ZetNew 
-vnoremap zn :ZetNew!
+vnoremap zn :ZetNew! 
 
 func! s:get_filetype(ext)
   if a:ext ==? 'html'
@@ -277,7 +277,7 @@ function! s:convertIntoLink(match)
     let l:selection = s:get_visual_selection()
     exec "normal! gvd"
     let mdlink = "[". l:selection ."](". g:zettelkasten .l:filename .")"
-    execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
+    execute "normal! i " . mdlink . "\<ESC>?[\<CR>"
 endfunction
 
 command!          ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF',
