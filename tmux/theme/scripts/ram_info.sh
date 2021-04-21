@@ -79,7 +79,7 @@ main()
 	# storing the refresh rate in the variable RATE, default is 5
 	RATE=$(get_tmux_option "@dracula-refresh-rate" 5)
 	ram_percent=$(get_percent)
-	echo "RAM $ram_percent"
+	echo "$ram_percent"
 	sleep $RATE
 }
 
