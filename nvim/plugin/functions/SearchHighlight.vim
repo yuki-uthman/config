@@ -10,7 +10,7 @@ fun! SearchNext()
         echohl IncSearch | echo "E385: search hit BOTTOM without match for: " . @/ | echohl None
     endtry
     call SearchHighlight()
-    call s:positionCursor(10)
+    " call s:positionCursor(10)
 endfun
 
 fun! SearchPrev()
@@ -20,7 +20,7 @@ fun! SearchPrev()
         echohl IncSearch | echo "E384: search hit TOP without match for: " . @/ | echohl None
     endtry
     call SearchHighlight()
-    call s:positionCursor(10)
+    " call s:positionCursor(10)
 endfun
 
 func! s:positionCursor(i)
