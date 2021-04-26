@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+require "date"
+
+# read from a file
+filename = "/Users/Yuki/.zettel/deadlines.txt"
+deadlines = {}
+File.read(filename).split(/\n/).map do |row|
+  date, name = row.split(" ; ")
+  date = Date.parse(date, "%d/%m/%Y")
+  deadlines[name.to_s] = date
+end
+
+deadlines.transform_values! {|date| Integer(date - Date.today) }
+deadlines.select! {|_key, days| days >= 0 }
+
+system("clear")
+
+no_of_deadlines = ARGV.empty? ? 3 : Integer(ARGV[0])
+
+deadlines.sort_by {|_, days| days }.take(no_of_deadlines).each do |name, days|
+  puts name.to_s
+  if days == 0
+    puts "  Due Today!"
+  elsif days == 1
+    puts "  Due Tomorrow!"
+  else
+    puts "  #{days} days left"
+  end
+
+  puts
+end
