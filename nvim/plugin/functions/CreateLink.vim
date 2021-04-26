@@ -35,4 +35,4 @@ function! s:ContentsAreEmptyOrLink(contents)
   return (a:contents == '') || (contents_are_link != -1)
 endfunction
 
-vnoremap <buffer> zl :call CreateLink()<cr>
+" vnoremap <buffer> zl :call CreateLink()<cr>
