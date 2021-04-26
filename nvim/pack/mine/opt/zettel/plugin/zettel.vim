@@ -10,10 +10,6 @@ function! s:comment_symbol() abort
 endfunction
 
 
-command! -bang -range -nargs=* ZetNew <line1>,<line2>call ZetNew(<bang>0, <f-args>)
-cnoreabbrev <expr> zn  (getcmdtype() ==# ':' && getcmdline() ==# 'zn')  ? 'ZetNew'  : 'zn'
-nnoremap zn :ZetNew 
-vnoremap zn :ZetNew! 
 
 func! s:get_filetype(ext)
   if a:ext ==? 'html'
@@ -39,6 +35,7 @@ func! s:capitalize(word)
   return substitute( a:word ,'\(\<\w\+\>\)', '\u\1', 'g')
 endfunc
 
+command! -bang -range -nargs=* ZetNew <line1>,<line2>call ZetNew(<bang>0, <f-args>)
 func! ZetNew(bang, ...) range
 
   let ext = 'md'
@@ -61,13 +58,18 @@ func! ZetNew(bang, ...) range
   " insert the link at the current position
   let selection = ''
   if a:bang == 1
-    " echo 'visual mode'
     let @a = s:get_visual_selection()
     let selection = s:get_visual_selection()
     " delete the selection
     exec "normal! gvd"
-    " insert the markdown link
-    exec "normal! i" . '[' . selection . '](' . filename . ')'
+    " is the cursor at the end of line?
+    if col(".") == col("$")-1      
+      " insert the markdown link 
+      exec "normal! a" . '[' . selection . '](' . filename . ')'
+    else
+      " insert the markdown link
+      exec "normal! i" . '[' . selection . '](' . filename . ')'
+    endif
   endif
 
   " built title
@@ -277,7 +279,7 @@ function! s:convertIntoLink(match)
     let l:selection = s:get_visual_selection()
     exec "normal! gvd"
     let mdlink = "[". l:selection ."](". g:zettelkasten .l:filename .")"
-    execute "normal! i " . mdlink . "\<ESC>?[\<CR>"
+    execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
 endfunction
 
 command!          ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF',
@@ -285,23 +287,19 @@ command!          ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF',
 
 
 
-
-" nnoremap zn :Zet
+" New notes
+cnoreabbrev <expr> zn  (getcmdtype() ==# ':' && getcmdline() ==# 'zn')  ? 'ZetNew'  : 'zn'
+nnoremap zn :ZetNew 
+vnoremap zn :ZetNew! 
 
 " Link Generation
 " nnoremap zf :ZetLink<CR>
 nnoremap zl :ZetLinkPreview :
 vnoremap zl :ZetConvertIntoLink :
 
-
 nnoremap zt "=strftime("%Y/%m/%d %H:%M")<CR>P
-
-
-
-" nnoremap zg :Denite -path=$HOME/.zettel grep<CR>
-nnoremap zg :ZetGrep :
-cnoreabbrev <expr> zg  (getcmdtype() ==# ':' && getcmdline() ==# 'zg')  ? 'ZetGrep'  : 'zg'
-
 nnoremap zcc :ZetCopyCursorPosition<CR>
-nmap zx <Plug>VimwikiToggleListItem
-" /Users/Yuki/.custom/nvim/minpac/after/ftplugin/vimwiki.vim:15
+
+" Search notes
+cnoreabbrev <expr> zg  (getcmdtype() ==# ':' && getcmdline() ==# 'zg')  ? 'ZetGrep'  : 'zg'
+nnoremap zg :ZetGrep :
