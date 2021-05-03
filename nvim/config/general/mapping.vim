@@ -271,6 +271,7 @@ onoremap j :<C-u>normal! VG$<CR>
 
 "{{{ Comamnd
 
-" cnoreabbrev mapping e ~/.config/nvim/config/general/mapping.vim
+cnoremap ; :
+cnoremap : ;
 
 "}}}
