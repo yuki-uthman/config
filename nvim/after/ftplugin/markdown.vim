@@ -9,4 +9,11 @@ inoremap ; :
 inoremap : ;
 
 runtime config/packs/markdown.vim
+packadd vim-markdown
 packadd goyo.vim
+
+runtime config/packs/easy-align.vim
+packadd vim-easy-align
+
+
+

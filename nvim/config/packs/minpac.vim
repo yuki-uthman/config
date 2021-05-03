@@ -20,9 +20,9 @@ function! PackInit() abort
   " Editor
   call minpac#add('machakann/vim-highlightedyank')
   call minpac#add('machakann/vim-swap')
-  call minpac#add('godlygeek/tabular')
   call minpac#add('junegunn/fzf.vim')
   call minpac#add('junegunn/vim-peekaboo')
+  call minpac#add('junegunn/vim-easy-align', { 'type' : 'opt' })
   call minpac#add('neoclide/coc.nvim', { 'type' : 'opt' } , {'branch' : 'release' } )
   call minpac#add('metakirby5/codi.vim', { 'type' : 'opt' } )
   call minpac#add('dense-analysis/ale', { 'type' : 'opt' } )
@@ -82,7 +82,6 @@ runtime config/packs/cutlass.vim
 runtime config/packs/snipmate.vim
 runtime config/packs/tmux.vim
 runtime config/packs/vifm.vim
-runtime config/packs/markdown.vim
 
 
 packadd targets.vim
@@ -93,7 +92,6 @@ packadd codi.vim
 packadd vim-cutlass
 packadd vim-ReplaceWithRegister
 packadd vim-test
-packadd vim-markdown
 
 " My plugin
 packadd files
