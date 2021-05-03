@@ -79,7 +79,7 @@ func! ZetNew(bang, ...) range
   else
     let title = a:000[0:]
   endif
-  let title = map(title, "s:capitalize(v:val)")
+
   let title = join(title, ' ')
 
   " open the new zettel note!
