@@ -18,10 +18,19 @@ set -gx EDITOR nvim
 set -gx PYTHONPATH '/Users/Yuki/Programming/python/dsa'
 set -g SPACEFISH_PROMPT_SEPARATE_LINE false
 set -g SPACEFISH_GIT_PREFIX ""
+set -g SPACEFISH_EXEC_TIME_SHOW false
+set -g SPACEFISH_BATTERY_SHOW false
 
 # Alias
 alias tx='tmuxinator'
 alias anonymous='tx anonymous'
-alias gstatus='nvim -c Gstatus'
-alias v='vifm .'
+alias today='tx today'
+alias idea='nvim -c "ZetNew "'(date +%d/%B/%Y)'" :idea"'
+
+alias gstatus='nvim -c Git'
+alias v='vifm'
 alias now='nvim ~/.zettel/now.md'
+alias edit_deadlines='nvim ~/.zettel/deadlines.txt'
+
+# initalize zoxide
+zoxide init fish | source

@@ -1,6 +1,4 @@
 function jh
-  set dir ( cat ~/.local/share/fish/fish_cd_history | fzf +m )
-  if test -n "$dir"
-    cd $dir
-  end
+    set -l __zoxide_result (command zoxide query -i -- $argv)
+    and z $__zoxide_result
 end
