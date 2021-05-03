@@ -16,10 +16,6 @@ set -x BAT_THEME gruvbox
 set -x FZF_DEFAULT_OPTS '--height 40% --layout=reverse'
 set -gx EDITOR nvim
 set -gx PYTHONPATH '/Users/Yuki/Programming/python/dsa'
-set -g SPACEFISH_PROMPT_SEPARATE_LINE false
-set -g SPACEFISH_GIT_PREFIX ""
-set -g SPACEFISH_EXEC_TIME_SHOW false
-set -g SPACEFISH_BATTERY_SHOW false
 
 # Alias
 alias tx='tmuxinator'
