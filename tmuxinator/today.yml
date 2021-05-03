@@ -1,0 +1,10 @@
+name: today
+root: ~/.zettel
+
+windows:
+  - today: 
+      layout: even-horizontal
+      panes: 
+          - nvim now.md
+          - nvim today.md
+  - idea:

@@ -4,23 +4,28 @@ name: rpn
 root: ~/Programming/ruby/gems/rpn_uia
 
 windows:
-  - main:
+  - terminal:
       panes: 
         -
         -
 
   - terminal:
+      panes: 
+        -
+        -
 
   - guard: 
       panes:
-        - cd rpn_uia; bundle exec guard
+        - 
 
   - pry: 
       layout: main-horizontal
       panes: 
         -
-        - cd rpn_uia
+        - 
 
-  - snippets: nvim ~/.config/nvim/snippets/ruby.snippets
+  - snippets: 
+      panes:
+          -
 
 

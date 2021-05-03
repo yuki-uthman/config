@@ -22,7 +22,7 @@ windows:
   - tmux: 
       root: ~/.config/tmux
       panes: 
-        - nvim tmux.conf
+        - 
 
   - tmuxinator:
       root: ~/.config/tmuxinator
