@@ -25,7 +25,7 @@ set -g SPACEFISH_BATTERY_SHOW false
 alias tx='tmuxinator'
 alias anonymous='tx anonymous'
 alias today='tx today'
-alias idea='nvim -c "ZetNew "'(date +%d/%B/%Y)'" :idea"'
+alias scratch='nvim -c "ZetNew "'(date +%d/%B/%Y)'" :scratchpad"'
 
 alias gstatus='nvim -c Git'
 alias v='vifm'
