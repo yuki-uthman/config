@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+PATH=/Users/Yuki/.asdf/shims:/Users/Yuki/.config/fish/bin:$PATH
+
+email_deadlines

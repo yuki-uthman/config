@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+PATH=/Users/Yuki/.asdf/shims:$PATH
+
+printenv | grep PATH
