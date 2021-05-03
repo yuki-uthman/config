@@ -478,6 +478,8 @@ mark c ~/.config
 mark w ~/VimWiki
 
 
+" open the file in "main" nvim instance
+nnoremap o :!nvr --servername ~/.nvim_server %f<cr>
 
 " create new file 
 nnoremap <F2> :touch<Space>
