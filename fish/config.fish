@@ -25,8 +25,10 @@ alias scratch='nvim -c "ZetNew "'(date +%d/%B/%Y)'" :scratchpad"'
 
 alias gstatus='nvim -c Git'
 alias v='vifm'
+alias mv_screenshots='v ~/.zettel ~/Desktop'
 alias now='nvim ~/.zettel/now.md'
 alias edit_deadlines='nvim ~/.zettel/deadlines.txt'
+
 
 # initalize zoxide
 zoxide init fish | source
