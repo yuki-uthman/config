@@ -21,7 +21,7 @@ set -gx PYTHONPATH '/Users/Yuki/Programming/python/dsa'
 alias tx='tmuxinator'
 alias anonymous='tx anonymous'
 alias today='tx today'
-alias scratch='nvim -c "ZetNew "'(date +%d/%B/%Y)'" :scratchpad"'
+alias scratch='nvim -c "ZetNew "'(date +"%d/%B/%Y")'" :scratchpad"'
 
 alias gstatus='nvim -c Git'
 alias v='vifm'
