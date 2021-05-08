@@ -1,4 +1,3 @@
-
 let g:python3_host_prog ='~/.asdf/shims/python'
 let g:python_host_prog  = '/usr/bin/python'
 

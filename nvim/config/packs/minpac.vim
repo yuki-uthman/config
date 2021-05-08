@@ -68,7 +68,8 @@ function! PackInit() abort
   call minpac#add('junegunn/goyo.vim', { 'type' : 'opt' })
   call minpac#add('gabrielelana/vim-markdown', { 'type' : 'opt' })
 
-
+  " Vimscript
+  call minpac#add('junegunn/vader.vim', { 'type' : 'opt' })
 endfunction
 
 runtime config/packs/coc.vim
@@ -92,6 +93,7 @@ packadd codi.vim
 packadd vim-cutlass
 packadd vim-ReplaceWithRegister
 packadd vim-test
+packadd vader.vim
 
 " My plugin
 packadd files
