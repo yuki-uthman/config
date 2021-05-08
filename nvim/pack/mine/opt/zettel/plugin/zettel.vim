@@ -88,8 +88,8 @@ func! ZetNew(bang, ...) range
   if ext ==# 'md'
     let title = '# ' . title
   else
-    let tag = ':'.ext.':'
-    let title = s:comment_symbol() . title .' '. tag
+    let tag = ':'.ext
+    let title = s:comment_symbol() . title . tag
   endif
 
   " add title
