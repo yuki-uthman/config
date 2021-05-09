@@ -72,6 +72,8 @@ function! PackInit() abort
   call minpac#add('junegunn/vader.vim', { 'type' : 'opt' })
 endfunction
 
+runtime macros/matchit.vim
+
 runtime config/packs/coc.vim
 runtime config/packs/codi.vim
 runtime config/packs/emmet.vim
@@ -83,7 +85,6 @@ runtime config/packs/cutlass.vim
 runtime config/packs/snipmate.vim
 runtime config/packs/tmux.vim
 runtime config/packs/vifm.vim
-
 
 packadd targets.vim
 packadd emmet-vim
