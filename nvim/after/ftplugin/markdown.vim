@@ -1,8 +1,7 @@
 
 setlocal linebreak
 setlocal textwidth=80
-setlocal fo+=t
-setlocal fo-=l
+setlocal fo=want
 setlocal conceallevel=2
 
 inoremap ; :
