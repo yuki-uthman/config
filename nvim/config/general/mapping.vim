@@ -86,10 +86,10 @@ nnoremap <silent> vn :vnew<CR>
 nnoremap <silent> vs :vs<CR>
 " nnoremap <silent> new :new<CR>
 
-nnoremap <nowait> <silent> = :vertical resize +5<CR>
-nnoremap <nowait> <silent> - :vertical resize -5<CR>
-nnoremap <nowait> <silent> + :resize +1<CR>
-nnoremap <nowait> <silent> _ :resize -1<CR>
+" nnoremap <nowait> <silent> = :vertical resize +5<CR>
+" nnoremap <nowait> <silent> - :vertical resize -5<CR>
+" nnoremap <nowait> <silent> + :resize +1<CR>
+" nnoremap <nowait> <silent> _ :resize -1<CR>
 
 " move window up/down/right/left
 " nnoremap <C-k> <C-y>
