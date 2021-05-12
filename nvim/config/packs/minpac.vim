@@ -30,6 +30,7 @@ function! PackInit() abort
   call minpac#add('preservim/tagbar')
   call minpac#add('kana/vim-textobj-user')
   call minpac#add('wellle/targets.vim')
+  call minpac#add('JRasmusBm/vim-peculiar')
 
 
   " Chris Toomey
@@ -41,7 +42,7 @@ function! PackInit() abort
   " File manager
   call minpac#add('vifm/vifm.vim')
 
-  " Snipmate and its dependencies
+  " Snipmate
   call minpac#add('garbas/vim-snipmate')
   call minpac#add('MarcWeber/vim-addon-mw-utils')
   call minpac#add('tomtom/tlib_vim')
