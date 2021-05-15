@@ -1,0 +1,15 @@
+# /Users/Yuki/.config/tmuxinator/md.yml
+
+name: md
+root: ~/Programming/vim/vader/md-helpers
+
+
+windows:
+  - editors:
+      layout: even-horizontal
+      panes: 
+        -
+        -
+
+  - terminal:
+
