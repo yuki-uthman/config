@@ -27,11 +27,11 @@ function! PackInit() abort
   call minpac#add('metakirby5/codi.vim', { 'type' : 'opt' } )
   call minpac#add('dense-analysis/ale', { 'type' : 'opt' } )
   call minpac#add('vim-test/vim-test', { 'type' : 'opt' } )
+  call minpac#add('wellle/targets.vim', { 'type' : 'opt' })
   call minpac#add('preservim/tagbar')
   call minpac#add('kana/vim-textobj-user')
-  call minpac#add('wellle/targets.vim')
   call minpac#add('JRasmusBm/vim-peculiar')
-
+  call minpac#add('svermeulen/vim-extended-ft', { 'type' : 'opt' })
 
   " Chris Toomey
   call minpac#add('inkarkat/vim-ReplaceWithRegister', { 'type' : 'opt' })
@@ -75,30 +75,31 @@ endfunction
 
 runtime macros/matchit.vim
 
+runtime config/packs/ale.vim
 runtime config/packs/coc.vim
 runtime config/packs/codi.vim
+runtime config/packs/cutlass.vim
 runtime config/packs/emmet.vim
 runtime config/packs/netrw.vim
 runtime config/packs/peekaboo.vim
-runtime config/packs/vim-test.vim
-runtime config/packs/ale.vim
-runtime config/packs/cutlass.vim
 runtime config/packs/snipmate.vim
 runtime config/packs/tmux.vim
 runtime config/packs/vifm.vim
+runtime config/packs/vim-test.vim
 
-packadd targets.vim
-packadd emmet-vim
 packadd ale
 packadd coc.nvim
 packadd codi.vim
-packadd vim-cutlass
-packadd vim-ReplaceWithRegister
-packadd vim-test
+packadd emmet-vim
+packadd targets.vim
 packadd vader.vim
+packadd vim-ReplaceWithRegister
+packadd vim-cutlass
+packadd vim-extended-ft
+packadd vim-test
 
 " My plugin
-packadd files
 packadd dictionary
+packadd editor
+packadd files
 packadd zettel
-
