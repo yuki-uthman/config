@@ -51,7 +51,6 @@ nnoremap <leader>0 :normal! mqA)<esc>`q
 nnoremap <leader>] :normal! mqA]<esc>`q
 nnoremap <leader>} :normal! mqA}<esc>`q
 
-
 "" Quick comment toggling
 nnoremap <leader>/ :Commentary<CR>
 
@@ -107,9 +106,6 @@ nnoremap <F2> :edit ~/VimWiki/technology/index.wiki<CR>
 
 " => Search & Replace {{{
 
-" Clear search buffer
-nnoremap <silent> <ESC><ESC> :let @/=''<CR>
-
 nnoremap <leader>s :%s///g<left><left>
 
 " Replace the next match with just one key!
@@ -123,6 +119,10 @@ nnoremap <silent> <expr> * Highlighting()
 "}}}
 
 " {{{ Insert
+
+" exit insert mode
+" disable <C-c>
+inoremap <C-c> <Nop>
 
 inoremap ; :
 inoremap : ;
@@ -170,9 +170,30 @@ onoremap j :<C-u>normal! VG$<CR>
 
 " " }}}
 
-"{{{ Comamnd
+"{{{ Command
+
+" open command history with q;
+nnoremap q; q:
 
 cnoremap ; :
 cnoremap : ;
 
+cnoremap <C-c> <Nop>
+cnoremap <ESC> <C-c>
+
+set cmdwinheight=3
+augroup command_window
+    autocmd!
+    " have <ESC> leave cmdline-window
+    autocmd CmdwinEnter * nnoremap <buffer> <silent> <ESC> :close<cr>
+    autocmd CmdwinEnter * inoremap <buffer> <silent> <C-c> <Nop>
+
+    " start command line window in insert mode and no line numbers
+    autocmd CmdwinEnter * startinsert
+    autocmd CmdwinEnter * set nonumber
+    autocmd CmdwinEnter * set laststatus=0
+
+augroup END
+
 "}}}
+
