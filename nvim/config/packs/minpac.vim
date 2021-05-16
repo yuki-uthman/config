@@ -80,6 +80,7 @@ runtime config/packs/coc.vim
 runtime config/packs/codi.vim
 runtime config/packs/cutlass.vim
 runtime config/packs/emmet.vim
+runtime config/packs/fzf.vim
 runtime config/packs/netrw.vim
 runtime config/packs/peekaboo.vim
 runtime config/packs/snipmate.vim
