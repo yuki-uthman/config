@@ -2,7 +2,7 @@
 " {{{ Global
 
 " Start Command Prompt
-map <Space> :
+" map <Space> :
 
 "}}}
 
@@ -121,18 +121,10 @@ nnoremap <silent> <expr> * Highlighting()
 " {{{ Insert
 
 " exit insert mode
-" disable <C-c>
-inoremap <C-c> <Nop>
+inoremap <C-c> <ESC>
 
 inoremap ; :
 inoremap : ;
-
-" Terminal shorcuts
-inoremap <C-e> <ESC>$a
-" inoremap <C-a> <ESC>0i
-
-" Move current line up with C-k
-imap <C-k> <ESC>lmlkojp0i
 
 " " }}}
 
@@ -172,27 +164,28 @@ onoremap j :<C-u>normal! VG$<CR>
 
 "{{{ Command
 
-" open command history with q;
-nnoremap q; q:
-
 cnoremap ; :
 cnoremap : ;
 
-cnoremap <C-c> <Nop>
-cnoremap <ESC> <C-c>
+" open command history with Space
+nnoremap <Space> q:
 
 set cmdwinheight=3
 augroup command_window
     autocmd!
-    " have <ESC> leave cmdline-window
-    autocmd CmdwinEnter * nnoremap <buffer> <silent> <ESC> :close<cr>
-    autocmd CmdwinEnter * inoremap <buffer> <silent> <C-c> <Nop>
+    " <C-c> to exit insert mode
+    autocmd CmdwinEnter * inoremap <buffer> <silent> <C-c> <ESC>
+
+    " <C-c> to leave cmdline-window from normal mode
+    autocmd CmdwinEnter * inoremap <buffer> <silent> <ESC> <ESC>:close<cr>
+
+    " <ESC> to leave cmdline-window from insert mode
+    autocmd CmdwinEnter * nnoremap <buffer> <silent> <C-c> :close<cr>
 
     " start command line window in insert mode and no line numbers
     autocmd CmdwinEnter * startinsert
     autocmd CmdwinEnter * set nonumber
     autocmd CmdwinEnter * set laststatus=0
-
 augroup END
 
 "}}}
