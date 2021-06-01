@@ -123,9 +123,6 @@ nnoremap <silent> <expr> * Highlighting()
 " exit insert mode
 inoremap <C-c> <ESC>
 
-inoremap ; :
-inoremap : ;
-
 " " }}}
 
 " " {{{ Visual

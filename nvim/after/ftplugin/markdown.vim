@@ -4,8 +4,8 @@ setlocal textwidth=80
 setlocal fo=want
 setlocal conceallevel=2
 
-inoremap ; :
-inoremap : ;
+inoremap <buffer> ; :
+inoremap <buffer> : ;
 
 runtime config/packs/markdown.vim
 packadd vim-markdown
