@@ -1,9 +1,15 @@
 {
   "suggest.autoTrigger": "always",
-  "suggest.maxCompleteItemCount": 10,
+  "suggest.maxCompleteItemCount": 50,
+  "suggest.minTriggerInputLength":3,
+
+  "coc.preferences.formatOnSaveFiletypes": ["dart","ruby","rust","python","javascript","html","css","scss"],
+
+  "coc.source.around.firstMatch": false,
+  "coc.source.buffer.firstMatch": false,
+  
   "snippets.userSnippetsDirectory": "~/.config/nvim/snippets",
   "snippets.priority" : 100,
-  "coc.preferences.formatOnSaveFiletypes": ["dart","ruby","rust", "python","javascript","html","css", "scss"],
 
   "solargraph.autoformat": true,
   "solargraph.formatting": true,
@@ -18,4 +24,5 @@
 
   "coc.source.dictionary.filetypes": ["markdown", "text"],
   "coc.source.dictionary.priority": 2
+
 }
