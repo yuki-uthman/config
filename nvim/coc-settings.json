@@ -1,7 +1,7 @@
 {
   "suggest.autoTrigger": "always",
   "suggest.maxCompleteItemCount": 50,
-  "suggest.minTriggerInputLength":3,
+  "suggest.minTriggerInputLength":1,
 
   "coc.preferences.formatOnSaveFiletypes": ["dart","ruby","rust","python","javascript","html","css","scss"],
 
