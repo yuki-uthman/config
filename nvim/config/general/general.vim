@@ -10,6 +10,7 @@ set path+=~/.config/nvim/after/ftplugin
 set path+=~/.config/nvim/config/*
 set path+=~/.config/nvim/config/packs
 set path+=~/.config/nvim/plugin/*
+set path+=~/.config/nvim/snippets
 
 " set directories for Rails
 set path+=$PWD/app/**
@@ -35,7 +36,7 @@ set noshowcmd
 set noshowmode
 set nospell
 set noswapfile
-set nowrap
+set wrap
 set number
 set relativenumber
 set scrolloff=0

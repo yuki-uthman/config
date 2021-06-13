@@ -106,7 +106,7 @@ nnoremap <F2> :edit ~/VimWiki/technology/index.wiki<CR>
 
 " => Search & Replace {{{
 
-nnoremap <leader>s :%s///g<left><left>
+nnoremap <leader>ss :%s///g<Left><Left><Left>
 
 " Replace the next match with just one key!
 nnoremap Q :normal! n.<CR>
@@ -123,9 +123,19 @@ nnoremap <silent> <expr> * Highlighting()
 " exit insert mode
 inoremap <C-c> <ESC>
 
+inoremap ((     ()<Left>
+inoremap {{     {}<Left>
+inoremap [[     []<Left>
+inoremap <<     <><Left>
+inoremap ""     ""<Left>
+inoremap ''     ''<Left>
+
 " " }}}
 
 " " {{{ Visual
+
+xnoremap <Space> :
+vnoremap <Space> :
 
 " xnoremap ( xi()<ESC>P
 " xnoremap [ xi[]<ESC>P
@@ -138,7 +148,7 @@ inoremap <C-c> <ESC>
 " vnoremap <leader>j :m '>+
 " vnoremap <leader>k :m '>-
 
-xnoremap <Leader>s :s///g<Left><Left>
+xnoremap <Leader>ss :s//<Left>
 
 " " Put current word in the search register without moving
 " vnoremap <silent> * :call GetSelectedText(visualmode())<cr>
@@ -164,8 +174,19 @@ onoremap j :<C-u>normal! VG$<CR>
 cnoremap ; :
 cnoremap : ;
 
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <M-b> <S-Left>
+cnoremap <M-f> <S-Right>
+
 " open command history with Space
 nnoremap <Space> q:
+
+
 
 set cmdwinheight=3
 augroup command_window
