@@ -3,7 +3,7 @@
   "suggest.maxCompleteItemCount": 50,
   "suggest.minTriggerInputLength":1,
 
-  "coc.preferences.formatOnSaveFiletypes": ["dart","ruby","rust","python","javascript","html","css","scss"],
+  "coc.preferences.formatOnSaveFiletypes": ["dart","ruby","rust","python","javascript","html","css","scss","php"],
 
   "coc.source.around.firstMatch": false,
   "coc.source.buffer.firstMatch": false,
@@ -20,9 +20,12 @@
   "python.linting.pylintEnabled":false,
   "python.formatting.provider" : "black",
   "python.formatting.blackPath": "~/.local/bin/black",
+
   "rust-client.disableRustup": true,
 
   "coc.source.dictionary.filetypes": ["markdown", "text"],
-  "coc.source.dictionary.priority": 2
+  "coc.source.dictionary.priority": 2,
+
+  "php-cs-fixer.enableFormatProvider": true
 
 }
