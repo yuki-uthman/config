@@ -1,33 +1,31 @@
 {
-  "suggest.autoTrigger": "always",
-  "suggest.maxCompleteItemCount": 50,
-  "suggest.minTriggerInputLength":1,
-
   "coc.preferences.formatOnSaveFiletypes": ["dart","ruby","rust","python","javascript","html","css","scss","php"],
-
   "coc.source.around.firstMatch": false,
   "coc.source.buffer.firstMatch": false,
-  
-  "snippets.userSnippetsDirectory": "~/.config/nvim/snippets",
+  "coc.source.dictionary.filetypes": ["markdown", "text"],
+  "coc.source.dictionary.priority": 2,
+
+  "javascript.suggestionActions.enabled": false,
+
+  "php-cs-fixer.enableFormatProvider": true,
+
+  "pyright.enable": true,
+  "python.formatting.blackPath": "~/.local/bin/black",
+  "python.formatting.provider" : "black",
+  "python.linting.enabled":false,
+  "python.linting.pylintEnabled":false,
+
+  "rust-client.disableRustup": true,
+
   "snippets.priority" : 100,
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snippets",
 
   "solargraph.autoformat": true,
   "solargraph.formatting": true,
   "solargraph.hover": true,
 
-  "javascript.suggestionActions.enabled": false,
-
-  "pyright.enable": true,
-  "python.linting.enabled":false,
-  "python.linting.pylintEnabled":false,
-  "python.formatting.provider" : "black",
-  "python.formatting.blackPath": "~/.local/bin/black",
-
-  "rust-client.disableRustup": true,
-
-  "coc.source.dictionary.filetypes": ["markdown", "text"],
-  "coc.source.dictionary.priority": 2,
-
-  "php-cs-fixer.enableFormatProvider": true
+  "suggest.autoTrigger": "always",
+  "suggest.maxCompleteItemCount": 50,
+  "suggest.minTriggerInputLength":1
 
 }
