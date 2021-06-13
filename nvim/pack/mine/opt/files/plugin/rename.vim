@@ -28,5 +28,8 @@ function! Rename(name, bang)
         echoerr v:errmsg
     endif
 endfunction
+
+autocmd CmdwinEnter * inoreabbrev <buffer> <expr> rename "Rename \<C-R>=expand(\"#:t\")\<CR>\<C-R>=Eatchar(' ')\<CR>"
+
 cnoreabbrev <expr> rename  (getcmdtype() ==# ':' && getcmdline() ==# 'rename')  ?
       \ "Rename \<C-R>=expand(\"%:t\")\<CR>\<C-R>=Eatchar(' ')\<CR>"  : 'rename'
