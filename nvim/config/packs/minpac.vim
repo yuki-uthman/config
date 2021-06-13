@@ -32,6 +32,7 @@ function! PackInit() abort
   call minpac#add('kana/vim-textobj-user')
   call minpac#add('JRasmusBm/vim-peculiar')
   call minpac#add('svermeulen/vim-extended-ft', { 'type' : 'opt' })
+  call minpac#add('easymotion/vim-easymotion', { 'type' : 'opt' })
 
   " Chris Toomey
   call minpac#add('inkarkat/vim-ReplaceWithRegister', { 'type' : 'opt' })
@@ -52,11 +53,13 @@ function! PackInit() abort
   call minpac#add('vim-ruby/vim-ruby', { 'type' : 'opt' })
   call minpac#add('nelstrom/vim-textobj-rubyblock', { 'type' : 'opt' })
 
-  "Rust
+  " Rust
   call minpac#add('rust-lang/rust.vim', { 'type' : 'opt' })
 
   " Javascript
   call minpac#add('yuezk/vim-js', { 'type' : 'opt' })
+
+  " PHP
 
   " Dart
   call minpac#add('dart-lang/dart-vim-plugin')
@@ -87,6 +90,7 @@ runtime config/packs/snipmate.vim
 runtime config/packs/tmux.vim
 runtime config/packs/vifm.vim
 runtime config/packs/vim-test.vim
+runtime config/packs/easymotion.vim
 
 packadd ale
 packadd coc.nvim
@@ -96,8 +100,9 @@ packadd targets.vim
 packadd vader.vim
 packadd vim-ReplaceWithRegister
 packadd vim-cutlass
-packadd vim-extended-ft
+" packadd vim-extended-ft
 packadd vim-test
+packadd vim-easymotion
 
 " My plugin
 packadd dictionary

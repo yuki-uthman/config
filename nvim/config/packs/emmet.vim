@@ -9,4 +9,4 @@ let g:user_emmet_leader_key=';'
 
 " enable emmet just for some files
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,eruby,scss EmmetInstall
+autocmd FileType html,css,eruby,scss,php EmmetInstall
