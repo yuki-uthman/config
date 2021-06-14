@@ -106,7 +106,7 @@ nnoremap <F2> :edit ~/VimWiki/technology/index.wiki<CR>
 
 " => Search & Replace {{{
 
-nnoremap <leader>ss :%s///g<Left><Left><Left>
+nnoremap <leader>s :%s///g<Left><Left><Left>
 
 " Replace the next match with just one key!
 nnoremap Q :normal! n.<CR>
@@ -134,8 +134,8 @@ inoremap ''     ''<Left>
 
 " " {{{ Visual
 
-xnoremap <Space> :
-vnoremap <Space> :
+xnoremap <Space><Space> :
+vnoremap <Space><Space> :
 
 " xnoremap ( xi()<ESC>P
 " xnoremap [ xi[]<ESC>P
@@ -148,7 +148,7 @@ vnoremap <Space> :
 " vnoremap <leader>j :m '>+
 " vnoremap <leader>k :m '>-
 
-xnoremap <Leader>ss :s//<Left>
+xnoremap <leader>s :s///g<Left><Left><Left>
 
 " " Put current word in the search register without moving
 " vnoremap <silent> * :call GetSelectedText(visualmode())<cr>
@@ -183,8 +183,8 @@ cnoremap <C-f> <Right>
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
 
-" open command history with Space
-nnoremap <Space> q:
+" open command history with Double Space
+nnoremap <Space><Space> q:
 
 
 

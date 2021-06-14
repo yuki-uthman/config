@@ -13,7 +13,7 @@ vnoremap <leader>r :VtrSendLinesToRunner<CR>
 
 nnoremap vs :VtrAttachToPane<CR>
 nnoremap vv :VtrSendCommandToRunner<CR>
-nnoremap vf :VtrFlushCommand<CR>
+nnoremap vc :VtrFlushCommand<CR>
 nnoremap v<Space> :VtrFocusRunner<CR>
 
 
