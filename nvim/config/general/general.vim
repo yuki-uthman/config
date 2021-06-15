@@ -36,7 +36,7 @@ set noshowcmd
 set noshowmode
 set nospell
 set noswapfile
-set wrap
+set nowrap
 set number
 set relativenumber
 set scrolloff=0
