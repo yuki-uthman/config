@@ -12,10 +12,8 @@ nmap T <Plug>(easymotion-T)
 nmap ; <Plug>(easymotion-next)
 nmap , <Plug>(easymotion-prev)
 
-omap f <Plug>(easymotion-f)
-omap F <Plug>(easymotion-F)
-omap t <Plug>(easymotion-t)
-omap T <Plug>(easymotion-T)
+omap / <Plug>(easymotion-f)
+omap ? <Plug>(easymotion-F)
 omap ; <Plug>(easymotion-next)
 omap , <Plug>(easymotion-prev)
 
