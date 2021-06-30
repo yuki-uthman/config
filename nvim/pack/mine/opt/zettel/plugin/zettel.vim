@@ -192,7 +192,7 @@ command! -bang -nargs=* ZetGrep
                         \                                   'yoffset': 1,
                         \                                   'border': 'left',
                         \                                  },
-                        \                       'dir': '~/.zettel'}, 
+                        \                       'dir': g:zettelkasten },
                         \                       'up',  'ctrl-/'),
                         \ <bang>0)
 
@@ -210,7 +210,7 @@ command! -bang -nargs=* ZetLinkPreview
                         \                                   'yoffset': 1,
                         \                                   'border': 'left',
                         \                                  },
-                        \                       'dir': '~/.zettel',
+                        \                       'dir': g:zettelkasten,
                         \                       'sink': function('s:insertLink') },
                         \                       'up', 'ctrl-/'),
                         \ <bang>0)
@@ -229,7 +229,7 @@ command! -range -bang -nargs=* ZetConvertIntoLink
                         \                                   'yoffset': 1,
                         \                                   'border': 'left',
                         \                                  },
-                        \                       'dir': '~/.zettel',
+                        \                       'dir': g:zettelkasten,
                         \                       'sink': function('s:convertIntoLink') },
                         \                       'up',  'ctrl-/'),
                         \ <bang>0)
