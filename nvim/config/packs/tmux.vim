@@ -19,8 +19,8 @@ nnoremap v<Space> :VtrFocusRunner<CR>
 
 let g:tmux_navigator_no_mappings = 1
 
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-Left> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-Down> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-Up> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-Right> :TmuxNavigateRight<cr>
 nnoremap <silent> <C-/> :TmuxNavigatePrevious<cr>
