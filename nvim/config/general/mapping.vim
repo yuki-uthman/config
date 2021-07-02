@@ -130,6 +130,10 @@ inoremap <<     <><Left>
 inoremap ""     ""<Left>
 inoremap ''     ''<Left>
 
+" Use Ctrl-O as Enter
+inoremap <C-o> <C-j>
+
+
 " " }}}
 
 " " {{{ Visual
