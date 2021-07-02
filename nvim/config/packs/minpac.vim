@@ -30,8 +30,6 @@ function! PackInit() abort
   call minpac#add('wellle/targets.vim', { 'type' : 'opt' })
   call minpac#add('preservim/tagbar')
   call minpac#add('kana/vim-textobj-user')
-  call minpac#add('JRasmusBm/vim-peculiar')
-  call minpac#add('svermeulen/vim-extended-ft', { 'type' : 'opt' })
   call minpac#add('easymotion/vim-easymotion', { 'type' : 'opt' })
 
   " Chris Toomey
@@ -100,7 +98,6 @@ packadd targets.vim
 packadd vader.vim
 packadd vim-ReplaceWithRegister
 packadd vim-cutlass
-" packadd vim-extended-ft
 packadd vim-test
 packadd vim-easymotion
 
