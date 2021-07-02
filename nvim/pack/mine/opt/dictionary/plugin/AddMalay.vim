@@ -1,12 +1,12 @@
 
-function! AddMalay()
+function! MalayAdd()
   set dict+=~/.config/nvim/dict/malay.dic
 endfunction
 
-function! RemoveMalay()
+function! MalayDelete()
   set dict-=~/.config/nvim/dict/malay.dic
 endfunction
 
 
-command! AddMalay call AddMalay()
-command! RemoveMalay call RemoveMalay()
+command! MalayAdd call MalayAdd()
+command! MalayDelete call MalayDelete()
