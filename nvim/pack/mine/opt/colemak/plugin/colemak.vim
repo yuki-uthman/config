@@ -15,18 +15,17 @@ function! ColemakActivate()
   nnoremap k n
   nnoremap K N
 
-  " Retain i position
-  nnoremap u i
-  nnoremap U I
-
-  " Retain u position
-  nnoremap l u
-  nnoremap L <C-r>
+  " use l as i
+  nnoremap l i
+  nnoremap L I
 
   " remap e 
   nnoremap j e
   vnoremap j e
   xnoremap j e
+  nnoremap J ge
+  vnoremap J ge
+  xnoremap J ge
 
   " Disable scroll with Ctrl-f
   nnoremap <C-f> <Nop>
@@ -49,11 +48,7 @@ function! ColemakDeactivate()
   nunmap k
   nunmap K
 
-  " Retain i position
-  nunmap u
-  nunmap U
-
-  " Retain u position
+  " use l as i
   nunmap l 
   nunmap L
 
@@ -61,6 +56,9 @@ function! ColemakDeactivate()
   nunmap j e
   vunmap j e
   xunmap j e
+  nunmap J E
+  vunmap J E
+  xunmap J E
 
   " Disable scroll with Ctrl-f
   nunmap <C-f>
