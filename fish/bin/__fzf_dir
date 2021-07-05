@@ -22,5 +22,4 @@ end
 # do not use _home_directories
 # problems with space in file name
 dir = `find #{directories.join(" ")} -type d -print 2> /dev/null | fzf +m`
-`__append_cd_history #{dir.chomp}`
 puts dir
