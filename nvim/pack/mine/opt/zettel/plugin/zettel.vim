@@ -52,7 +52,7 @@ func! ZetNew(bang, ...) range
   endif
 
   " build the filename
-  let filename = g:zettelkasten . strftime("%y%m%d_%H%M"). '.' . ext
+  let filename = strftime("%y%m%d_%H%M"). '.' . ext
 
   " if called from viusal mode
   " insert the link at the current position
@@ -171,7 +171,7 @@ endfunc
 
 
 
-command! ZetCopyCursorPosition let @+ = join([expand('%:p'),  line(".")], ':')
+command! ZetCopyCursorPosition let @+ = join([expand('%:p:~'),  line(".")], ':')
 
 " /Users/Yuki/.fzf/plugin/fzf.vim:94
 " /Users/Yuki/.custom/nvim/main/pack/minpac/opt/fzf.vim/autoload/fzf/vim.vim:161
@@ -253,7 +253,7 @@ command! -nargs=1 HandleFZF          :call HandleFZF(<f-args>)
 " /Users/Yuki/.zettel/2012261729_extract_filename_ripgrep.vim:1
 function! s:insertLink(match)
     let l:filename = matchstr(a:match, '.\{-}\ze:\d\+:\d\+:')
-    let mdlink = "[](". g:zettelkasten . l:filename .")"
+    let mdlink = "[](". l:filename .")"
     execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
 endfunction
 
@@ -278,12 +278,12 @@ function! s:convertIntoLink(match)
     let l:filename = matchstr(a:match, '.\{-}\ze:\d\+:\d\+:')
     let l:selection = s:get_visual_selection()
     exec "normal! gvd"
-    let mdlink = "[". l:selection ."](". g:zettelkasten .l:filename .")"
+    let mdlink = "[". l:selection ."](". l:filename .")"
     execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
 endfunction
 
-command!          ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF',
-                                                           \ 'down' : '25%' }))
+command! ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF', 'down' : '25%' }))
+
 
 
 
