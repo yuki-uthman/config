@@ -1,9 +1,15 @@
 
-function! ColemakAdd()
+function! ColemakActivate()
   " hnei as hjkl
   nnoremap n j
   nnoremap e k
   nnoremap i l
+  vnoremap n j
+  vnoremap e k
+  vnoremap i l
+  xnoremap n j
+  xnoremap e k
+  xnoremap i l
 
   " Retain n position
   nnoremap k n
@@ -16,27 +22,50 @@ function! ColemakAdd()
   " Retain u position
   nnoremap l u
   nnoremap L <C-r>
+
+  " remap e 
+  nnoremap j e
+  vnoremap j e
+  xnoremap j e
+
+  " Disable scroll with Ctrl-f
+  nnoremap <C-f> <Nop>
+
 endfunction
 
-function! ColemakDelete()
+function! ColemakDeactivate()
   " hnei as hjkl
-  unmap n j
-  unmap e k
-  unmap i l
+  nunmap n
+  nunmap e
+  nunmap i
+  vunmap n
+  vunmap e
+  vunmap i
+  xunmap n
+  xunmap e
+  xunmap i
 
   " Retain n position
-  unmap k n
-  unmap K N
+  nunmap k
+  nunmap K
 
   " Retain i position
-  unmap u i
-  unmap U I
+  nunmap u
+  nunmap U
 
   " Retain u position
-  unmap l u
-  unmap L <C-r>
+  nunmap l 
+  nunmap L
+
+  " remap e 
+  nunmap j e
+  vunmap j e
+  xunmap j e
+
+  " Disable scroll with Ctrl-f
+  nunmap <C-f>
 endfunction
 
 
-command! ColemakAdd call ColemakAdd()
-command! ColemakDelete call ColemakDelete()
+command! ColemakActivate call ColemakActivate()
+command! ColemakDeactivate call ColemakDeactivate()

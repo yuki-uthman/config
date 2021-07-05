@@ -9,4 +9,4 @@ runtime config/general/tmux.vim
 " packages 
 runtime config/packs/minpac.vim
 
-
+call ColemakActivate()

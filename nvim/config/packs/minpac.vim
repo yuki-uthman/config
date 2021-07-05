@@ -106,3 +106,4 @@ packadd dictionary
 packadd editor
 packadd files
 packadd zettel
+packadd colemak
