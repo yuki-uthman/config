@@ -31,8 +31,8 @@ endfunc
 
 
 " Highlight entry
-nnoremap <silent> n :call SearchNext()<CR>
-nnoremap <silent> N :call SearchPrev()<CR>
+" nnoremap <silent> n :call SearchNext()<CR>
+" nnoremap <silent> N :call SearchPrev()<CR>
 
 " Use <C-L> to clear some highlighting
 " nnoremap <silent> <C-L> :silent! call matchdelete(b:ring)<CR>:nohlsearch<CR>:set nolist nospell<CR><C-L>
