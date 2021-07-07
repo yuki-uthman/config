@@ -1,17 +1,15 @@
 " /Users/Yuki/.custom/nvim/main/config/general/mapping.vim:318
 
-let g:zettelkasten = "~/.zettel/"
-let g:filetypes = [ ]
-let g:zet_separator = '_'
+let g:zettelkasten = "~/.zettel"
+let g:tag_symbol = "#"
 
-function! s:comment_symbol() abort
+function! s:comment_symbol() abort "{{{
   return split(get(b:, 'commentary_format', substitute(substitute(substitute(
         \ &commentstring, '^$', '%s', ''), '\S\zs%s',' %s', '') ,'%s\ze\S', '%s ', '')), '%s', 1)[0]
 endfunction
+"}}}
 
-
-
-func! s:get_filetype(ext)
+func! s:get_filetype(ext) "{{{
   if a:ext ==? 'html'
     return 'html'
   elseif a:ext ==? 'dart'
@@ -29,14 +27,15 @@ func! s:get_filetype(ext)
       return filetype
     endif
   endfor
-endfunction
+endfunction "}}}
 
-func! s:capitalize(word)
+func! s:capitalize(word) "{{{
   return substitute( a:word ,'\(\<\w\+\>\)', '\u\1', 'g')
-endfunc
+endfunc "}}}
 
-command! -bang -range -nargs=* ZetNew <line1>,<line2>call ZetNew(<bang>0, <f-args>)
-func! ZetNew(bang, ...) range
+"{{{ new file
+" .vim/autoload/local/zettel.vim
+func! ZetNew(bang, ...) range 
 
   let ext = 'md'
   let ext_provided = 0
@@ -52,13 +51,12 @@ func! ZetNew(bang, ...) range
   endif
 
   " build the filename
-  let filename = strftime("%y%m%d_%H%M"). '.' . ext
+  let filename = strftime("%y%m%d%H%M"). '.' . ext
 
   " if called from viusal mode
   " insert the link at the current position
-  let selection = ''
+  let backlink = ''
   if a:bang == 1
-    let @a = s:get_visual_selection()
     let selection = s:get_visual_selection()
     " delete the selection
     exec "normal! gvd"
@@ -70,6 +68,9 @@ func! ZetNew(bang, ...) range
       " insert the markdown link
       exec "normal! i" . '[' . selection . '](' . filename . ')'
     endif
+
+    " save the filename to insert the backlink in the new file
+    let backlink = "[". expand('%:t:r')."](" . expand('%:t') . ")"
   endif
 
   " built title
@@ -83,183 +84,97 @@ func! ZetNew(bang, ...) range
   let title = join(title, ' ')
 
   " open the new zettel note!
-  exec "e " . filename
+  exec "e " . g:zettelkasten . "/" .filename
 
   if ext ==# 'md'
     let title = '# ' . title
   else
-    let tag = ':'.ext
-    let title = s:comment_symbol() . title . tag
+    let tag = g:tag_symbol.ext
+    let title = s:comment_symbol() . title . " ". tag
   endif
 
-  " add title
+
   exec "normal! i" . title
 
-  " add 2 empty lines
-  exec "normal! o\<C-U>\<ESC>o\<ESC>k"
+  " add empty lines
+  exec "normal! o\<C-U>\<C-j>\<C-j>\<C-j>"
 
-endfunc
+  if ext ==# 'md'
+    exec "normal! otags:"
 
-
-
-command! -nargs=* Zet call Zet(<f-args>)
-" .vim/autoload/local/zettel.vim
-func! Zet(...)
-
-  " default extension => md
-  let extension = 'md'
-
-  let title = 'diary'
-
-  " build the file name
-  let l:sep = ''
-
-  if len(a:000) == 1
-    let l:sep = '_'
-    let extension = a:1
-  elseif len(a:000) > 1
-    let l:sep = '_'
-    let extension = a:000[-1]
-    let title = a:000[:-2]
-  endif
-
-  let l:fname = g:zettelkasten . strftime("%y%m%d%H%M") . l:sep . join( title , l:sep ) . '.' . extension
-
-  " exec "normal! i" . l:fname
-
-  " edit the new file
-  exec "e " . l:fname
-
-  " %d => 01
-  " %e =>  1
-  let date = strftime("%e %B %Y")
-  if len(a:000) > 0
-    let title_list = a:000[:-2]
-    let first_word = title_list[0]
-    let rest_of_the_title = title_list[1:]
-
-    if extension ==? 'md' || extension ==? 'vimwiki'
-      " capitalize the first word and leave the rest as it is
-      let first_word = substitute( first_word ,'\(\<\w\+\>\)', '\u\1', 'g')
-      let rest_of_the_title = join( rest_of_the_title, ' ' )
-      let title = first_word . ' ' . rest_of_the_title
-
-        " # Title
-        exec "normal! i# ". title
-
-        " add two empty lines
-        exec "normal! o\<ESC>\<C-U>o\<ESC>k"
-
-    else
-      " eg
-      " # :python: title
-      let tag = ':'.&ft.':'
-
-      " this inserts the title after the tag
-      exec "normal! i". s:comment_symbol() . tag . join(title_list,' ') . "\<ESC>"
-      " add two empty lines
-      exec "normal! o\<C-u>\<ESC>o\<ESC>k"
+    if a:bang == 1
+      exec "normal! olinks:"
+      exec "normal! o\<C-i>" . backlink
     endif
-
-  else
-    " No title No extension given
-    "  2 December 2020
-    exec "normal! i# " . date . "\<ESC>o\<ESC>o\<ESC>kk"
+  else 
+    if a:bang == 1
+      exec "normal! o" . s:comment_symbol(). backlink
+    endif
   endif
-endfunc
 
+  exec "normal! ggk"
+endfunc 
 
+command! -bang -range -nargs=* ZetNew <line1>,<line2>call ZetNew(<bang>0, <f-args>)
+"}}}
 
-
-command! ZetCopyCursorPosition let @+ = join([expand('%:p:~'),  line(".")], ':')
-
+" {{{ search 
 " /Users/Yuki/.fzf/plugin/fzf.vim:94
 " /Users/Yuki/.custom/nvim/main/pack/minpac/opt/fzf.vim/autoload/fzf/vim.vim:161
 " refactor to use function rather than this looong command
 " https://github.com/junegunn/dotfiles/blob/master/vimrc
-nnoremap zg :ZetGrep :
-cnoreabbrev <expr> zg  (getcmdtype() ==# ':' && getcmdline() ==# 'zg')  ? 'ZetGrep'  : 'zg'
-command! -bang -nargs=* ZetGrep
-  \ call fzf#vim#grep("rg  --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
-                        \ 1,
-                        \fzf#vim#with_preview({'options': [
-                        \                                   '--preview-window', '90%',
-                        \                                   '--bind', 'up:preview-up,down:preview-down',
-                        \                                   '--margin', '0%', '--padding', '0%'],
-                        \                       'window': { 'width': 0.5,
-                        \                                   'height': 0.6,
-                        \                                   'xoffset': 1,
-                        \                                   'yoffset': 1,
-                        \                                   'border': 'left',
-                        \                                  },
-                        \                       'dir': g:zettelkasten },
-                        \                       'up',  'ctrl-/'),
-                        \ <bang>0)
+function! ZetGrep(query, fullscreen) 
+  let initial_command = "rg  --column --line-number --no-heading --color=always --smart-case ".shellescape(a:query)
 
-
-command! -bang -nargs=* ZetLinkPreview
-  \ call fzf#vim#grep("rg  --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
-                        \ 1,
-                        \fzf#vim#with_preview({'options': [
-                        \                                   '--preview-window', 'top:90%',
-                        \                                   '--bind', 'up:preview-up,down:preview-down',
-                        \                                   '--margin', '0%', '--padding', '0%'],
-                        \                       'window': { 'width': 0.5,
-                        \                                   'height': 0.6,
-                        \                                   'xoffset': 1,
-                        \                                   'yoffset': 1,
-                        \                                   'border': 'left',
-                        \                                  },
-                        \                       'dir': g:zettelkasten,
-                        \                       'sink': function('s:insertLink') },
-                        \                       'up', 'ctrl-/'),
-                        \ <bang>0)
-
-
-command! -range -bang -nargs=* ZetConvertIntoLink
-  \ call fzf#vim#grep("rg  --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
-                        \ 1,
-                        \fzf#vim#with_preview({'options': [
-                        \                                   '--preview-window', 'top:90%',
-                        \                                   '--bind', 'up:preview-up,down:preview-down',
-                        \                                   '--margin', '0%', '--padding', '0%'],
-                        \                       'window': { 'width': 0.5,
-                        \                                   'height': 0.6,
-                        \                                   'xoffset': 1,
-                        \                                   'yoffset': 1,
-                        \                                   'border': 'left',
-                        \                                  },
-                        \                       'dir': g:zettelkasten,
-                        \                       'sink': function('s:convertIntoLink') },
-                        \                       'up',  'ctrl-/'),
-                        \ <bang>0)
-
-
-" include bang!
-function! HandleFZF(file)
-    let absolute_path = fnameescape(fnamemodify(a:file, ":p"))
-    let filename = fnameescape(fnamemodify(a:file, ":t"))
-    "why only the tail ?  I believe the whole filename must be linked unless everything is flat ...
-    " let filename = fnameescape(a:file)
-    let filename_wo_timestamp = fnameescape(fnamemodify(a:file, ":t:s/^[0-9]*-//"))
-     " Insert the markdown link to the file in the current buffer
-    let mdlink = "[](".absolute_path.")"
-    execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
-endfunction
-command! -nargs=1 HandleFZF          :call HandleFZF(<f-args>)
-
+  let spec = {'options': [ '--preview-window', '90%',
+             \             '--bind', 'up:preview-up,down:preview-down',
+             \             '--margin', '0%', 
+             \             '--padding', '0%'],
+             \ 'window': { 'width': 0.5,
+             \             'height': 0.6,
+             \             'xoffset': 1,
+             \             'yoffset': 1,
+             \             'border': 'left',
+             \            },
+             \ 'dir': g:zettelkasten }
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
+endfunction 
+command! -nargs=* -bang ZetGrep call ZetGrep(<q-args>, <bang>0)
+"}}}
 
 " for normal mode sink
 " /Users/Yuki/.zettel/2012261729_extract_filename_ripgrep.vim:1
-function! s:insertLink(match)
+function! s:insertLink(match) "{{{
     let l:filename = matchstr(a:match, '.\{-}\ze:\d\+:\d\+:')
     let mdlink = "[](". l:filename .")"
     execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
-endfunction
+endfunction "}}}
+
+function! ZetLinkPreview(query, fullscreen) "{{{
+  let initial_command = "rg  --column --line-number --no-heading --color=always --smart-case ".shellescape(a:query)
+
+  let spec = {'options': [ '--preview-window', '90%',
+             \             '--bind', 'up:preview-up,down:preview-down',
+             \             '--margin', '0%', 
+             \             '--padding', '0%'],
+             \ 'window': { 'width': 0.5,
+             \             'height': 0.6,
+             \             'xoffset': 1,
+             \             'yoffset': 1,
+             \             'border': 'left',
+             \            },
+             \ 'dir': g:zettelkasten,
+             \ 'sink': function('s:insertLink')}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
+endfunction 
+command! -nargs=* -bang ZetLinkPreview call ZetLinkPreview(<q-args>, <bang>0)
+"}}}
+
+" {{{ helper functions for ZetConvertIntoLink
 
 " if there is a visually selected text use it as the text between [ ]
-"/Users/Yuki/.zettel/2012252045_visual_selection_as_arguments.vim
-function! s:get_visual_selection()
+" ~/.zettel/2012252045.vim
+function! s:get_visual_selection() 
     let [line_start, column_start] = getpos("'<")[1:2]
     let [line_end, column_end] = getpos("'>")[1:2]
     let lines = getline(line_start, line_end)
@@ -270,7 +185,7 @@ function! s:get_visual_selection()
     let lines[0] = lines[0][column_start - 1:]
     " let @a = join(lines,"\n")
     return join(lines, "\n")
-endfunction
+endfunction 
 
 " for visual mode sink
 " /Users/Yuki/.zettel/2012261729_extract_filename_ripgrep.vim:1
@@ -279,27 +194,80 @@ function! s:convertIntoLink(match)
     let l:selection = s:get_visual_selection()
     exec "normal! gvd"
     let mdlink = "[". l:selection ."](". l:filename .")"
+
+    if col(".") == col("$")-1      
+      execute "normal! a" . mdlink . "\<ESC>o\<ESC>k/[\<CR>"
+    else
+      execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
+    endif
+
+endfunction "}}}
+
+function! ZetConvertIntoLink(query, fullscreen) "{{{
+  let initial_command = "rg  --column --line-number --no-heading --color=always --smart-case ".shellescape(a:query)
+
+  let spec = {'options': [ '--preview-window', '90%',
+             \             '--bind', 'up:preview-up,down:preview-down',
+             \             '--margin', '0%', 
+             \             '--padding', '0%'],
+             \ 'window': { 'width': 0.5,
+             \             'height': 0.6,
+             \             'xoffset': 1,
+             \             'yoffset': 1,
+             \             'border': 'left',
+             \            },
+             \ 'dir': g:zettelkasten,
+             \ 'sink': function('s:convertIntoLink')}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
+endfunction 
+command! -range -nargs=* -bang ZetConvertIntoLink call ZetConvertIntoLink(<q-args>, <bang>0)
+"}}}
+"
+
+" include bang!
+function! HandleFZF(file) "{{{
+    let absolute_path = fnameescape(fnamemodify(a:file, ":p"))
+    let filename = fnameescape(fnamemodify(a:file, ":t"))
+    "why only the tail ?  I believe the whole filename must be linked unless everything is flat ...
+    " let filename = fnameescape(a:file)
+    let filename_wo_timestamp = fnameescape(fnamemodify(a:file, ":t:s/^[0-9]*-//"))
+     " Insert the markdown link to the file in the current buffer
+    let mdlink = "[](".absolute_path.")"
     execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
 endfunction
-
+command! -nargs=1 HandleFZF          :call HandleFZF(<f-args>)
 command! ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF', 'down' : '25%' }))
+"}}}
 
+" jump {{{
+"~/.zettel/2107062329.vim:13
+function! s:edit_markdown_file()
+  " get id from the markdown link
+  let id = matchstr(getline('.'), '\[.*\](\zs.\{-}\ze)')
 
-
+  if empty(id)
+    exec "normal! 1\<C-i>"
+  else
+    let file = systemlist("find . -iname '". id . "*' -print")[0]
+    exec "edit " . g:zettelkasten . "/" . file
+  endif
+endfunction
+"}}}
 
 " New notes
 cnoreabbrev <expr> zn  (getcmdtype() ==# ':' && getcmdline() ==# 'zn')  ? 'ZetNew'  : 'zn'
 nnoremap zn :ZetNew 
 vnoremap zn :ZetNew! 
 
-" Link Generation
-" nnoremap zf :ZetLink<CR>
+cnoreabbrev <expr> zg  (getcmdtype() ==# ':' && getcmdline() ==# 'zg')  ? 'ZetGrep'  : 'zg'
+nnoremap zg :ZetGrep 
+
 nnoremap zl :ZetLinkPreview :
 vnoremap zl :ZetConvertIntoLink :
 
 nnoremap zt "=strftime("%Y/%m/%d %H:%M")<CR>P
-nnoremap zcc :ZetCopyCursorPosition<CR>
 
-" Search notes
-cnoreabbrev <expr> zg  (getcmdtype() ==# ':' && getcmdline() ==# 'zg')  ? 'ZetGrep'  : 'zg'
-nnoremap zg :ZetGrep :
+command! ZetCopyCursorPosition let @+ = join([expand('%:p:~'),  line(".")], ':')
+nnoremap zc :ZetCopyCursorPosition<CR>
+
+nnoremap <silent> <C-i> :<C-u>call <SID>edit_markdown_file()<CR>
