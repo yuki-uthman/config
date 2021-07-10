@@ -277,16 +277,38 @@ command! ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF', 'down' : '25%' })
 "}}}
 
 " jump {{{
-"~/.zettel/2107062329.vim:13
-function! s:edit_markdown_file()
-  " get id from the markdown link
-  let id = matchstr(getline('.'), '\[.*\](\zs.\{-}\ze)')
+" [find file by ID in zettel](2107062329.vim)
+function! s:open_ID()
+  " get id from the word under the cursor
+  " [cfile and cWORD](2107091853.vim)
+  let matched_id = matchstr(expand('<cWORD>'), '\zs\d\{10}\(\.\w\+\)\?\(:\d*\)\?\ze')
+  let matched_id = split(matched_id, ':')
+  echo matched_id
 
-  if empty(id)
-    exec "normal! 1\<C-i>"
+  " found ID
+  if !empty(matched_id)
+    let id = matched_id[0]
+    " need to expand ~/.zettel => /Users/Yuki [what is expand](2012071551:30) 
+    " get the first file with the ID in /zettel
+    let file = systemlist("find ". expand(g:zet_dir). " -iname '". id . "*' -print")[0]
+    exec "edit " . file
+
+    " found line number
+    if len(matched_id) == 2
+      let line_number = matched_id[1]
+      call setpos('.', [0, line_number, 1, 1])
+      exec "normal! zz"
+    endif
   else
-    let file = systemlist("find . -iname '". id . "*' -print")[0]
-    exec "edit " . g:zettelkasten . "/" . file
+    " [jump to the next ID](2107091410.vim) 
+    " following patterns are handled
+    " <Space>ID
+    " [link](ID)
+    " [link](ID.ext)
+    " Not compatible with obsidian
+    " [link](ID:number)
+    let id_regex = '\(\s\zs\d\{10}\|\[.\{-1,}](\zs\d\{10}\ze\(\(\.\|:\).\+\)\?)\)'
+    exec "normal! /" . id_regex . "\<CR>"
   endif
 endfunction
 "}}}
