@@ -50,88 +50,95 @@ func! s:capitalize(word) "{{{
 endfunc "}}}
 
 "{{{ new file
-" .vim/autoload/local/zettel.vim
-func! ZetNew(bang, ...) range 
+" get user input from the command-line mode
+function! s:user_prompt(message)
+  call inputsave()
+  let input = input(a:message)
+  call inputrestore()
+  return input
+endfunction
 
-  let ext = 'md'
-  let ext_provided = 0
-  if a:0 > 0
-    let ext = s:get_filetype(a:000[-1])
-    " not recognized => md
-    if ext == ''
-      let ext = 'md'
-    else
-      let ext_provided = 1
-      let ext = a:000[-1]
-    endif
+" n => new note
+" nl => new note with link 
+" v => new note from visual mode
+func! s:new_note(mode) range  
+  let title = s:user_prompt("Note Title: ")
+
+  let link_keyword = ''
+  if a:mode ==# 'n'
+    echo "new mode n"
+  elseif a:mode ==# 'nl'
+    let link_keyword = s:user_prompt('Link Keyword: ')
+    echo "new mode nn"
+  elseif a:mode ==# 'v'
+    echo "new mode v"
+  else
+    echo "Invalid mode"
+    return
   endif
 
-  " build the filename
-  let filename = strftime("%y%m%d%H%M"). '.' . ext
+  let words = split(title)
+  let ext = words[-1]
 
-  " if called from viusal mode
-  " insert the link at the current position
+  let new_id = strftime("%y%m%d%H%M")
+
   let backlink = ''
-  if a:bang == 1
+  if a:mode ==# 'nl'
+    " insert the link with the keyword at the end of the line
+    " insert space 
+    exec "normal! A " . '[' . link_keyword . '](' . new_id . ')'
+    " save the ID to insert the backlink in the new file later
+    let id = expand('%:t:r')
+    let backlink = "[". id ."](" . id . ")"
+  elseif a:mode ==# 'v'
     let selection = s:get_visual_selection()
     " delete the selection
     exec "normal! gvd"
     " is the cursor at the end of line?
     if col(".") == col("$")-1      
       " insert the markdown link 
-      exec "normal! a" . '[' . selection . '](' . filename . ')'
+      exec "normal! a" . '[' . selection . '](' . new_id . ')'
     else
       " insert the markdown link
-      exec "normal! i" . '[' . selection . '](' . filename . ')'
+      exec "normal! i" . '[' . selection . '](' . new_id . ')'
     endif
 
-    " save the filename to insert the backlink in the new file
-    let backlink = "[". expand('%:t:r')."](" . expand('%:t') . ")"
+    " save the ID to insert the backlink in the new file later
+    let id = expand('%:t:r')
+    let backlink = "[". id ."](" . id . ")"
   endif
 
-  " built title
-  let title = ''
-  if ext_provided == 1
-    let title = a:000[0:-2]
-  else
-    let title = a:000[0:]
-  endif
+  " always put # in the title for any files
+  let words = split(title)
+  let title = '# ' . join(words[0:-2], ' ')
 
-  let title = join(title, ' ')
+  " add comment symbol if not md
+  if ext !=# 'md'
+    let comment = s:comment_symbol()
+
+    let title = comment . title
+    if !empty(backlink)
+      let backlink = comment . backlink
+    end
+  endif
 
   " open the new zettel note!
-  exec "e " . g:zettelkasten . "/" .filename
-
-  if ext ==# 'md'
-    let title = '# ' . title
-  else
-    let tag = g:tag_symbol.ext
-    let title = s:comment_symbol() . title . " ". tag
-  endif
-
+  exec "e " . g:zet_dir . "/" . new_id . '.' . ext
 
   exec "normal! i" . title
 
   " add empty lines
   exec "normal! o\<C-U>\<C-j>\<C-j>\<C-j>"
 
-  if ext ==# 'md'
-    exec "normal! otags:"
-
-    if a:bang == 1
-      exec "normal! olinks:"
-      exec "normal! o\<C-i>" . backlink
-    endif
-  else 
-    if a:bang == 1
-      exec "normal! o" . s:comment_symbol(). backlink
-    endif
+  " insert backlink in the new note if backlink exists
+  if !empty(backlink)
+    exec "normal! o" . backlink
   endif
 
+  " go back to the beginning of the file
   exec "normal! ggk"
 endfunc 
 
-command! -bang -range -nargs=* ZetNew <line1>,<line2>call ZetNew(<bang>0, <f-args>)
 "}}}
 
 " {{{ search 
@@ -270,10 +277,6 @@ function! s:edit_markdown_file()
 endfunction
 "}}}
 
-" New notes
-cnoreabbrev <expr> zn  (getcmdtype() ==# ':' && getcmdline() ==# 'zn')  ? 'ZetNew'  : 'zn'
-nnoremap zn :ZetNew 
-vnoremap zn :ZetNew! 
 
 cnoreabbrev <expr> zg  (getcmdtype() ==# ':' && getcmdline() ==# 'zg')  ? 'ZetGrep'  : 'zg'
 nnoremap zg :ZetGrep 
@@ -286,4 +289,9 @@ nnoremap zt "=strftime("%Y/%m/%d %H:%M")<CR>P
 command! ZetCopyCursorPosition let @+ = join([expand('%:p:~'),  line(".")], ':')
 nnoremap zc :ZetCopyCursorPosition<CR>
 
-nnoremap <silent> <C-i> :<C-u>call <SID>edit_markdown_file()<CR>
+" New notes
+nnoremap <silent> zn :<C-u>call <SID>new_note("n")<CR>
+nnoremap <silent> znn :<C-u>call <SID>new_note("nl")<CR>
+vnoremap <silent> zn :<C-u>call <SID>new_note("v")<CR>
+
+nnoremap <silent> <C-n> :<C-u>call <SID>open_ID()<CR>
