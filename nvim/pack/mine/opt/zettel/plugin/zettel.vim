@@ -142,24 +142,38 @@ endfunc
 "}}}
 
 " {{{ search 
+
+function! s:build_filter(tags)
+  let prev = ""
+  for tag in a:tags
+
+    let filter = "(rg -l -S '" . tag . "'"
+    if !empty(prev)
+      let filter = filter . " " . prev
+    endif
+    let filter = filter . ")"
+    let prev = filter
+  endfor
+
+  return filter
+endfunction
+" [ripgrep](2107070924.md)
+
+
 " /Users/Yuki/.fzf/plugin/fzf.vim:94
 " /Users/Yuki/.custom/nvim/main/pack/minpac/opt/fzf.vim/autoload/fzf/vim.vim:161
-" refactor to use function rather than this looong command
 " https://github.com/junegunn/dotfiles/blob/master/vimrc
-function! ZetGrep(query, fullscreen) 
-  let initial_command = "rg  --column --line-number --no-heading --color=always --smart-case ".shellescape(a:query)
+function! s:zet_search(query, fullscreen) 
+  let filter = s:build_filter(split(a:query))
+  let initial_command = g:zet_search_command . " " . filter
+  echo initial_command
 
-  let spec = {'options': [ '--preview-window', '90%',
-             \             '--bind', 'up:preview-up,down:preview-down',
-             \             '--margin', '0%', 
-             \             '--padding', '0%'],
-             \ 'window': { 'width': 0.5,
-             \             'height': 0.6,
-             \             'xoffset': 1,
-             \             'yoffset': 1,
-             \             'border': 'left',
-             \            },
-             \ 'dir': g:zettelkasten }
+  let spec = {
+             \ 'options': g:zet_search_options,
+             \ 'window' : g:zet_search_window,
+             \ 'dir'    : g:zet_dir 
+             \}
+
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
 endfunction 
 command! -nargs=* -bang ZetSearch call s:zet_search(<q-args>, <bang>0)
@@ -279,7 +293,6 @@ endfunction
 
 
 cnoreabbrev <expr> zg  (getcmdtype() ==# ':' && getcmdline() ==# 'zg')  ? 'ZetGrep'  : 'zg'
-nnoremap zg :ZetGrep 
 
 nnoremap zl :ZetLinkPreview :
 vnoremap zl :ZetConvertIntoLink :
