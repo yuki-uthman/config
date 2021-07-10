@@ -330,3 +330,6 @@ nnoremap <silent> znn :<C-u>call <SID>new_note("nl")<CR>
 vnoremap <silent> zn :<C-u>call <SID>new_note("v")<CR>
 
 nnoremap <silent> <C-n> :<C-u>call <SID>open_ID()<CR>
+
+" Search notes
+nnoremap zs :ZetSearch
