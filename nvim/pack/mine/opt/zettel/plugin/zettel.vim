@@ -1,7 +1,23 @@
 " /Users/Yuki/.custom/nvim/main/config/general/mapping.vim:318
 
-let g:zettelkasten = "~/.zettel"
-let g:tag_symbol = "#"
+let g:zet_dir = "~/.zettel"
+
+" search config for fzf
+let g:zet_search_command = "rg  --column --line-number --no-heading --color=always --smart-case -H ''"
+
+let g:zet_search_options = [ 
+  \ '--preview-window', '90%',
+  \ '--bind', 'up:preview-up,down:preview-down',
+  \ '--margin', '0%', 
+  \ '--padding', '0%' ]
+
+let g:zet_search_window = { 
+  \ 'width': 0.5,
+  \ 'height': 0.6,
+  \ 'xoffset': 1,
+  \ 'yoffset': 1,
+  \ 'border': 'left' }
+
 
 function! s:comment_symbol() abort "{{{
   return split(get(b:, 'commentary_format', substitute(substitute(substitute(
@@ -139,7 +155,7 @@ function! ZetGrep(query, fullscreen)
              \ 'dir': g:zettelkasten }
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
 endfunction 
-command! -nargs=* -bang ZetGrep call ZetGrep(<q-args>, <bang>0)
+command! -nargs=* -bang ZetSearch call s:zet_search(<q-args>, <bang>0)
 "}}}
 
 " for normal mode sink
@@ -163,7 +179,7 @@ function! ZetLinkPreview(query, fullscreen) "{{{
              \             'yoffset': 1,
              \             'border': 'left',
              \            },
-             \ 'dir': g:zettelkasten,
+             \ 'dir': g:zet_dir,
              \ 'sink': function('s:insertLink')}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
 endfunction 
@@ -183,8 +199,7 @@ function! s:get_visual_selection()
     endif
     let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
     let lines[0] = lines[0][column_start - 1:]
-    " let @a = join(lines,"\n")
-    return join(lines, "\n")
+    return join(lines, "h dp\n")
 endfunction 
 
 " for visual mode sink
@@ -216,13 +231,14 @@ function! ZetConvertIntoLink(query, fullscreen) "{{{
              \             'yoffset': 1,
              \             'border': 'left',
              \            },
-             \ 'dir': g:zettelkasten,
+             \ 'dir': g:zet_dir,
              \ 'sink': function('s:convertIntoLink')}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
 endfunction 
 command! -range -nargs=* -bang ZetConvertIntoLink call ZetConvertIntoLink(<q-args>, <bang>0)
 "}}}
 "
+"}}}
 
 " include bang!
 function! HandleFZF(file) "{{{
