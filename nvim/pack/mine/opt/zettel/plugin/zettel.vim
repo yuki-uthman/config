@@ -255,6 +255,7 @@ function! s:open_ID()
     " found line number
     if len(matched_id) == 2
       let line_number = matched_id[1]
+       " [setpos](2107111157)
       call setpos('.', [0, line_number, 1, 1])
       exec "normal! zz"
     endif
