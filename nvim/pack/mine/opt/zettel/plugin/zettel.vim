@@ -237,7 +237,7 @@ endfunction
 
 " jump {{{
 " [find file by ID in zettel](2107062329.vim)
-function! s:open_ID()
+function! s:jump_to_zettel()
   " get id from the word under the cursor
   " [cfile and cWORD](2107091853.vim)
   let matched_id = matchstr(expand('<cWORD>'), '\zs\d\{10}\(\.\w\+\)\?\(:\d*\)\?\ze')
@@ -298,7 +298,8 @@ nnoremap <silent> zn :<C-u>call <SID>new_note("n")<CR>
 nnoremap <silent> znn :<C-u>call <SID>new_note("nl")<CR>
 vnoremap <silent> zn :<C-u>call <SID>new_note("v")<CR>
 
-nnoremap <silent> <C-n> :<C-u>call <SID>open_ID()<CR>
+" Open zettel link
+nnoremap <silent> <C-n> :<C-u>call <SID>jump_to_zettel()<CR>
 
 " Search notes
 nnoremap <silent> zz :<C-u>call <SID>search(0, 0)<CR>
