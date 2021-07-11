@@ -163,7 +163,8 @@ endfunction
 " /Users/Yuki/.fzf/plugin/fzf.vim:94
 " /Users/Yuki/.custom/nvim/main/pack/minpac/opt/fzf.vim/autoload/fzf/vim.vim:161
 " https://github.com/junegunn/dotfiles/blob/master/vimrc
-function! s:zet_search(query, fullscreen) 
+ " [function as a function arg](2107101658)
+function! s:zet_fzf(query, sink, fullscreen) "{{{
   let filter = s:build_filter(split(a:query))
   let initial_command = g:zet_search_command . " " . filter
   echo initial_command
@@ -171,40 +172,31 @@ function! s:zet_search(query, fullscreen)
   let spec = {
              \ 'options': g:zet_search_options,
              \ 'window' : g:zet_search_window,
-             \ 'dir'    : g:zet_dir 
+             \ 'dir'    : g:zet_dir,
              \}
+
+  if a:sink != 0 
+   " [append to dict](2107110900)
+    call extend( spec, { 'sink': a:sink } )
+  endif
+
 
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
 endfunction 
-command! -nargs=* -bang ZetSearch call s:zet_search(<q-args>, <bang>0)
+
+command! -nargs=* -bang ZetSearch call s:zet_fzf(<q-args>, 0, <bang>0)
 "}}}
 
+" {{{ insert link
 " for normal mode sink
 " /Users/Yuki/.zettel/2012261729_extract_filename_ripgrep.vim:1
-function! s:insertLink(match) "{{{
+function! s:insertLink(match) 
     let l:filename = matchstr(a:match, '.\{-}\ze:\d\+:\d\+:')
     let mdlink = "[](". l:filename .")"
     execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
-endfunction "}}}
-
-function! ZetLinkPreview(query, fullscreen) "{{{
-  let initial_command = "rg  --column --line-number --no-heading --color=always --smart-case ".shellescape(a:query)
-
-  let spec = {'options': [ '--preview-window', '90%',
-             \             '--bind', 'up:preview-up,down:preview-down',
-             \             '--margin', '0%', 
-             \             '--padding', '0%'],
-             \ 'window': { 'width': 0.5,
-             \             'height': 0.6,
-             \             'xoffset': 1,
-             \             'yoffset': 1,
-             \             'border': 'left',
-             \            },
-             \ 'dir': g:zet_dir,
-             \ 'sink': function('s:insertLink')}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
 endfunction 
-command! -nargs=* -bang ZetLinkPreview call ZetLinkPreview(<q-args>, <bang>0)
+
+command! -nargs=* -bang ZetInsertLink call s:zet_fzf(<q-args>, function('s:insertLink'), <bang>0)
 "}}}
 
 " {{{ helper functions for ZetConvertIntoLink
@@ -225,38 +217,21 @@ endfunction
 
 " for visual mode sink
 " /Users/Yuki/.zettel/2012261729_extract_filename_ripgrep.vim:1
-function! s:convertIntoLink(match)
-    let l:filename = matchstr(a:match, '.\{-}\ze:\d\+:\d\+:')
-    let l:selection = s:get_visual_selection()
+function! s:convert_to_link(match)
+    let filename = matchstr(a:match, '.\{-}\ze:\d\+:\d\+:')
+    let selection = s:get_visual_selection()
     exec "normal! gvd"
-    let mdlink = "[". l:selection ."](". l:filename .")"
+    let mdlink = "[". selection ."](". filename .")"
 
     if col(".") == col("$")-1      
-      execute "normal! a" . mdlink . "\<ESC>o\<ESC>k/[\<CR>"
+      execute "normal! a" . mdlink . "\<ESC>?[\<CR>"
     else
       execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
     endif
 
 endfunction "}}}
 
-function! ZetConvertIntoLink(query, fullscreen) "{{{
-  let initial_command = "rg  --column --line-number --no-heading --color=always --smart-case ".shellescape(a:query)
-
-  let spec = {'options': [ '--preview-window', '90%',
-             \             '--bind', 'up:preview-up,down:preview-down',
-             \             '--margin', '0%', 
-             \             '--padding', '0%'],
-             \ 'window': { 'width': 0.5,
-             \             'height': 0.6,
-             \             'xoffset': 1,
-             \             'yoffset': 1,
-             \             'border': 'left',
-             \            },
-             \ 'dir': g:zet_dir,
-             \ 'sink': function('s:convertIntoLink')}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
-endfunction 
-command! -range -nargs=* -bang ZetConvertIntoLink call ZetConvertIntoLink(<q-args>, <bang>0)
+command! -range -nargs=* -bang ZetConvertToLink call s:zet_fzf(<q-args>, function('s:convert_to_link'), <bang>0)
 "}}}
 "
 "}}}
@@ -313,12 +288,6 @@ function! s:open_ID()
 endfunction
 "}}}
 
-
-cnoreabbrev <expr> zg  (getcmdtype() ==# ':' && getcmdline() ==# 'zg')  ? 'ZetGrep'  : 'zg'
-
-nnoremap zl :ZetLinkPreview :
-vnoremap zl :ZetConvertIntoLink :
-
 nnoremap zt "=strftime("%Y/%m/%d %H:%M")<CR>P
 
 command! ZetCopyCursorPosition let @+ = join([expand('%:p:~'),  line(".")], ':')
@@ -333,3 +302,9 @@ nnoremap <silent> <C-n> :<C-u>call <SID>open_ID()<CR>
 
 " Search notes
 nnoremap zs :ZetSearch
+
+" Link insertion
+nnoremap zi :ZetInsertLink 
+inoremap ;; <ESC>:ZetInsertLink 
+vnoremap zi :ZetConvertToLink 
+
