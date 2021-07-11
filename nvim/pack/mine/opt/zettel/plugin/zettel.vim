@@ -135,8 +135,8 @@ func! s:new_note(mode) range
     exec "normal! o" . backlink
   endif
 
-  " go back to the beginning of the file
-  exec "normal! ggk"
+  " go back to the beginning of the file [setpos](2107111157.vim)
+  call setpos('.', [0, 0, 0, 0])
 endfunc 
 
 "}}}
