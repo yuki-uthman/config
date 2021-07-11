@@ -62,7 +62,6 @@ endfunction
 " nl => new note with link 
 " v => new note from visual mode
 func! s:new_note(mode) range  
-  let title = s:user_prompt("Note Title: ")
 
   let link_keyword = ''
   if a:mode ==# 'n'
@@ -76,6 +75,8 @@ func! s:new_note(mode) range
     echo "Invalid mode"
     return
   endif
+
+  let title = s:user_prompt("Note Title: ")
 
   let words = split(title)
   let ext = words[-1]
@@ -141,7 +142,7 @@ endfunc
 
 "}}}
 
-" {{{ search 
+" {{{ fzf helper
 
 function! s:build_filter(tags)
   let prev = ""
@@ -164,11 +165,9 @@ endfunction
 " /Users/Yuki/.custom/nvim/main/pack/minpac/opt/fzf.vim/autoload/fzf/vim.vim:161
 " https://github.com/junegunn/dotfiles/blob/master/vimrc
  " [function as a function arg](2107101658)
-function! s:search(sink, fullscreen)
-  let search_terms = s:user_prompt("Search: ")
+function! s:fzf_grep(query, sink, fullscreen)
 
-  let filter = s:build_filter(split(search_terms))
-
+  let filter = s:build_filter(split(a:query))
   let initial_command = g:zet_search_command . " " . filter
   echo initial_command
 
@@ -187,6 +186,17 @@ function! s:search(sink, fullscreen)
 " command (string), has_column (0/1), [options (dict)], [fullscreen (0/1)]
   call fzf#vim#grep(initial_command, 0, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
 endfunction
+" }}}
+
+" {{{ search
+
+function! s:search()
+  let query = s:user_prompt("Search: ")
+
+  call s:fzf_grep(query, 0, 0)
+endfunction
+
+
 " }}}
 
 " {{{ insert link
@@ -227,10 +237,14 @@ function! s:sink_insert_link(match)
 endfunction 
 
 function! s:insert_link(mode)
+
   if a:mode ==# "n" || a:mode ==# "i"
     let b:link_keyword = s:user_prompt("Link Keyword: ")
   endif
-  call s:search(function('s:sink_insert_link'), 0)
+
+  let query = s:user_prompt("Search: ")
+
+  call s:fzf_grep(query, function('s:sink_insert_link'), 0)
 endfunction
 
 "}}}
@@ -293,18 +307,18 @@ nnoremap zt "=strftime("%Y/%m/%d %H:%M")<CR>P
 command! ZetCopyCursorPosition let @+ = join([expand('%:p:~'),  line(".")], ':')
 nnoremap zc :ZetCopyCursorPosition<CR>
 
-" New notes
+" Create new zettel notes
 nnoremap <silent> zn :<C-u>call <SID>new_note("n")<CR>
-nnoremap <silent> znn :<C-u>call <SID>new_note("nl")<CR>
 vnoremap <silent> zn :<C-u>call <SID>new_note("v")<CR>
 
 " Open zettel link
 nnoremap <silent> <C-n> :<C-u>call <SID>jump_to_zettel()<CR>
 
-" Search notes
-nnoremap <silent> zz :<C-u>call <SID>search(0, 0)<CR>
+" Search zettel notes
+nnoremap <silent> zz :<C-u>call <SID>search()<CR>
 
-" Link insertion
-nnoremap <silent> zi :<C-u>call <SID>insert_link('n')<CR>
+" Insert zettel link
+nnoremap <silent> zis :<C-u>call <SID>insert_link('n')<CR>
+nnoremap <silent> zin :<C-u>call <SID>new_note("nl")<CR>
 inoremap <silent> ;; <ESC>:<C-u>call <SID>insert_link('i')<CR>
-vnoremap <silent> zi :<C-u>call <SID>insert_link('v')<CR>
+vnoremap <silent> zis :<C-u>call <SID>insert_link('v')<CR>
