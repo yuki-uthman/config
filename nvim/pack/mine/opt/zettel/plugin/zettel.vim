@@ -3,20 +3,25 @@
 let g:zet_dir = "~/.zettel"
 
 " search config for fzf
-let g:zet_search_command = "rg  --column --line-number --no-heading --color=always --smart-case -H ''"
+let g:zet_search_command = "rg  --line-number --no-heading --color=always --smart-case -H ''"
 
-let g:zet_search_options = [ 
-  \ '--preview-window', '90%',
-  \ '--bind', 'up:preview-up,down:preview-down',
-  \ '--margin', '0%', 
-  \ '--padding', '0%' ]
+let g:zet_search_options = '
+                          \ --expect=ctrl-t,ctrl-v,ctrl-x,ctrl-b,ctrl-l
+                          \ --ansi
+                          \ --delimiter :
+                          \ --bind=up:preview-up,down:preview-down
+                          \ --preview ''bat --style=numbers --color=always --highlight-line {2} {1}''
+                          \ --preview-window +{2}-/2
+                          \ --preview-window=up:80%
+                          \'
+
 
 let g:zet_search_window = { 
-  \ 'width': 0.5,
-  \ 'height': 0.6,
-  \ 'xoffset': 1,
-  \ 'yoffset': 1,
-  \ 'border': 'left' }
+  \ 'width'   : 0.5,
+  \ 'height'  : 0.6,
+  \ 'xoffset' : 1,
+  \ 'yoffset' : 1,
+  \ 'border'  : 'left' }
 
 
 function! s:comment_symbol() abort "{{{
@@ -25,7 +30,7 @@ function! s:comment_symbol() abort "{{{
 endfunction
 "}}}
 
-func! s:get_filetype(ext) "{{{
+function! s:get_filetype(ext) "{{{
   if a:ext ==? 'html'
     return 'html'
   elseif a:ext ==? 'dart'
@@ -45,9 +50,74 @@ func! s:get_filetype(ext) "{{{
   endfor
 endfunction "}}}
 
-func! s:capitalize(word) "{{{
+function! s:capitalize(word) "{{{
   return substitute( a:word ,'\(\<\w\+\>\)', '\u\1', 'g')
 endfunc "}}}
+
+function! s:get_id_or_filepath() " {{{
+  " check if the current file is a zettel note [check dir of the file vim](2107111552)
+  if expand('%:p:h') ==# expand(g:zet_dir)
+    " use zettel id
+    return expand('%:t:r')
+  else
+    " use the absolute path as id
+    return expand('%:p:~')
+  endif
+endfunction "}}}
+
+function! s:get_visual_selection() " {{{
+" if there is a visually selected text use it as the text between [ ]
+" ~/.zettel/2012252045.vim
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "h dp\n")
+endfunction 
+
+"}}}
+
+function! s:append(text, filename) "{{{
+  " insert backlink to the linked file [append to end of file](2107090907.vim)
+  silent exec "w !echo '" . a:text . "' >> " . shellescape(expand(a:filename))
+endfunc "}}}
+
+function! s:build_filter(tags) "{{{
+  let prev = ""
+  for tag in a:tags
+
+    let filter = "$(rg -l -S '" . tag . "'"
+    if !empty(prev)
+      let filter = filter . " " . prev
+    endif
+    let filter = filter . ")"
+    let prev = filter
+  endfor
+
+  return filter
+endfunction "}}}
+
+function! s:copy_cursor_position() " {{{
+  let @+ = join([expand('%:p:~'),  line(".")], ':')
+endfunction "}}}
+
+function! HandleFZF(file) "{{{
+    let absolute_path = fnameescape(fnamemodify(a:file, ":p"))
+    let filename = fnameescape(fnamemodify(a:file, ":t"))
+    "why only the tail ?  I believe the whole filename must be linked unless everything is flat ...
+    " let filename = fnameescape(a:file)
+    let filename_wo_timestamp = fnameescape(fnamemodify(a:file, ":t:s/^[0-9]*-//"))
+     " Insert the markdown link to the file in the current buffer
+    let mdlink = "[](".absolute_path.")"
+    execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
+endfunction
+command! -nargs=1 HandleFZF          :call HandleFZF(<f-args>)
+command! ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF', 'down' : '25%' }))
+"}}}
 
 "{{{ new file
 " get user input from the command-line mode
@@ -64,33 +134,24 @@ endfunction
 func! s:new_note(mode) range  
 
   let link_keyword = ''
-  if a:mode ==# 'n'
-    echo "new mode n"
-  elseif a:mode ==# 'nl'
+  if a:mode ==# 'nl'
     let link_keyword = s:user_prompt('Link Keyword: ')
-    echo "new mode nn"
-  elseif a:mode ==# 'v'
-    echo "new mode v"
-  else
-    echo "Invalid mode"
-    return
   endif
 
-  let title = s:user_prompt("Note Title: ")
+  let title = s:user_prompt("Note Title + Ext: ")
 
   let words = split(title)
   let ext = words[-1]
 
   let new_id = strftime("%y%m%d%H%M")
 
-  let backlink = ''
+  let backlink_id = ''
   if a:mode ==# 'nl'
     " insert the link with the keyword at the end of the line
     " insert space 
     exec "normal! A " . '[' . link_keyword . '](' . new_id . ')'
     " save the ID to insert the backlink in the new file later
-    let id = expand('%:t:r')
-    let backlink = "[". id ."](" . id . ")"
+    let backlink_id = s:get_id()
   elseif a:mode ==# 'v'
     let selection = s:get_visual_selection()
     " delete the selection
@@ -100,13 +161,20 @@ func! s:new_note(mode) range
       " insert the markdown link 
       exec "normal! a" . '[' . selection . '](' . new_id . ')'
     else
-      " insert the markdown link
+      " insert the markdown link [test](2107111612)
       exec "normal! i" . '[' . selection . '](' . new_id . ')'
     endif
 
     " save the ID to insert the backlink in the new file later
-    let id = expand('%:t:r')
-    let backlink = "[". id ."](" . id . ")"
+    let backlink_id = s:get_id()
+
+  endif
+
+  " open the new zettel note!
+  if a:mode ==# 'n'
+    exec "e " . g:zet_dir . "/" . new_id . '.' . ext
+  else
+    exec "vs " . g:zet_dir . "/" . new_id . '.' . ext
   endif
 
   " always put # in the title for any files
@@ -114,17 +182,12 @@ func! s:new_note(mode) range
   let title = '# ' . join(words[0:-2], ' ')
 
   " add comment symbol if not md
+  let comment = ''
   if ext !=# 'md'
     let comment = s:comment_symbol()
 
     let title = comment . title
-    if !empty(backlink)
-      let backlink = comment . backlink
-    end
   endif
-
-  " open the new zettel note!
-  exec "e " . g:zet_dir . "/" . new_id . '.' . ext
 
   exec "normal! i" . title
 
@@ -132,120 +195,15 @@ func! s:new_note(mode) range
   exec "normal! o\<C-U>\<C-j>\<C-j>\<C-j>"
 
   " insert backlink in the new note if backlink exists
-  if !empty(backlink)
+  if !empty(backlink_id)
+    let backlink_keyword = s:user_prompt("Refer to this note as: ")
+    let backlink = comment . '[' . backlink_keyword . ']' . '(' . backlink_id . ')'
     exec "normal! o" . backlink
   endif
 
   " go back to the beginning of the file [setpos](2107111157.vim)
   call setpos('.', [0, 0, 0, 0])
 endfunc 
-
-"}}}
-
-" {{{ fzf helper
-
-function! s:build_filter(tags)
-  let prev = ""
-  for tag in a:tags
-
-    let filter = "(rg -l -S '" . tag . "'"
-    if !empty(prev)
-      let filter = filter . " " . prev
-    endif
-    let filter = filter . ")"
-    let prev = filter
-  endfor
-
-  return filter
-endfunction
-" [ripgrep](2107070924.md)
-
-
-" /Users/Yuki/.fzf/plugin/fzf.vim:94
-" /Users/Yuki/.custom/nvim/main/pack/minpac/opt/fzf.vim/autoload/fzf/vim.vim:161
-" https://github.com/junegunn/dotfiles/blob/master/vimrc
- " [function as a function arg](2107101658)
-function! s:fzf_grep(query, sink, fullscreen)
-
-  let filter = s:build_filter(split(a:query))
-  let initial_command = g:zet_search_command . " " . filter
-  echo initial_command
-
-  let spec = {
-             \ 'options': g:zet_search_options,
-             \ 'window' : g:zet_search_window,
-             \ 'dir'    : g:zet_dir,
-             \}
-
-  if a:sink != 0 
-   " [append to dict](2107110900)
-    call extend( spec, { 'sink': a:sink } )
-  endif
-
-" #vim#grep ~/.custom/nvim/main/pack/minpac/opt/fzf.vim/autoload/fzf/vim.vim:775
-" command (string), has_column (0/1), [options (dict)], [fullscreen (0/1)]
-  call fzf#vim#grep(initial_command, 0, fzf#vim#with_preview(spec, "up", "ctrl-/"), a:fullscreen)
-endfunction
-" }}}
-
-" {{{ search
-
-function! s:search()
-  let query = s:user_prompt("Search: ")
-
-  call s:fzf_grep(query, 0, 0)
-endfunction
-
-
-" }}}
-
-" {{{ insert link
-
-" if there is a visually selected text use it as the text between [ ]
-" ~/.zettel/2012252045.vim
-function! s:get_visual_selection() 
-    let [line_start, column_start] = getpos("'<")[1:2]
-    let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
-    endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    return join(lines, "h dp\n")
-endfunction 
-
-" /Users/Yuki/.zettel/2012261729_extract_filename_ripgrep.vim:1
-function! s:sink_insert_link(match) 
-    let filename = matchstr(a:match, '.\{-}\ze:\d\+:\d\+:')
-
-    " check if the link_keyword exists
-    if !exists("b:link_keyword")
-      let b:link_keyword = s:get_visual_selection()
-      exec "normal! gvd"
-    endif
-
-    let mdlink = "[" . b:link_keyword . "](". filename .")"
-
-    if col(".") == col("$")-1      
-      execute "normal! a" . mdlink
-    else
-      execute "normal! i" . mdlink
-    endif
-
-    unlet b:link_keyword
-endfunction 
-
-function! s:insert_link(mode)
-
-  if a:mode ==# "n" || a:mode ==# "i"
-    let b:link_keyword = s:user_prompt("Link Keyword: ")
-  endif
-
-  let query = s:user_prompt("Search: ")
-
-  call s:fzf_grep(query, function('s:sink_insert_link'), 0)
-endfunction
 
 "}}}
 
@@ -287,38 +245,102 @@ function! s:jump_to_zettel()
 endfunction
 "}}}
 
-" include bang!
-function! HandleFZF(file) "{{{
-    let absolute_path = fnameescape(fnamemodify(a:file, ":p"))
-    let filename = fnameescape(fnamemodify(a:file, ":t"))
-    "why only the tail ?  I believe the whole filename must be linked unless everything is flat ...
-    " let filename = fnameescape(a:file)
-    let filename_wo_timestamp = fnameescape(fnamemodify(a:file, ":t:s/^[0-9]*-//"))
-     " Insert the markdown link to the file in the current buffer
-    let mdlink = "[](".absolute_path.")"
-    execute "normal! i" . mdlink . "\<ESC>?[\<CR>"
+" {{{ search
+
+" https://github.com/junegunn/fzf/wiki/Examples-(vim)#narrow-ag-results-within-vim
+" https://github.com/junegunn/fzf.vim/issues/379
+function! s:sink(lines)
+  let pressed_key = a:lines[0]
+  let match = a:lines[1]
+
+  let default_cmd = 'edit'
+  let cmd = get({
+                \ 'ctrl-b': 'backlink',
+                \ 'ctrl-l': 'link',
+                \ 'ctrl-x': 'split',
+                \ 'ctrl-v': 'vertical split',
+                \ }, 
+                \ pressed_key, default_cmd)
+
+  let filename = matchstr(match, '.\{-}\ze:\d\+:')
+  let id = matchstr(filename, '\d\{10}')
+
+  " if the cmd is not link nor backlink
+  if cmd !=# 'link' && cmd !=# 'backlink'
+    execute cmd filename
+    return
+  endif
+
+  " both link and backlink follows through to here
+
+  let link_title = s:user_prompt("Link Title: ")
+  let link = "[" .  link_title . "]" . "(" . id . ")"
+
+  " insert the link of the chosen file
+  if col(".") == col("$")-1      
+    execute "normal! a" . link
+  else
+    execute "normal! i" . link
+  endif
+
+  if cmd ==# 'backlink'
+    " append the link to the chosen file
+    "
+    " create the link
+    let backlink_title = s:user_prompt("Refer to this note as: ")
+    let backlink = "[" . backlink_title . "](". s:get_id_or_filepath() .")"
+
+    " insert backlink to the linked file [append to the end of file](2107090907.vim)
+    let absolute_path = g:zet_dir . '/' . filename
+    call s:append(backlink, absolute_path)
+
+  endif
+
 endfunction
-command! -nargs=1 HandleFZF          :call HandleFZF(<f-args>)
-command! ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF', 'down' : '25%' }))
-"}}}
 
-nnoremap zt "=strftime("%Y/%m/%d %H:%M")<CR>P
 
-command! ZetCopyCursorPosition let @+ = join([expand('%:p:~'),  line(".")], ':')
-nnoremap zc :ZetCopyCursorPosition<CR>
+" ~/.fzf/plugin/fzf.vim:416 fzf#run
+" ~/.fzf/plugin/fzf.vim:272 common_sink
+" ~/.fzf/plugin/fzf.vim:94
+function! s:search()
+
+  let query = s:user_prompt("Search: ")
+
+  let initial_command = g:zet_search_command
+  if !empty(query)
+    let filter = s:build_filter(split(query))
+    let initial_command .= " " . filter
+  endif
+
+  let spec = {
+             \ 'source' : initial_command,
+             \ 'options': g:zet_search_options,
+             \ 'window' : g:zet_search_window,
+             \ 'dir'    : g:zet_dir,
+             \ 'sink*'   : function("s:sink"),
+             \}
+
+
+  call fzf#run(fzf#vim#with_preview(spec, "up"))
+
+endfunction
+
+" }}}
+
 
 " Create new zettel notes
 nnoremap <silent> zn :<C-u>call <SID>new_note("n")<CR>
-vnoremap <silent> zn :<C-u>call <SID>new_note("v")<CR>
 
-" Open zettel link
+" Create new zettel note with a link
+nnoremap <silent> ZN :<C-u>call <SID>new_note("nl")<CR>
+vnoremap <silent> ZN :<C-u>call <SID>new_note("v")<CR>
+
+" Jump to zettel link
 nnoremap <silent> <C-n> :<C-u>call <SID>jump_to_zettel()<CR>
 
-" Search zettel notes
-nnoremap <silent> zz :<C-u>call <SID>search()<CR>
+" Open zettel notes searcher
+nnoremap <silent> zo :<C-u>call <SID>search()<CR>
 
-" Insert zettel link
-nnoremap <silent> zis :<C-u>call <SID>insert_link('n')<CR>
-nnoremap <silent> zin :<C-u>call <SID>new_note("nl")<CR>
-inoremap <silent> ;; <ESC>:<C-u>call <SID>insert_link('i')<CR>
-vnoremap <silent> zis :<C-u>call <SID>insert_link('v')<CR>
+" Copy the current position of the cursor to the clipboard
+nnoremap zc :<C-u>call <SID>copy_cursor_position()<CR>
+
