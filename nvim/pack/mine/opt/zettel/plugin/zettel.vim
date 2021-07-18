@@ -30,6 +30,19 @@ function! s:comment_symbol() abort "{{{
 endfunction
 "}}}
 
+function! s:get_comment_symbol(ext) "{{{
+  " [retrieve from dict](2107131453)
+ 
+  let comment_symbols = { 
+        \ 'rb' : '#',
+        \ 'py' : '#',
+        \ 'js' : '//',
+        \ 'vim' : '"', 
+        \}
+  return get(comment_symbols, a:ext)
+
+endfunction "}}}
+
 function! s:get_filetype(ext) "{{{
   if a:ext ==? 'html'
     return 'html'
@@ -119,6 +132,21 @@ command! -nargs=1 HandleFZF          :call HandleFZF(<f-args>)
 command! ZetLink :call fzf#run(fzf#wrap({'sink' : 'HandleFZF', 'down' : '25%' }))
 "}}}
 
+function! s:insert_link(text, link, ext) " {{{
+  let markdown_link = '[' . a:text . '](' . a:link . ')'
+
+  if a:ext !=# 'md'
+    let comment = s:get_comment_symbol(a:ext)
+    let markdown_link = comment . " " . markdown_link
+  endif
+
+  if col(".") == col("$")-1      
+    exec "normal! a" . markdown_link
+  else
+    exec "normal! i" . markdown_link
+  endif
+endfunction "}}}
+
 "{{{ new file
 " get user input from the command-line mode
 function! s:user_prompt(message)
@@ -148,10 +176,12 @@ func! s:new_note(mode) range
   let backlink_id = ''
   if a:mode ==# 'nl'
     " insert the link with the keyword at the end of the line
+    " [test](2107160402)
     " insert space 
-    exec "normal! A " . '[' . link_keyword . '](' . new_id . ')'
+    call s:insert_link(link_keyword, new_id, expand('%:e'))
+    " exec "normal! A" . '[' . link_keyword . '](' . new_id . ')'
     " save the ID to insert the backlink in the new file later
-    let backlink_id = s:get_id()
+    let backlink_id = s:get_id_or_filepath()
   elseif a:mode ==# 'v'
     let selection = s:get_visual_selection()
     " delete the selection
@@ -166,15 +196,17 @@ func! s:new_note(mode) range
     endif
 
     " save the ID to insert the backlink in the new file later
-    let backlink_id = s:get_id()
+    let backlink_id = s:get_id_or_filepath()
 
   endif
 
-  " open the new zettel note!
+  let filename = g:zet_dir . "/" . new_id . '.' . ext 
+
+  " open the new zettel note in a float
   if a:mode ==# 'n'
-    exec "e " . g:zet_dir . "/" . new_id . '.' . ext
+    exec "edit " . filename
   else
-    exec "vs " . g:zet_dir . "/" . new_id . '.' . ext
+    call s:edit_file_with_float(filename)
   endif
 
   " always put # in the title for any files
@@ -216,7 +248,7 @@ function! s:jump_to_zettel()
   let matched_id = split(matched_id, ':')
   echo matched_id
 
-  " found ID
+  " found ID under the cursor
   if !empty(matched_id)
     let id = matched_id[0]
     " need to expand ~/.zettel => /Users/Yuki [what is expand](2012071551:30) 
@@ -232,6 +264,7 @@ function! s:jump_to_zettel()
       exec "normal! zz"
     endif
   else
+    " No ID under the cursor
     " [jump to the next ID](2107091410.vim) 
     " following patterns are handled
     " <Space>ID
@@ -239,15 +272,18 @@ function! s:jump_to_zettel()
     " [link](ID.ext)
     " Not compatible with obsidian
     " [link](ID:number)
-    let id_regex = '\(\s\zs\d\{10}\|\[.\{-1,}](\zs\d\{10}\ze\(\(\.\|:\).\+\)\?)\)'
-    exec "normal! /" . id_regex . "\<CR>"
+
+    " jump to markdown link [link](2107131419)
+    " [put in search register](2107131438) todo
+    let markdown_link_regex = '\[.\{-}\](\zs[^"'']\{-}\ze)'
+    exec "normal! /" . markdown_link_regex . "\<CR>"
   endif
 endfunction
 "}}}
 
 " {{{ search
 
-" https://github.com/junegunn/fzf/wiki/Examples-(vim)#narrow-ag-results-within-vim
+" https://github.com/junegunn/fzf/wiki/Examples-(vim)#narrow-ag-results-within-vim [Ag](2107131455)
 " https://github.com/junegunn/fzf.vim/issues/379
 function! s:sink(lines)
   let pressed_key = a:lines[0]
@@ -290,6 +326,14 @@ function! s:sink(lines)
     let backlink_title = s:user_prompt("Refer to this note as: ")
     let backlink = "[" . backlink_title . "](". s:get_id_or_filepath() .")"
 
+    " get the extension of the chosen file
+    let ext = matchstr(filename, '.\{-}\.\zs.\{-}$')
+
+    " [assign variable in if statement?](2107131517) error!!!
+    if ext 
+      let backlink = ext . " " . backlink
+    endif
+
     " insert backlink to the linked file [append to the end of file](2107090907.vim)
     let absolute_path = g:zet_dir . '/' . filename
     call s:append(backlink, absolute_path)
@@ -326,6 +370,49 @@ function! s:search()
 endfunction
 
 " }}}
+
+" {{{ floating window
+function! s:create_float_window(filename) abort 
+    let width = min([&columns - 4, max([80, &columns - 20])])
+    let height = min([&lines - 4, max([20, &lines - 10])])
+    let top = ((&lines - height) / 2) - 1
+    let left = (&columns - width) / 2
+    let opts = {
+      \ 'relative': 'editor',
+      \ 'row': top,
+      \ 'col': left,
+      \ 'width': width,
+      \ 'height': height,
+      \ 'style': 'minimal',
+      \ 'focusable': v:false
+    \ }
+
+    let top = "╭" . repeat("─", width - 2) . "╮"
+    let mid = "│" . repeat(" ", width - 2) . "│"
+    let bot = "╰─" . repeat("─", width - 3) . "╯"
+    let lines = [top] + repeat([mid], height - 2) + [bot]
+    let border_bufnr = nvim_create_buf(v:false, v:true)
+    call nvim_buf_set_lines(border_bufnr, 0, -1, v:true, lines)
+    let s:border_winid = nvim_open_win(border_bufnr, v:true, opts)
+
+    let opts.row += 1
+    let opts.height -= 2
+    let opts.col += 2
+    let opts.width -= 4
+    let opts.focusable = v:true
+    let text_bufnr = nvim_create_buf(v:false, v:true)
+    call nvim_open_win(text_bufnr, v:true, opts)
+
+    set winhl=Normal:Floating
+    au WinLeave * ++once :q | call nvim_win_close(s:border_winid, v:true)
+    return text_bufnr
+endfunction
+
+function! s:edit_file_with_float(query) abort
+    call s:create_float_window(a:query)
+    execute 'edit ' . a:query
+endfunction
+"}}}
 
 
 " Create new zettel notes
