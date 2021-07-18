@@ -6,9 +6,3 @@ nnoremap <buffer> <leader>r :!node --harmony %<esc>
 
 inoremap $      ${}<Left>
 
-" Swap single quote with backtick 
-inoremap ''     ``<Left>
-inoremap ' `
-onoremap i' i`
-onoremap a' a`
-
