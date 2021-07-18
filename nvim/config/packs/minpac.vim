@@ -16,30 +16,32 @@ function! PackInit() abort
   call minpac#add('tpope/vim-unimpaired')
   call minpac#add('tpope/vim-repeat')
 
-
   " Editor
+  call minpac#add('dense-analysis/ale', { 'type' : 'opt' } )
+  call minpac#add('easymotion/vim-easymotion', { 'type' : 'opt' })
+  call minpac#add('junegunn/fzf.vim')
+  call minpac#add('junegunn/vim-easy-align', { 'type' : 'opt' })
+  call minpac#add('junegunn/vim-peekaboo')
+  call minpac#add('kana/vim-textobj-user')
   call minpac#add('machakann/vim-highlightedyank')
   call minpac#add('machakann/vim-swap')
-  call minpac#add('junegunn/fzf.vim')
-  call minpac#add('junegunn/vim-peekaboo')
-  call minpac#add('junegunn/vim-easy-align', { 'type' : 'opt' })
-  call minpac#add('neoclide/coc.nvim', { 'type' : 'opt' } , {'branch' : 'release' } )
   call minpac#add('metakirby5/codi.vim', { 'type' : 'opt' } )
-  call minpac#add('dense-analysis/ale', { 'type' : 'opt' } )
+  call minpac#add('neoclide/coc.nvim', { 'type' : 'opt' } , {'branch' : 'release' } )
+  call minpac#add('preservim/tagbar')
   call minpac#add('vim-test/vim-test', { 'type' : 'opt' } )
   call minpac#add('wellle/targets.vim', { 'type' : 'opt' })
-  call minpac#add('preservim/tagbar')
-  call minpac#add('kana/vim-textobj-user')
-  call minpac#add('easymotion/vim-easymotion', { 'type' : 'opt' })
+  call minpac#add('voldikss/vim-floaterm', { 'type' : 'opt' })
+
+  " Telescrope
+  call minpac#add('nvim-lua/popup.nvim', { 'type' : 'opt' })
+  call minpac#add('nvim-lua/plenary.nvim', { 'type' : 'opt' })
+  call minpac#add('nvim-telescope/telescope.nvim', { 'type' : 'opt' })
 
   " Chris Toomey
   call minpac#add('inkarkat/vim-ReplaceWithRegister', { 'type' : 'opt' })
   call minpac#add('svermeulen/vim-cutlass', { 'type' : 'opt' })
   call minpac#add('christoomey/vim-tmux-navigator')
   call minpac#add('christoomey/vim-tmux-runner')
-
-  " File manager
-  call minpac#add('vifm/vifm.vim')
 
   " Snipmate
   call minpac#add('garbas/vim-snipmate')
@@ -68,7 +70,6 @@ function! PackInit() abort
 
   " Markdown
   call minpac#add('junegunn/goyo.vim', { 'type' : 'opt' })
-  call minpac#add('gabrielelana/vim-markdown', { 'type' : 'opt' })
 
   " Vimscript
   call minpac#add('junegunn/vader.vim', { 'type' : 'opt' })
@@ -80,6 +81,8 @@ runtime config/packs/ale.vim
 runtime config/packs/coc.vim
 runtime config/packs/codi.vim
 runtime config/packs/cutlass.vim
+runtime config/packs/easy-align.vim
+runtime config/packs/easymotion.vim
 runtime config/packs/emmet.vim
 runtime config/packs/fzf.vim
 runtime config/packs/netrw.vim
@@ -88,7 +91,7 @@ runtime config/packs/snipmate.vim
 runtime config/packs/tmux.vim
 runtime config/packs/vifm.vim
 runtime config/packs/vim-test.vim
-runtime config/packs/easymotion.vim
+runtime config/packs/floaterm.vim
 
 packadd ale
 packadd coc.nvim
@@ -98,12 +101,20 @@ packadd targets.vim
 packadd vader.vim
 packadd vim-ReplaceWithRegister
 packadd vim-cutlass
-packadd vim-test
+packadd vim-easy-align
 packadd vim-easymotion
+packadd vim-test
+packadd vim-floaterm
+
+packadd popup.nvim
+packadd plenary.nvim
+packadd telescope.nvim
 
 " My plugin
+packadd buffers
+packadd colemak
 packadd dictionary
 packadd editor
 packadd files
+packadd scroll
 packadd zettel
-packadd colemak

@@ -1,3 +1,0 @@
-
-
-nnoremap <silent> \ :Vifm . .<CR>
