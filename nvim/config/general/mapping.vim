@@ -62,6 +62,8 @@ nnoremap <silent> vn :vnew<CR>
 nnoremap <silent> vs :vs<CR>
 " nnoremap <silent> new :new<CR>
 
+nnoremap <silent> <C-l> :b#<CR>
+
 " nnoremap <nowait> <silent> = :vertical resize +5<CR>
 " nnoremap <nowait> <silent> - :vertical resize -5<CR>
 " nnoremap <nowait> <silent> + :resize +1<CR>
@@ -174,9 +176,6 @@ onoremap j :<C-u>normal! VG$<CR>
 " " }}}
 
 "{{{ Command
-
-cnoremap ; :
-cnoremap : ;
 
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
