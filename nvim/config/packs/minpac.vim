@@ -89,7 +89,6 @@ runtime config/packs/netrw.vim
 runtime config/packs/peekaboo.vim
 runtime config/packs/snipmate.vim
 runtime config/packs/tmux.vim
-runtime config/packs/vifm.vim
 runtime config/packs/vim-test.vim
 runtime config/packs/floaterm.vim
 
