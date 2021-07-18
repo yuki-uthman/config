@@ -5,12 +5,13 @@ let g:python_host_prog  = '/usr/bin/python'
 set rtp+=~/.fzf
 
 " set config files directories 
-set path+=~/.config/nvim
-set path+=~/.config/nvim/after/ftplugin
-set path+=~/.config/nvim/config/*
-set path+=~/.config/nvim/config/packs
-set path+=~/.config/nvim/plugin/*
-set path+=~/.config/nvim/snippets
+set path+=~/.config/nvim/
+set path+=~/.config/nvim/pack/mine/opt/**/*
+set path+=~/.config/nvim/after/ftplugin/
+set path+=~/.config/nvim/config/general/
+set path+=~/.config/nvim/config/packs/
+set path+=~/.config/nvim/plugin/
+set path+=~/.config/nvim/snippets/
 
 " set directories for Rails
 set path+=$PWD/app/**
