@@ -47,6 +47,7 @@ set splitbelow
 set splitright
 set tabstop=2
 set timeoutlen=400
+set completeopt=menuone,noselect
 
 set ignorecase
 set smartcase

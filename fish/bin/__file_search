@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+matches = `rg --files-with-matches --no-messages #{ARGV[0]}`
+
+# rg --files-with-matches --no-messages #{ARGV[0]} | fzf --preview "highlight -O ansi -l {} 2> /dev/null
+
+# matches = matches.split(/\n/)
+
+result = `#{matches} | rg env -print 2> /dev/null | fzf`
+
+puts result

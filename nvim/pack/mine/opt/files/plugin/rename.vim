@@ -29,7 +29,9 @@ function! Rename(name, bang)
     endif
 endfunction
 
-autocmd CmdwinEnter * inoreabbrev <buffer> <expr> rename "Rename \<C-R>=expand(\"#:t\")\<CR>\<C-R>=Eatchar(' ')\<CR>"
+autocmd CmdwinEnter * inoreabbrev <buffer> <expr> r "Rename \<C-R>=expand(\"#:t\")\<CR>\<C-R>=Eatchar(' ')\<CR>"
 
-cnoreabbrev <expr> rename  (getcmdtype() ==# ':' && getcmdline() ==# 'rename')  ?
-      \ "Rename \<C-R>=expand(\"%:t\")\<CR>\<C-R>=Eatchar(' ')\<CR>"  : 'rename'
+cnoreabbrev <expr> r  
+      \ (getcmdtype() ==# ':' && getcmdline() ==# 'r')  ?
+      \ "Rename \<C-R>=expand(\"%:t\")\<CR>\<C-R>=Eatchar(' ')\<CR>"  : 'r'
+

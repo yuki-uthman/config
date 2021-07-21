@@ -2,63 +2,46 @@
 function! ColemakActivate()
   " hnei as hjkl
   nnoremap n j
-  nnoremap e k
-  nnoremap i l
+  " nnoremap e k
   vnoremap n j
-  vnoremap e k
-  vnoremap i l
+  " vnoremap e k
   xnoremap n j
-  xnoremap e k
-  xnoremap i l
+  " xnoremap e k
 
-  " Retain n position
-  nnoremap k n
-  nnoremap K N
+  " use j as n
+  nnoremap j n
+  nnoremap J N
 
-  " use l as i
-  nnoremap l i
-  nnoremap L I
+  " use N as Join
+  nnoremap N J
 
   " remap e 
-  nnoremap j e
-  vnoremap j e
-  xnoremap j e
-  nnoremap J ge
-  vnoremap J ge
-  xnoremap J ge
-
+  " nnoremap j e
+  " vnoremap j e
+  " xnoremap j e
+  
   " Disable scroll with Ctrl-f
-  nnoremap <C-f> <Nop>
+  nnoremap <C-f> <C-E>
 
 endfunction
 
 function! ColemakDeactivate()
-  " hnei as hjkl
+  " ne as jk
   nunmap n
   nunmap e
-  nunmap i
   vunmap n
   vunmap e
-  vunmap i
   xunmap n
   xunmap e
-  xunmap i
 
   " Retain n position
   nunmap k
   nunmap K
 
-  " use l as i
-  nunmap l 
-  nunmap L
-
   " remap e 
   nunmap j e
   vunmap j e
   xunmap j e
-  nunmap J E
-  vunmap J E
-  xunmap J E
 
   " Disable scroll with Ctrl-f
   nunmap <C-f>

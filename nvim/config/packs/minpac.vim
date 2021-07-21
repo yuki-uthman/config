@@ -10,7 +10,7 @@ function! PackInit() abort
 
   " tpope
   call minpac#add('tpope/vim-commentary')
-  call minpac#add('tpope/vim-endwise')
+  call minpac#add('tpope/vim-endwise' , { 'type' : 'opt' })
   call minpac#add('tpope/vim-fugitive')
   call minpac#add('tpope/vim-surround')
   call minpac#add('tpope/vim-unimpaired')
@@ -36,6 +36,11 @@ function! PackInit() abort
   call minpac#add('nvim-lua/popup.nvim', { 'type' : 'opt' })
   call minpac#add('nvim-lua/plenary.nvim', { 'type' : 'opt' })
   call minpac#add('nvim-telescope/telescope.nvim', { 'type' : 'opt' })
+
+  " Auto complete
+  call minpac#add('hrsh7th/nvim-compe', { 'type' : 'opt' })
+  call minpac#add('nvim-lua/completion-nvim', { 'type' : 'opt' })
+  call minpac#add('kabouzeid/nvim-lspinstall', { 'type' : 'opt' })
 
   " Chris Toomey
   call minpac#add('inkarkat/vim-ReplaceWithRegister', { 'type' : 'opt' })
@@ -77,37 +82,43 @@ endfunction
 
 runtime macros/matchit.vim
 
-runtime config/packs/ale.vim
+" runtime config/packs/ale.vim
 runtime config/packs/coc.vim
-runtime config/packs/codi.vim
+" runtime config/packs/codi.vim
 runtime config/packs/cutlass.vim
-runtime config/packs/easy-align.vim
-runtime config/packs/easymotion.vim
-runtime config/packs/emmet.vim
+" runtime config/packs/easy-align.vim
+" runtime config/packs/easymotion.vim
+" runtime config/packs/emmet.vim
 runtime config/packs/fzf.vim
 runtime config/packs/netrw.vim
-runtime config/packs/peekaboo.vim
+" runtime config/packs/peekaboo.vim
 runtime config/packs/snipmate.vim
 runtime config/packs/tmux.vim
-runtime config/packs/vim-test.vim
+" runtime config/packs/vim-test.vim
 runtime config/packs/floaterm.vim
+" runtime config/packs/nvim-treesitter-textsubjects.vim
+" runtime config/packs/nvim-compe.vim
 
-packadd ale
+" packadd ale
 packadd coc.nvim
-packadd codi.vim
-packadd emmet-vim
+" packadd codi.vim
+" packadd emmet-vim
 packadd targets.vim
-packadd vader.vim
+" packadd vader.vim
 packadd vim-ReplaceWithRegister
 packadd vim-cutlass
-packadd vim-easy-align
-packadd vim-easymotion
-packadd vim-test
+" packadd vim-easy-align
+" packadd vim-easymotion
+" packadd vim-test
 packadd vim-floaterm
+packadd vim-endwise
 
-packadd popup.nvim
-packadd plenary.nvim
-packadd telescope.nvim
+" packadd popup.nvim
+" packadd plenary.nvim
+" packadd telescope.nvim
+
+" packadd nvim-compe
+" packadd nvim-lspconfig
 
 " My plugin
 packadd buffers
@@ -117,3 +128,4 @@ packadd editor
 packadd files
 packadd scroll
 packadd zettel
+packadd float

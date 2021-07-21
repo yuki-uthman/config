@@ -11,6 +11,7 @@
 " Map movement through errors without wrapping.
 " nmap <silent> <C-k> <Plug>(ale_previous)
 " nmap <silent> <C-j> <Plug>(ale_next)
+
 " OR map keys to use wrapping.
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-j> <Plug>(ale_next_wrap)

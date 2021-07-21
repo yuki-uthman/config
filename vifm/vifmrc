@@ -503,30 +503,6 @@ nnoremap <Space> :
 " Close vifm with \
 nnoremap \ :q<CR>
 
-" Colemak mapping
-" hnei as hjkl
-nnoremap n j
-nnoremap e k
-nnoremap i l
-vnoremap n j
-vnoremap e k
-vnoremap i l
-
-" Retain n position
-nnoremap k n
-nnoremap K N
-
-" Retain i position
-nnoremap u i
-nnoremap U I
-
-" Retain u position
-nnoremap l u
-nnoremap L <C-r>
-
-" Disable scroll with Ctrl-f
-nnoremap <C-f> <Nop>
-
 " ------------------------------------------------------------------------------
 
 " Various customization examples

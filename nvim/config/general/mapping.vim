@@ -30,11 +30,11 @@ nnoremap o o<ESC>k
 nnoremap O O<ESC>j
 
 " Disable <CR> in a normal mode
-nnoremap <CR> <NOP>
+" nnoremap <CR> <NOP>
 
 " Keep the default function of pressing enter in command and quickfix
-autocmd CmdwinEnter * nnoremap <CR> <CR>
-autocmd BufReadPost quickfix nnoremap <CR> <CR>
+" autocmd CmdwinEnter * nnoremap <CR> <CR>
+" autocmd BufReadPost quickfix nnoremap <CR> <CR>
 
 " Moving lines
 " nnoremap <M-j> :m .+1<CR>==
@@ -70,8 +70,8 @@ nnoremap <silent> <C-l> :b#<CR>
 " nnoremap <nowait> <silent> _ :resize -1<CR>
 
 " move window up/down/right/left
-" nnoremap <C-k> <C-y>
-" nnoremap <C-j> <C-e>
+nnoremap <C-k> <C-y>
+nnoremap <C-j> <C-e>
 
 " nnoremap <c-l> :normal! zl<CR>zlzl
 " nnoremap <c-h> :normal! zh<CR>zhzh
@@ -188,8 +188,6 @@ cnoremap <M-f> <S-Right>
 
 " open command history with Double Space
 nnoremap <Space><Space> q:
-
-
 
 set cmdwinheight=3
 augroup command_window

@@ -23,6 +23,13 @@ let g:zet_search_window = {
   \ 'yoffset' : 1,
   \ 'border'  : 'left' }
 
+let s:default_todo_window = {
+      \ 'x': 1,
+      \ 'y': 0.1,
+      \ 'height': 0.8,
+      \ 'width': 0.3,
+      \}
+
 
 function! s:comment_symbol() abort "{{{
   return split(get(b:, 'commentary_format', substitute(substitute(substitute(
@@ -117,6 +124,17 @@ endfunction "}}}
 function! s:copy_cursor_position() " {{{
   let @+ = join([expand('%:p:~'),  line(".")], ':')
 endfunction "}}}
+
+function! s:id_to_filepath(id) "{{{
+  let file = systemlist("find ". expand(g:zet_dir). " -iname '". a:id . "*' -print")
+  if empty(file)
+    echo "No zettel with the ID: " . a:id
+    return 0
+  endif
+  return file[0]
+endfunction "}}}
+
+" echo s:id_to_filepath(2107111157)
 
 function! HandleFZF(file) "{{{
     let absolute_path = fnameescape(fnamemodify(a:file, ":p"))
@@ -240,21 +258,38 @@ endfunc
 "}}}
 
 " jump {{{
+
 " [find file by ID in zettel](2107062329.vim)
 function! s:jump_to_zettel()
+
+  " [search](2107202214)
+  if search('\[.\{-}\](\zs[^"'']\{-}\ze)', 'wnc') == 0
+    echo "No link found"
+    return
+  endif
+
   " get id from the word under the cursor
   " [cfile and cWORD](2107091853.vim)
   let matched_id = matchstr(expand('<cWORD>'), '\zs\d\{10}\(\.\w\+\)\?\(:\d*\)\?\ze')
   let matched_id = split(matched_id, ':')
-  echo matched_id
 
-  " found ID under the cursor
-  if !empty(matched_id)
+  " no ID under the cursor
+  if empty(matched_id)
+    " jump to markdown link [link](2107131419)
+    " [put in search register](2107131438) #todo
+    let @/ = '\[.\{-}\](\zs[^"'']\{-}\ze)'
+    call feedkeys("/\<CR>")
+  else
     let id = matched_id[0]
     " need to expand ~/.zettel => /Users/Yuki [what is expand](2012071551:30) 
     " get the first file with the ID in /zettel
-    let file = systemlist("find ". expand(g:zet_dir). " -iname '". id . "*' -print")[0]
-    exec "edit " . file
+
+    let filepath = s:id_to_filepath(id)
+    if filepath ==# '' " [empty string](2107210807) [exception](2107210819)
+      return
+    endif
+
+    exec "edit " . filepath
 
     " found line number
     if len(matched_id) == 2
@@ -263,20 +298,6 @@ function! s:jump_to_zettel()
       call setpos('.', [0, line_number, 1, 1])
       exec "normal! zz"
     endif
-  else
-    " No ID under the cursor
-    " [jump to the next ID](2107091410.vim) 
-    " following patterns are handled
-    " <Space>ID
-    " [link](ID)
-    " [link](ID.ext)
-    " Not compatible with obsidian
-    " [link](ID:number)
-
-    " jump to markdown link [link](2107131419)
-    " [put in search register](2107131438) todo
-    let markdown_link_regex = '\[.\{-}\](\zs[^"'']\{-}\ze)'
-    exec "normal! /" . markdown_link_regex . "\<CR>"
   endif
 endfunction
 "}}}
@@ -414,6 +435,56 @@ function! s:edit_file_with_float(query) abort
 endfunction
 "}}}
 
+" {{{ todo
+
+function! s:get_todo_id()
+  let cursor_pos = getpos(".")
+
+  if search('\[TODO](\zs[^"'']\{-}\ze)', 'c') == 0 " " [seach](2107202214)
+       echo 'No "TODO" file found for this buffer'
+       return 0
+  endif
+
+  let todo_id = matchstr(expand('<cWORD>'), '\zs\d\{10}\(\.\w\+\)\?\(:\d*\)\?\ze')
+  let todo_id = split(todo_id, ':')
+
+  call cursor(cursor_pos[1], cursor_pos[2])
+  return todo_id[0]
+endfunction
+
+
+function! s:open_todo()
+  " extract todo id from current file
+  let id = s:get_todo_id()
+
+  if empty(id)
+    return
+  endif
+
+  " get the file path from id
+  let filepath = s:id_to_filepath(id)
+
+  let todo_window = get(g:, 'zet_todo_window', s:default_todo_window)
+
+  " check if the todo window is already open #todo
+
+  for i in range(1, winnr('$'))
+    let is_open = getwinvar(i, 'todo_window_is_open', 0)
+    if is_open
+      echo "TODO window is already open"
+      return
+    endif
+  endfor
+
+  " open it in a float and come back
+  call float#edit(filepath, todo_window)
+  let w:todo_window_is_open = 1
+  exec "wincmd p"
+
+endfunction
+
+
+"}}}
 
 " Create new zettel notes
 nnoremap <silent> zn :<C-u>call <SID>new_note("n")<CR>
@@ -431,3 +502,7 @@ nnoremap <silent> zo :<C-u>call <SID>search()<CR>
 " Copy the current position of the cursor to the clipboard
 nnoremap zc :<C-u>call <SID>copy_cursor_position()<CR>
 
+" Open todo list for the current file in a float window
+nnoremap <script> zO :<C-U>call <SID>open_todo()<CR>
+
+" [TODO](2107170601)
