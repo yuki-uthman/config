@@ -135,8 +135,10 @@ function! s:copy_cursor_position() " {{{
   let @+ = join([expand('%:p:~'),  line(".")], ':')
 endfunction "}}}
 
-function! s:get_filepath_from_id(id) "{{{
-  let file = systemlist("find ". expand(g:zet_dir). " -iname '". a:id . "*' -print")
+function! s:get_filepath_from_id(id) "{{{ TODO change to rg
+  " needs to use systemlist cuz the result contains newline character
+  let file = systemlist("rg --files " . expand(g:zet_dir) . "| rg " . a:id)
+
   if empty(file)
     echom "No zettel with the ID: " . a:id
     return ''
