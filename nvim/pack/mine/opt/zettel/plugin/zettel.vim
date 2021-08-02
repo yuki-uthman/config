@@ -1,4 +1,3 @@
-" /Users/Yuki/.custom/nvim/main/config/general/mapping.vim:318
 
 let g:zet_dir = "~/.zettel"
 
@@ -35,8 +34,6 @@ let s:default_float_window_options = {
       \ 'height': 0.5,
       \ 'width': 0.5,
       \}
-
-let s:default_todo_text = 'TODO'
 
 let s:default_format = "%y%m%d%H%M"
 
@@ -135,14 +132,14 @@ function! s:copy_cursor_position() " {{{
   let @+ = join([expand('%:p:~'),  line(".")], ':')
 endfunction "}}}
 
-function! s:get_filepath_from_id(id) "{{{ TODO change to rg
+function! s:get_filepath_from_id(id) abort "{{{
   " needs to use systemlist cuz the result contains newline character
   let file = systemlist("rg --files " . expand(g:zet_dir) . "| rg " . a:id)
 
-  if empty(file)
-    echom "No zettel with the ID: " . a:id
-    return ''
+  if makaatib#value#IsEmpty(file)
+    throw maktaba#error#Message('ZettelNotFound', 'No such zettel(%s)', a:id)
   endif
+
   return file[0]
 endfunction "}}}
 
@@ -318,11 +315,11 @@ endfunc
 
 " jump {{{
 
-" [extract filepath](2107272048)
+" [extract filepath](2107272049)
 function! s:extract_file(string)
   let match = matchlist(a:string, '\(\~\/.*\.\w*\):\?\(\d*\)\?')
 
-  if maktabax#value#IsEmpty(match)
+  if makaatib#value#IsEmpty(match)
     return maktaba#value#EmptyValue(match)
   endif
 
@@ -337,14 +334,14 @@ endfunction
 function! s:extract_zettel(string)
   let match = matchlist(a:string, '\(\d\{10}\)\(\.\w*\)\?:\?\(\d*\)')
 
-  if maktabax#value#IsEmpty(match)
+  if makaatib#value#IsEmpty(match)
     return maktaba#value#EmptyValue(match)
   endif
 
   let id = match[1]
   let filepath = s:get_filepath_from_id(id)
 
-  if maktabax#value#IsEmpty(filepath)
+  if makaatib#value#IsEmpty(filepath)
     return maktaba#value#EmptyValue(match)
   endif
 
@@ -359,7 +356,7 @@ endfunction
 
 function! s:extract_jump_location(string) "{{{
   let match = matchstr(a:string, '(\zs\d\{1,9}\ze)')
-  if !maktabax#value#IsEmpty(match)
+  if !makaatib#value#IsEmpty(match)
     let file = {}
     let file.path = expand('%:p')
     let file.line_number = str2nr(match)
@@ -367,7 +364,7 @@ function! s:extract_jump_location(string) "{{{
   endif
 
   let match = matchlist(a:string, '\(\d\{10}\)\(\.\w*\)\?:\?\(\d*\)')
-  if !maktabax#value#IsEmpty(match)
+  if !makaatib#value#IsEmpty(match)
     let id = match[1]
     let filepath = s:get_filepath_from_id(id)
     let line_number = str2nr(match[3])
@@ -379,7 +376,7 @@ function! s:extract_jump_location(string) "{{{
   endif
 
   let match = matchlist(a:string, '\(\~\/.*\.\w*\):\?\(\d*\)\?')
-  if !maktabax#value#IsEmpty(match)
+  if !makaatib#value#IsEmpty(match)
     let file = {}
     let file.path = expand(match[1])
     call maktaba#ensure#FileWritable(file.path)
@@ -390,9 +387,8 @@ function! s:extract_jump_location(string) "{{{
   return maktaba#value#EmptyValue(match)
 endfunction "}}}
 
-" [find file by ID in zettel](2107062329.vim)
+" [find file by ID in zettel](2107062330.vim)
 function! s:jump_to_zettel() abort
-
   " [zettel plugin](~/.config/nvim/pack/mine/opt/zettel/plugin/zettel.vim:100)
   " [search()](2107202214)
   if search('\[.\{-}\](\zs[^"'']\{-}\ze)', 'wnc') == 0
@@ -401,9 +397,17 @@ function! s:jump_to_zettel() abort
   endif
 
   " [cfile and cWORD](2107091853.vim)
-  let jump_location = s:extract_jump_location(expand('<cWORD>'))
+  try
+    let jump_location = s:extract_jump_location(expand('<cWORD>'))
+  catch /ERROR(NotFound)/
+    echom v:exception
+    return
+  catch /ERROR(ZettelNotFound)/
+    echom v:exception
+    return
+  endtry
 
-  if !maktabax#value#IsEmpty(jump_location)
+  if !makaatib#value#IsEmpty(jump_location)
     let is_todo_open = getwinvar(winnr(), 'todo', 0)
     if is_todo_open
       exec "wincmd p"
@@ -508,49 +512,6 @@ function! s:search()
 endfunction
 
 " }}}
-
-" {{{ floating window
-function! s:create_float_window(filename) abort 
-    let width = min([&columns - 4, max([80, &columns - 20])])
-    let height = min([&lines - 4, max([20, &lines - 10])])
-    let top = ((&lines - height) / 2) - 1
-    let left = (&columns - width) / 2
-    let opts = {
-      \ 'relative': 'editor',
-      \ 'row': top,
-      \ 'col': left,
-      \ 'width': width,
-      \ 'height': height,
-      \ 'style': 'minimal',
-      \ 'focusable': v:false
-    \ }
-
-    let top = "╭" . repeat("─", width - 2) . "╮"
-    let mid = "│" . repeat(" ", width - 2) . "│"
-    let bot = "╰─" . repeat("─", width - 3) . "╯"
-    let lines = [top] + repeat([mid], height - 2) + [bot]
-    let border_bufnr = nvim_create_buf(v:false, v:true)
-    call nvim_buf_set_lines(border_bufnr, 0, -1, v:true, lines)
-    let s:border_winid = nvim_open_win(border_bufnr, v:true, opts)
-
-    let opts.row += 1
-    let opts.height -= 2
-    let opts.col += 2
-    let opts.width -= 4
-    let opts.focusable = v:true
-    let text_bufnr = nvim_create_buf(v:false, v:true)
-    call nvim_open_win(text_bufnr, v:true, opts)
-
-    set winhl=Normal:Floating
-    au WinLeave * ++once :q | call nvim_win_close(s:border_winid, v:true)
-    return text_bufnr
-endfunction
-
-function! s:edit_file_with_float(query) abort
-    call s:create_float_window(a:query)
-    execute 'edit ' . a:query
-endfunction
-"}}}
 
 " {{{ todo
 
