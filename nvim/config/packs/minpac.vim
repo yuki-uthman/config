@@ -96,8 +96,7 @@ runtime config/packs/snipmate.vim
 runtime config/packs/tmux.vim
 " runtime config/packs/vim-test.vim
 runtime config/packs/floaterm.vim
-" runtime config/packs/nvim-treesitter-textsubjects.vim
-" runtime config/packs/nvim-compe.vim
+runtime config/packs/maximizer.vim
 
 " packadd ale
 packadd coc.nvim
