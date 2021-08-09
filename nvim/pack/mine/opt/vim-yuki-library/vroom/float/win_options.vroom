@@ -1,0 +1,29 @@
+Plugin and maktaba installation.
+  :set nocompatible
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+  :call maktaba#LateLoad()
+  :call yuki#hello()
+  ~ Hello
+
+To set window specific options there is a win_options({opt}).
+
+  :let options = { 
+  |'number': v:true,
+  |'relativenumber': v:true,
+  |'spell': v:false,
+  |}
+
+  :let float = yuki#float#create()
+  |.win_options(options)
+  |.open()
+
+  :let winnr = win_id2win(float.winid)
+
+  :echom getwinvar(winnr, "&number")
+  ~ 1
+  :echom getwinvar(winnr, "&relativenumber")
+  ~ 1
+  :echom getwinvar(winnr, "&spell")
+  ~ 0

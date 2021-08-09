@@ -1,0 +1,76 @@
+Plugin and maktaba installation
+  :set nocompatible
+  :let g:thisdir = fnamemodify($VROOMFILE, ':p:h')
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+  :call maktaba#LateLoad()
+
+  :call yuki#hello()
+  ~ Hello
+
+
+yuki#value#IsEmpty()
+
+Vimscript does not have a uniform way of checking whether the variable is
+empty. This makes it troublesome because each types would have a different way
+of checking its 'emptyness'. This method makes it uniform. Below describes
+what is considered empty for each type.
+Number -> 0
+  :call maktaba#ensure#IsTrue(yuki#value#IsEmpty(0))
+  :call maktaba#ensure#IsFalse(yuki#value#IsEmpty(1))
+
+Float  -> 0.0
+  :call maktaba#ensure#IsTrue(yuki#value#IsEmpty(0.0))
+  :call maktaba#ensure#IsFalse(yuki#value#IsEmpty(0.5))
+
+String -> ''
+  :call maktaba#ensure#IsTrue(yuki#value#IsEmpty(""))
+  :call maktaba#ensure#IsFalse(yuki#value#IsEmpty("this is not empty string"))
+
+List   -> []
+  :call maktaba#ensure#IsTrue(yuki#value#IsEmpty([]))
+  :call maktaba#ensure#IsFalse(yuki#value#IsEmpty([1]))
+
+Dict   -> {}
+  :call maktaba#ensure#IsTrue(yuki#value#IsEmpty({}))
+  :call maktaba#ensure#IsFalse(yuki#value#IsEmpty({'not': 'empty'}))
+
+
+
+yuki#value#IsIn()
+
+Default maktaba#value#IsIn only works with lists. The modified version also
+checks whether the value is in the dictionary as one of its key. 
+  :let number = [1, 2, 3]
+  :call maktaba#ensure#IsTrue(yuki#value#IsIn(1, number))
+  :call maktaba#ensure#IsFalse(yuki#value#IsIn(5, number))
+
+  :let dictionary = {'hello': 'It is a greeting in English'}
+  :call maktaba#ensure#IsTrue(yuki#value#IsIn('hello', dictionary))
+  :call maktaba#ensure#IsFalse(yuki#value#IsIn('salaam', dictionary))
+
+Should throw WrongType Error if the second argument is not either a list or dictionary.
+  :let g:parse = maktaba#function#Create('yuki#value#IsIn')
+  :call maktaba#error#Try(g:parse.WithArgs('', ''))
+  ~ ERROR(WrongType): Expected a list or dictionary. Got a string.
+
+  :call maktaba#error#Try(g:parse.WithArgs('', 1))
+  ~ ERROR(WrongType): Expected a list or dictionary. Got a number.
+
+  :call maktaba#error#Try(g:parse.WithArgs('', 1.0))
+  ~ ERROR(WrongType): Expected a list or dictionary. Got a float.
+
+
+There is also a function to check if dictionary contains the key similar to the
+built-in function has_key().
+  :call maktaba#ensure#IsTrue(yuki#value#HasKey('hello', dictionary))
+  :call maktaba#ensure#IsFalse(yuki#value#HasKey('salaam', dictionary))
+
+Should throw WrongType Error if the second argument is not a dictionary.
+  :let g:parse = maktaba#function#Create('yuki#value#HasKey')
+  :call maktaba#error#Try(g:parse.WithArgs('hello', []))
+  ~ ERROR(WrongType): Expected a dictionary. Got a list.
+
+
+

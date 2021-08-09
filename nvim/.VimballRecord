@@ -1,0 +1,1 @@
+Decho.vba: call delete('/Users/Yuki/.config/nvim/plugin/Decho.vim')|call delete('/Users/Yuki/.config/nvim/plugin/cecutil.vim')|call delete('/Users/Yuki/.config/nvim/syntax/Decho.vim')|call delete('/Users/Yuki/.config/nvim/doc/Decho.txt')

@@ -2,5 +2,11 @@
 " fold based on marker 
 setlocal foldmethod=marker
 
-" run vim file 
-nnoremap <buffer> <leader>r :so %<esc>
+" save and run vim file 
+nnoremap <buffer> <leader>r :w<CR>:so %<CR>
+
+runtime config/packs/lookup.vim
+packadd vim-lookup
+
+runtime config/packs/decho.vim
+packadd decho

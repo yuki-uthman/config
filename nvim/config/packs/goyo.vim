@@ -1,0 +1,2 @@
+
+nnoremap gy :Goyo<CR>

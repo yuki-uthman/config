@@ -136,7 +136,7 @@ function! s:get_filepath_from_id(id) abort "{{{
   " needs to use systemlist cuz the result contains newline character
   let file = systemlist("rg --files " . expand(g:zet_dir) . "| rg " . a:id)
 
-  if makaatib#value#IsEmpty(file)
+  if yuki#value#IsEmpty(file)
     throw maktaba#error#Message('ZettelNotFound', 'No such zettel(%s)', a:id)
   endif
 
@@ -319,7 +319,7 @@ endfunc
 function! s:extract_file(string)
   let match = matchlist(a:string, '\(\~\/.*\.\w*\):\?\(\d*\)\?')
 
-  if makaatib#value#IsEmpty(match)
+  if yuki#value#IsEmpty(match)
     return maktaba#value#EmptyValue(match)
   endif
 
@@ -334,14 +334,14 @@ endfunction
 function! s:extract_zettel(string)
   let match = matchlist(a:string, '\(\d\{10}\)\(\.\w*\)\?:\?\(\d*\)')
 
-  if makaatib#value#IsEmpty(match)
+  if yuki#value#IsEmpty(match)
     return maktaba#value#EmptyValue(match)
   endif
 
   let id = match[1]
   let filepath = s:get_filepath_from_id(id)
 
-  if makaatib#value#IsEmpty(filepath)
+  if yuki#value#IsEmpty(filepath)
     return maktaba#value#EmptyValue(match)
   endif
 
@@ -356,7 +356,7 @@ endfunction
 
 function! s:extract_jump_location(string) "{{{
   let match = matchstr(a:string, '(\zs\d\{1,9}\ze)')
-  if !makaatib#value#IsEmpty(match)
+  if !yuki#value#IsEmpty(match)
     let file = {}
     let file.path = expand('%:p')
     let file.line_number = str2nr(match)
@@ -364,7 +364,7 @@ function! s:extract_jump_location(string) "{{{
   endif
 
   let match = matchlist(a:string, '\(\d\{10}\)\(\.\w*\)\?:\?\(\d*\)')
-  if !makaatib#value#IsEmpty(match)
+  if !yuki#value#IsEmpty(match)
     let id = match[1]
     let filepath = s:get_filepath_from_id(id)
     let line_number = str2nr(match[3])
@@ -376,7 +376,7 @@ function! s:extract_jump_location(string) "{{{
   endif
 
   let match = matchlist(a:string, '\(\~\/.*\.\w*\):\?\(\d*\)\?')
-  if !makaatib#value#IsEmpty(match)
+  if !yuki#value#IsEmpty(match)
     let file = {}
     let file.path = expand(match[1])
     call maktaba#ensure#FileWritable(file.path)
@@ -407,7 +407,7 @@ function! s:jump_to_zettel() abort
     return
   endtry
 
-  if !makaatib#value#IsEmpty(jump_location)
+  if !yuki#value#IsEmpty(jump_location)
     let is_todo_open = getwinvar(winnr(), 'todo', 0)
     if is_todo_open
       exec "wincmd p"

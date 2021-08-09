@@ -11,6 +11,7 @@ function! PackInit() abort
   " tpope
   call minpac#add('tpope/vim-commentary')
   call minpac#add('tpope/vim-endwise' , { 'type' : 'opt' })
+  call minpac#add('tpope/vim-scriptease' , { 'type' : 'opt' })
   call minpac#add('tpope/vim-fugitive')
   call minpac#add('tpope/vim-surround')
   call minpac#add('tpope/vim-unimpaired')
@@ -30,17 +31,27 @@ function! PackInit() abort
   call minpac#add('preservim/tagbar')
   call minpac#add('vim-test/vim-test', { 'type' : 'opt' } )
   call minpac#add('wellle/targets.vim', { 'type' : 'opt' })
-  call minpac#add('voldikss/vim-floaterm', { 'type' : 'opt' })
+  call minpac#add('gelguy/wilder.nvim', { 'type' : 'opt' })
+  call minpac#add('ggandor/lightspeed.nvim', { 'type' : 'opt' })
+  
 
-  " Telescrope
-  call minpac#add('nvim-lua/popup.nvim', { 'type' : 'opt' })
-  call minpac#add('nvim-lua/plenary.nvim', { 'type' : 'opt' })
-  call minpac#add('nvim-telescope/telescope.nvim', { 'type' : 'opt' })
+  " Library
+  call minpac#add('google/vim-maktaba', { 'type' : 'opt' })
+  call minpac#add('LucHermitte/lh-vim-lib', {'type' : 'opt' })
+  call minpac#add('vim-jp/vital.vim', {'type' : 'opt' })
+  call minpac#add('inkarkat/vim-ingo-library', {'type' : 'opt' })
 
-  " Auto complete
-  call minpac#add('hrsh7th/nvim-compe', { 'type' : 'opt' })
-  call minpac#add('nvim-lua/completion-nvim', { 'type' : 'opt' })
-  call minpac#add('kabouzeid/nvim-lspinstall', { 'type' : 'opt' })
+  " Vimscript
+  call minpac#add('junegunn/vader.vim', { 'type' : 'opt' })
+ 
+
+
+  " Various searcher
+  call minpac#add('tomtom/tselectbuffer_vim', {'type' : 'opt' })
+  call minpac#add('pechorin/any-jump.vim', {'type' : 'opt' })
+  call minpac#add('mhinz/vim-lookup', {'type' : 'opt' })
+  call minpac#add('Shougo/denite.nvim', {'type' : 'opt' })
+  call minpac#add('kien/ctrlp.vim', {'type' : 'opt' })
 
   " Chris Toomey
   call minpac#add('inkarkat/vim-ReplaceWithRegister', { 'type' : 'opt' })
@@ -64,8 +75,6 @@ function! PackInit() abort
   " Javascript
   call minpac#add('yuezk/vim-js', { 'type' : 'opt' })
 
-  " PHP
-
   " Dart
   call minpac#add('dart-lang/dart-vim-plugin')
 
@@ -75,9 +84,9 @@ function! PackInit() abort
 
   " Markdown
   call minpac#add('junegunn/goyo.vim', { 'type' : 'opt' })
+  call minpac#add('gpanders/vim-medieval')
 
-  " Vimscript
-  call minpac#add('junegunn/vader.vim', { 'type' : 'opt' })
+
 endfunction
 
 runtime macros/matchit.vim
@@ -91,12 +100,13 @@ runtime config/packs/cutlass.vim
 " runtime config/packs/emmet.vim
 runtime config/packs/fzf.vim
 runtime config/packs/netrw.vim
-" runtime config/packs/peekaboo.vim
+runtime config/packs/peekaboo.vim
 runtime config/packs/snipmate.vim
 runtime config/packs/tmux.vim
 " runtime config/packs/vim-test.vim
 runtime config/packs/floaterm.vim
 runtime config/packs/maximizer.vim
+runtime config/packs/lightspeed.vim
 
 " packadd ale
 packadd coc.nvim
@@ -111,20 +121,27 @@ packadd vim-cutlass
 " packadd vim-test
 packadd vim-floaterm
 packadd vim-endwise
+packadd tselectbuffer_vim
+" packadd ctrlp.vim
+packadd vim-scriptease
+" packadd any-jump.vim
+packadd vim-maximizer
+packadd lightspeed.nvim
 
-" packadd popup.nvim
-" packadd plenary.nvim
-" packadd telescope.nvim
+packadd wilder.nvim
+runtime config/packs/wilder.vim
 
-" packadd nvim-compe
-" packadd nvim-lspconfig
 
-" My plugin
+" offline
 packadd buffers
 packadd colemak
 packadd dictionary
 packadd editor
 packadd files
-packadd scroll
-packadd zettel
 packadd float
+packadd fuzzy
+packadd scroll
+packadd vim-maktaba
+packadd vim-yuki-library
+packadd any-jump.clone
+packadd zettel

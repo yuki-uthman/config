@@ -18,14 +18,17 @@ function! float#edit(filename, window) abort "{{{
         \ 'focusable': v:true,
         \ 'border': "single",
         \ }
-  let bufnr = bufadd(a:filename)
-  let winid = nvim_open_win(bufnr, v:true, opts)
 
-  return {'bufnr': bufnr, 'winid': winid}
+  " let bufnr = bufadd(a:filename)
+  let bufnr = nvim_create_buf(v:false, v:true)
+  let winid = nvim_open_win(bufnr, v:true, opts)
+  exec "edit " . a:filename
+
+  return {'bufnr': bufnr, 'winid': winid, 'height': height, 'width': width}
 endfunction "}}}
 
 " let window = {'y': 0, 'x': 1, 'height': 0.5, 'width': 0.25}
-" let file = expand("~/.zettel/today.md")
-" call float#edit(file, window)
-
+" let file = expand("~/.zettel/test1.md")
+" let float = float#edit(file, window)
+" echo float
 " [TODO](2107211007)

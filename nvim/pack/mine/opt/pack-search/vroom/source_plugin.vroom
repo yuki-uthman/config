@@ -1,0 +1,24 @@
+Can it just source plugin without maktaba?
+
+  :let plugin_dir = fnamemodify($VROOMFILE, ':p:h:h')
+
+  :echomsg plugin_dir
+  ~ /Users/Yuki/.config/nvim/pack/mine/opt/pack-search
+
+  :exec "set rtp+=".plugin_dir
+
+Can load autoload functions
+
+  :call pack_search#hello()
+  ~ Hello
+
+But not command
+  :Hello
+  ~ E492: Not an editor command: Hello
+
+Can it source individual files manually?
+  :exec "so " . plugin_dir . "/plugin/commands.vim"
+
+It can!
+  :Hello
+  ~ Hello

@@ -187,7 +187,7 @@ cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
 
 " open command history with Double Space
-nnoremap <Space><Space> q:
+nnoremap q; q:
 
 set cmdwinheight=3
 augroup command_window
@@ -195,16 +195,19 @@ augroup command_window
     " <C-c> to exit insert mode
     autocmd CmdwinEnter * inoremap <buffer> <silent> <C-c> <ESC>
 
-    " <C-c> to leave cmdline-window from normal mode
+    " <ESC> to leave cmdline-window from insert mode
     autocmd CmdwinEnter * inoremap <buffer> <silent> <ESC> <ESC>:close<cr>
 
-    " <ESC> to leave cmdline-window from insert mode
+    " <C-c> to leave cmdline-window from normal mode
     autocmd CmdwinEnter * nnoremap <buffer> <silent> <C-c> :close<cr>
 
+    " ZZ to leave cmdline-window
+    autocmd CmdwinEnter * nnoremap <buffer> <silent> ZZ :close<cr>
+
     " start command line window in insert mode and no line numbers
-    autocmd CmdwinEnter * startinsert
     autocmd CmdwinEnter * set nonumber
     autocmd CmdwinEnter * set laststatus=0
+    autocmd CmdwinEnter * startinsert
 augroup END
 
 "}}}

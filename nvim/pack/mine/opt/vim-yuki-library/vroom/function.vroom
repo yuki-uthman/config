@@ -1,0 +1,19 @@
+Plugin and maktaba installation
+  :set nocompatible
+  :let g:thisdir = fnamemodify($VROOMFILE, ':p:h')
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+  :call maktaba#LateLoad()
+  :call yuki#hello()
+  ~ Hello
+
+:call yuki#function#name()
+~ 
+
+  :function! Hello() abort
+  :   echom yuki#function#name(expand('<sfile>'))
+  :endfunction
+  :call Hello()
+  ~ Hello
+

@@ -2,16 +2,15 @@
 "
 " :Rename[!] {newname}
 
-command! -nargs=* -complete=file -bang Rename :call Rename("<args>", "<bang>")
+command! -nargs=* -bang Rename :call Rename("<args>", "<bang>")
 
 
-func! Eatchar(pat)
+function! s:Eatchar(pat)
    let c = nr2char(getchar(0))
    return (c =~ a:pat) ? '' : c
 endfunc
 
 function! Rename(name, bang)
-    let ext = expand("%:e")
     let curfile = expand("%:p")
     let curfilepath = expand("%:p:h")
     let newname = curfilepath . "/" . a:name 
@@ -29,9 +28,9 @@ function! Rename(name, bang)
     endif
 endfunction
 
-autocmd CmdwinEnter * inoreabbrev <buffer> <expr> r "Rename \<C-R>=expand(\"#:t\")\<CR>\<C-R>=Eatchar(' ')\<CR>"
+autocmd CmdwinEnter * inoreabbrev <silent> <buffer> <expr> r "Rename \<C-R>=expand(\"#:t\")\<CR>\<C-R>=<SID>Eatchar(' ')\<CR>"
 
 cnoreabbrev <expr> r  
       \ (getcmdtype() ==# ':' && getcmdline() ==# 'r')  ?
-      \ "Rename \<C-R>=expand(\"%:t\")\<CR>\<C-R>=Eatchar(' ')\<CR>"  : 'r'
+      \ "Rename \<C-R>=expand(\"%:t\")\<CR>\<C-R>=<SID>Eatchar(' ')\<CR>"  : 'r'
 

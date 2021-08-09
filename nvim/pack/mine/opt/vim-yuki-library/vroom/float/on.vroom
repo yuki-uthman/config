@@ -1,0 +1,414 @@
+Plugin and maktaba installation.
+  :set nocompatible
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+  :call maktaba#LateLoad()
+  :call yuki#hello()
+  ~ Hello
+
+
+
+
+Previously it was shown that you can achieve a stacking of windows using
+align_{top,bottom,right,left}(). There are equivalent functions on_() with
+different suffixes. The difference is that this version aligns the window in the
+center of the other window.
+
+Let's see what this means in the example below.
+
+So let's put one box in the middle of the screen.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.center()
+
+To place another box on top with align_() functions you would have to align the
+vertical position and horizontal position manually like so. To put the box2
+above box1 we can use align_bottom(). To align the side we can use either
+align_left() or align_right().
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_bottom(box1, 'top')
+  |.align_left(box1)
+
+But this does not align the box horizontally if the either one of the box has a
+border. With on_() functions they handle that for you.
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_top_of(box1)
+
+
+
+
+1. Stacking the window on top of another window.
+
+No borders.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_top_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [21, 21])
+  :call yuki#ensure#window#at(box2.winid, [11, 21])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+ 
+Box1 with border.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_top_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [21, 21])
+  :call yuki#ensure#window#at(box2.winid, [11, 22])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+ 
+Box2 with border.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_top_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [21, 21])
+  :call yuki#ensure#window#at(box2.winid, [9, 20])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Both boxes with borders.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_top_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [21, 21])
+  :call yuki#ensure#window#at(box2.winid, [9, 21])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+
+
+2. Stacking the window below another window.
+
+No borders.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_bottom_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 21])
+  :call yuki#ensure#window#at(box2.winid, [21, 21])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Box1 with a border.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_bottom_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 21])
+  :call yuki#ensure#window#at(box2.winid, [23, 22])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Box2 with a border.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_bottom_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 21])
+  :call yuki#ensure#window#at(box2.winid, [21, 20])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Both boxes with borders.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_bottom_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 21])
+  :call yuki#ensure#window#at(box2.winid, [23, 21])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+
+3. Stacking the window on the right of another window.
+
+No borders.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_right_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 21])
+  :call yuki#ensure#window#at(box2.winid, [11, 21 + 20])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Box1 with a border.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_right_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 21])
+  :call yuki#ensure#window#at(box2.winid, [11 + 1, 21 + 20 + 2])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Box2 with a border.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_right_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 21])
+  :call yuki#ensure#window#at(box2.winid, [11 - 1, 21 + 20])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Both boxes with borders.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_right_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 21])
+  :call yuki#ensure#window#at(box2.winid, [11, 21 + 20 + 2])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+
+4. Stacking the window on the left of another window.
+
+No borders.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(40)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_left_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 41])
+  :call yuki#ensure#window#at(box2.winid, [11, 41 - 20])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Box1 with a border.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(40)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_left_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 41])
+  :call yuki#ensure#window#at(box2.winid, [11 + 1, 41 - 20])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Box2 with a border.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(40)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_left_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 41])
+  :call yuki#ensure#window#at(box2.winid, [11 - 1, 41 - 20 - 2])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Both boxes with borders.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(40)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.on_left_of(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 41])
+  :call yuki#ensure#window#at(box2.winid, [11, 41 - 20 - 2])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name

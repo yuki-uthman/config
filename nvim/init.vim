@@ -8,10 +8,12 @@ runtime config/general/tmux.vim
 " packages 
 runtime config/packs/minpac.vim
 
-" lsp
-" lua << EOF
-" require'lspconfig'.vimls.setup{}
-" require'lspconfig'.solargraph.setup{}
-" EOF
+
+lua<<EOF
+require'lightspeed'.setup { 
+    jump_to_first_match = true,
+    full_inclusive_prefix_key = '<tab>',
+}
+EOF
 
 

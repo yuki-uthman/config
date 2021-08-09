@@ -1,0 +1,314 @@
+Plugin and maktaba installation.
+  :set nocompatible
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+  :call maktaba#LateLoad()
+  :call yuki#hello()
+  ~ Hello
+
+  :let g:logger = maktaba#log#Logger('yuki#float')
+  :let g:LEVELS = maktaba#log#LEVELS
+  :call maktaba#log#SetNotificationLevel(g:LEVELS.DEBUG)
+:set noshowmode
+:set noruler
+:set laststatus=0
+:set noshowcmd
+
+
+Quick start
+
+Put some text in the first buffer.
+  % This is the first buffer
+  This is the first buffer
+
+Create float with #create() and #open().
+  :let float = yuki#float#create().open()
+  % This is the float
+  This is the float
+
+Unload the buffer.
+  :bunload!
+
+Now we are back to the initial buffer.
+  This is the first buffer
+
+
+
+Float with a custom buffer name
+
+You can create a buffer with any name you want.
+Use name().
+  :call yuki#float#create().buf_name("cool name").open()
+  :call maktaba#ensure#IsEqual('cool name', bufname())
+
+Unload the "cool name" buffer.
+  :bunload
+
+
+
+Scratch buffer
+
+To create scratch buffer you can use as_scratch().
+You have to remember that you still need to call open() to
+open the buffer. All the other method just sets the options
+to be used later in open().
+  :let scratch = yuki#float#create().as_scratch().open()
+
+Let's check the property of the buffer that was just created.
+  :echom getbufvar(scratch.bufnr, "&bufhidden")
+  ~ hide
+  :echom getbufvar(scratch.bufnr, "&buftype")
+  ~ nofile
+  :echom getbufvar(scratch.bufnr, "&swapfile")
+  ~ 0
+
+
+
+Setting the size of the float window.
+
+By default the size of the window is calculated to be 80% of the editor. Right
+now my editor is set to have 37 lines with 135 chars.  This will depend on the
+font size of the terminal. Therefore my float window will have the height and
+width of:
+height =  37 * 0.8 = 29,
+width  = 135 * 0.8 = 108.
+
+The following test will fail if it is run with the different font sizes.
+
+  :let float = yuki#float#create().open()
+  :echom winheight(float.winid)
+  ~ 29
+  :echom winwidth(float.winid)
+  ~ 108
+  :bunload
+
+Let's override the default size.
+  :let float = yuki#float#create()
+  |.height(10)
+  |.width(50)
+  |.open()
+  :echom winheight(float.winid)
+  ~ 10
+  :echom winwidth(float.winid)
+  ~ 50
+  :bunload
+
+You can also set the size with a percentage. Right now you can only set the
+size relative to the nvim_list_ui() value. Let's try to make the float window
+half the size. That means:
+height =  37 * 0.5 = 18,
+width  = 135 * 0.5 = 67.
+
+  :let float = yuki#float#create()
+  |.height(0.5)
+  |.width(0.5)
+  |.open()
+
+For my terminal settings the following assertion would pass.
+  :call yuki#ensure#window#size(float.winid, [18, 67])
+  :bunload
+
+You can do the same with size(). The following three are all equivalent.
+  :let float = yuki#float#create()
+  |.size(18, 67)
+  |.open()
+  :call yuki#ensure#window#size(float.winid, [18, 67])
+  :bunload
+
+
+  :let float = yuki#float#create()
+  |.size(0.5, 0.5)
+  |.open()
+  :call yuki#ensure#window#size(float.winid, [18, 67])
+  :bunload
+
+  :let float = yuki#float#create()
+  |.size(0.5)
+  |.open()
+  :call yuki#ensure#window#size(float.winid, [18, 67])
+  :bunload
+
+
+Setting the position of the window.
+
+By default the float window opens at the top left corner of the editor.
+Let's verify that.
+  :let float = yuki#float#create().open()
+  :call yuki#ensure#window#at(float.winid, [1, 1])
+  :bunload
+
+To move the window around there are 4 functions: 
+up(), down(), right(), left()
+
+They can take an integer or a float.
+
+Let's try it with integers first.
+  :let float = yuki#float#create()
+  |.down(1)
+  |.open()
+  :call yuki#ensure#window#at(float.winid, [1 + 1, 1])
+  :bunload
+
+They just move the window around with the number you give to it.
+You can move it back up after moving it down too.
+  :let float = yuki#float#create()
+  |.down(1)
+  |.up(1)
+  |.open()
+  :call yuki#ensure#window#at(float.winid, [1, 1])
+  :bunload
+
+right() and left() work the same way.
+  :let float = yuki#float#create()
+  |.right(1)
+  |.open()
+  :call yuki#ensure#window#at(float.winid, [1, 1 + 1])
+  :bunload
+
+  :let float = yuki#float#create()
+  |.right(10)
+  |.left(5)
+  |.open()
+  :call yuki#ensure#window#at(float.winid, [1, 1 + 10 - 5])
+  :bunload
+
+Don't forget that the top left corner is [1, 1] and not [0, 0]!
+
+When you give float as an argument it is relative to the editor. So down(0.5)
+moves it down to the center of the editor. So if you want to place the window
+at the center of your screen you can do down(0.5) and right(0.5).
+
+Since my screen has 135 cols and if the window width is 35 cols then the
+remaining available space would be 100. So moving 50% of that to the right
+would be 1 + 50 cols.
+
+  :let float = yuki#float#create()
+  |.width(35)
+  |.right(0.5)
+  |.open()
+
+  :call yuki#ensure#window#at(float.winid, [1, 51])
+  :bunload
+
+Let's do the same vertically. The available lines after deducting the height of
+the window and the command line is 37 - 1 - 6 = 30 lines. 
+Moving down by 50% would equal 30 * 0.5 = 15 lines.
+  :let float = yuki#float#create()
+  |.height(6)
+  |.down(0.5)
+  |.open()
+
+  :call yuki#ensure#window#at(float.winid, [1 + 15, 1])
+  :bunload
+
+So now making the float window of 80% of the editor size and placing it at the
+center is as easy as:
+  :let float = yuki#float#create()
+  |.size(0.8)
+  |.down(0.5)
+  |.right(0.5)
+  |.open()
+
+  :bunload
+
+
+
+
+To set the window at the bottom of the editor and move up, do the same with
+from_bottom(offset). Let's try setting it to the bottom of the screen.
+Since the height of the window is 29 and the available space is 37 the most it
+can go down is until the line 8. (height of the main window - height of the float)
+
+  :let float = yuki#float#create()
+  |.align_bottom()
+  |.open()
+
+  :echom win_screenpos(float.winid)
+  ~ [8, 1]
+  :bunload
+
+Let's set the height of the window to 1 and open it at the bottom. Then it
+should be at line 36 (37 - 1 (command line)). 
+
+:let float = yuki#float#create()
+|.height(1)
+|.align_bottom()
+|.open()
+:echom win_screenpos(float.winid)
+~ [36, 1]
+:bunload
+
+
+To move it up by 10 lines:
+
+:let float = yuki#float#create()
+|.height(1)
+|.align_bottom()
+|.up(10)
+|.open()
+:echom win_screenpos(float.winid)
+~ [26, 1]
+:bunload
+
+
+Push the window to the most right.
+Just for a reminder total width of my terminal window is 135 cols.
+Since the col starts from 1 the right most edge would be col 136.
+
+The top left corner of the float window would be:
+136 - 10 = 126
+  :let float = yuki#float#create()
+  |.size(10, 10)
+  |.align_right()
+  |.open()
+
+  :echom win_screenpos(float.winid)
+  ~ [1, 126]
+  :bunload
+
+Then move 10 chars to the left.
+136 - 10 - 10 = 116
+  :let float = yuki#float#create()
+  |.size(10, 10)
+  |.align_right()
+  |.left(10)
+  |.open()
+
+  :echom win_screenpos(float.winid)
+  ~ [1, 116]
+  :bunload
+
+
+So with align you can first push the window to the bottom right corner and move
+it up and left 50% to have the same effect as right(0.5).down(0.5).
+
+  :let float = yuki#float#create()
+  |.size(6, 35)
+  |.down(0.5)
+  |.right(0.5)
+  |.open()
+
+  :let center_pos = win_screenpos(float.winid)
+  :bunload
+
+  
+  :let float = yuki#float#create()
+  |.size(6, 35)
+  |.align_right()
+  |.align_bottom()
+  |.up(0.5)
+  |.left(0.5)
+  |.open()
+
+  :call yuki#ensure#window#at(float.winid, center_pos)
+  :bunload
+
+Rather than doing right(0.5).down(0.5) you can also use center().
+  :let float = yuki#float#create()
+  |.size(6, 35)
+  |.center()
+  |.open()
+
+  :call yuki#ensure#window#at(float.winid, center_pos)
+  :bunload

@@ -1,0 +1,28 @@
+Plugin and maktaba installation.
+  :set nocompatible
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+  :call maktaba#LateLoad()
+  :call yuki#hello()
+  ~ Hello
+
+
+
+
+
+  :let filter = yuki#float#create()
+  |.border('single')
+  |.size(1, 0.2)
+
+  :let result = yuki#float#create()
+  |.border('single')
+  |.size(8, 0.2)
+  |.stack_bottom(filter)
+  |.right(10)
+  |.down(5)
+  |.open()
+
+:ls!
+:call yuki#ensure#window#exists_at(6, 12)
+

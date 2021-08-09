@@ -1,0 +1,41 @@
+Install maktaba
+
+  :set nocompatible
+  :let g:thisdir = fnamemodify($VROOMFILE, ':p:h')
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+
+$VROOMFILE is the file path of the vroom file being executed.
+
+  :echom fnamemodify($VROOMFILE, ':p')
+  ~ /Users/Yuki/.config/nvim/pack/mine/opt/vim-yuki-library/vroom/maktaba_installation.vroom
+
+
+After calling echom make sure to end the command with "<CR>"
+
+  :echom g:plugindir
+  ~ /Users/Yuki/.config/nvim/pack/mine/opt/vim-yuki-library
+
+
+Plugins files are not loaded
+
+  :Hello
+  ~ E492: Not an editor command: Hello
+
+Install the plugin
+
+  :call maktaba#LateLoad()
+
+Commands will be available after this point
+
+  :Hello
+  ~ Hello
+
+As a summary, to intialize maktaba and load the plugin
+  :set nocompatible
+  :let g:thisdir = fnamemodify($VROOMFILE, ':p:h')
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+  :call maktaba#LateLoad()

@@ -1,0 +1,40 @@
+Plugin and maktaba installation
+  :set nocompatible
+  :let g:thisdir = fnamemodify($VROOMFILE, ':p:h')
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+  :call maktaba#LateLoad()
+  :call yuki#hello()
+  ~ Hello
+
+When dict1 has an extra pair.
+  :let dict1 = { 1: 'one', 2: 'two', 3: 'three' }
+  :let dict2 = { 1: 'one', 2: 'two' }
+
+  :let diff = yuki#dict#diff(dict1, dict2)
+  :call maktaba#ensure#IsEqual(diff, [{3: 'three'}])
+
+
+When dict2 has an extra pair.
+  :let dict1 = { 1: 'one', 2: 'two' }
+  :let dict2 = { 1: 'one', 2: 'two', 3: 'three' }
+
+  :let diff = yuki#dict#diff(dict1, dict2)
+  :call maktaba#ensure#IsEqual(diff, [{3: 'three'}])
+
+
+When both dict have pairs not in the other.  
+  :let dict1 = { 1: 'one', 2: 'two', 3: 'three' }
+  :let dict2 = { 1: 'one', 2: 'two', 5: 'five' }
+
+  :let diff = yuki#dict#diff(dict1, dict2)
+  :call maktaba#ensure#IsEqual(diff, [{3: 'three'}, {5: 'five'}])
+
+When there are equal keys with different values.
+  :let dict1 = { 1: 'one', 2: 'two' }
+  :let dict2 = { 1: 'one', 2: 'Two' }
+
+  :let diff = yuki#dict#diff(dict1, dict2)
+  :call maktaba#ensure#IsEqual(diff, [{2: 'two'}, {2: 'Two'}])
+

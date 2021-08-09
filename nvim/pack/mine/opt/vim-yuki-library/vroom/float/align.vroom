@@ -1,0 +1,692 @@
+Plugin and maktaba installation.
+  :set nocompatible
+  :let g:plugindir = fnamemodify($VROOMFILE, ':p:h:h:h')
+  :let g:bootstrapfile = g:plugindir . '/bootstrap.vim'
+  :execute 'source' g:bootstrapfile
+  :call maktaba#LateLoad()
+  :call yuki#hello()
+  ~ Hello
+
+
+
+The termial window size used for this vroom test:
+height =  37 lines
+width  = 135 cols
+
+
+Aligning to the other floating windows.
+
+Sometimes you would want to be able to align the side of the float window to
+already existing ones. 
+
+1. Align the top side.
+
+Let's set the height and the width.
+
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+
+Let's move down the box1 by 5 lines and align the top side of the box2 with the
+box1. 
+
+  :let box1 = box1.down(10)
+  :let box2 = box2.align_right().align_top(box1)
+
+  :let info_box1 = box1.open()
+  :let info_box2 = box2.open()
+  
+  :call yuki#ensure#window#at(info_box1.winid, [11, 1])
+  :call yuki#ensure#window#at(info_box2.winid, [11, 116])
+
+  :bwipeout box1
+  :bwipeout box2
+
+
+Now with box1 with a border.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1-single-border')
+  |.height(10)
+  |.width(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(15)
+  |.width(20)
+  |.right(30)
+  |.align_top(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 1])
+  :call yuki#ensure#window#at(box2.winid, [11, 31])
+
+  :bwipeout box1
+  :bwipeout box2
+
+
+Now for both boxes.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1-single-border')
+  |.height(10)
+  |.width(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(15)
+  |.width(20)
+  |.right(30)
+  |.align_top(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 1])
+  :call yuki#ensure#window#at(box2.winid, [11, 31])
+
+  :bwipeout box1
+  :bwipeout box2
+
+
+
+
+2. Align the bottom side.
+
+Sometimes the height of two float windows can differ and aligning the bottom
+side would involve calculating the height difference of the two windows and
+adjusting the row positions accordingly.
+
+
+Let's set the height to different sizes and position the first box.
+
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.down(10)
+  |.open()
+
+Now let's try to align the two boxes on the bottom side.
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(15)
+  |.width(20)
+  |.right(40)
+  |.align_bottom(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 1])
+  :call yuki#ensure#window#at(box2.winid, [6, 41])
+
+  :bwipeout box1
+  :bwipeout box2
+
+
+Let's try putting a border in one of the box.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1-single-border')
+  |.height(10)
+  |.width(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(15)
+  |.width(20)
+  |.right(40)
+  |.align_bottom(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 1])
+  :call yuki#ensure#window#at(box2.winid, [8, 41])
+
+  :bwipeout box1
+  :bwipeout box2
+
+
+Now for both boxes.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1-single-border')
+  |.height(10)
+  |.width(20)
+  |.down(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2-single-border')
+  |.height(15)
+  |.width(20)
+  |.right(40)
+  |.align_bottom(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 1])
+  :call yuki#ensure#window#at(box2.winid, [6, 41])
+
+  :bwipeout box1
+  :bwipeout box2
+
+
+
+
+3. Align the left side.
+
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(10)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 11])
+
+Let's align the left side of the box2 with the box1.
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(40)
+  |.down(20)
+  |.align_left(box1)
+  |.open()
+  
+  :call yuki#ensure#window#at(box2.winid, [21, 11])
+
+  :bwipeout box1
+  :bwipeout box2
+
+Now with box1 with a border
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('align_left box1-border')
+  |.height(10)
+  |.width(20)
+  |.right(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('align_left box2')
+  |.height(10)
+  |.width(40)
+  |.down(20)
+  |.align_left(box1)
+  |.open()
+  
+  :call yuki#ensure#window#at(box1.winid, [1, 11])
+  :call yuki#ensure#window#at(box2.winid, [21, 11])
+
+  :bwipeout box1
+  :bwipeout box2
+
+
+Now 2 boxes with a border
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('align_left box1-border')
+  |.height(10)
+  |.width(20)
+  |.right(10)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('align_left box2-border')
+  |.height(10)
+  |.width(40)
+  |.down(20)
+  |.align_left(box1)
+  |.open()
+  
+  :call yuki#ensure#window#at(box1.winid, [1, 11])
+  :call yuki#ensure#window#at(box2.winid, [21, 11])
+
+  :bwipeout box1
+  :bwipeout box2
+
+
+
+
+4. Align the right side.
+
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(30)
+  |.down(20)
+  |.align_right(box1)
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 21])
+  :call yuki#ensure#window#at(box2.winid, [21, 11])
+
+  :bwipeout box1
+  :bwipeout box2
+
+Now with box1 with a border
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('align_right box1-border')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('align_right box2')
+  |.height(10)
+  |.width(20)
+  |.down(15)
+  |.align_right(box1)
+  |.open()
+  
+  :call yuki#ensure#window#at(box1.winid, [1, 21])
+  :call yuki#ensure#window#at(box2.winid, [16, 23])
+
+  :bwipeout box1
+  :bwipeout box2
+
+Now with 2 boxes
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('align_right box1-border')
+  |.height(10)
+  |.width(20)
+  |.right(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('align_right box2-border')
+  |.height(10)
+  |.width(20)
+  |.down(15)
+  |.align_right(box1)
+  |.open()
+  
+  :call yuki#ensure#window#at(box1.winid, [1, 21])
+  :call yuki#ensure#window#at(box2.winid, [16, 21])
+
+  :bwipeout box1
+  :bwipeout box2
+
+
+
+
+You can also pass additional argument to specify which side of the window you
+want to align. With this you can stack one window on top of another.
+
+5. Placing the window below another window.
+
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_top(box1, 'bottom')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 1])
+  :call yuki#ensure#window#at(box2.winid, [11, 1])
+  :bw box1
+  :bw box2
+
+
+Box1 with border
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_top(box1, 'bottom')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 1])
+  :call yuki#ensure#window#at(box2.winid, [13, 1])
+  :bw box1
+  :bw box2
+
+Box2 with border
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_top(box1, 'bottom')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 1])
+  :call yuki#ensure#window#at(box2.winid, [11, 1])
+  :exec "bw ". box1._buf_name
+  :bw box2
+
+
+Both with borders.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_top(box1, 'bottom')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 1])
+  :call yuki#ensure#window#at(box2.winid, [13, 1])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+
+
+
+6. Placing the window above another window.
+
+Let's put box1 down a few rows.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.down(10)
+  |.open()
+
+And put box2 on top of box1.
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_bottom(box1, 'top')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [11, 1])
+  :call yuki#ensure#window#at(box2.winid, [1, 1])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+Box1 with border.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.down(15)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_bottom(box1, 'top')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [16, 1])
+  :call yuki#ensure#window#at(box2.winid, [6, 1])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+Box2 with border.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.down(15)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_bottom(box1, 'top')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [16, 1])
+  :call yuki#ensure#window#at(box2.winid, [4, 1])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+Both with borders.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.down(15)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_bottom(box1, 'top')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [16, 1])
+  :call yuki#ensure#window#at(box2.winid, [4, 1])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+
+7. Putting another window on the right.
+
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.open()
+
+And put box2 on right of box1.
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_left(box1, 'right')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 1])
+  :call yuki#ensure#window#at(box2.winid, [1, 21])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+Box1 with border.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_left(box1, 'right')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 1])
+  :call yuki#ensure#window#at(box2.winid, [1, 23])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+Box2 with border.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_left(box1, 'right')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 1])
+  :call yuki#ensure#window#at(box2.winid, [1, 21])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+Both with borders.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_left(box1, 'right')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 1])
+  :call yuki#ensure#window#at(box2.winid, [1, 23])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+
+
+8. Putting another window on the left.
+
+Let's move the box1 to the right.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(100)
+  |.open()
+
+And put box2 on left of box1.
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_right(box1, 'left')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 101])
+  :call yuki#ensure#window#at(box2.winid, [1, 81])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+Box1 with border.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(100)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_right(box1, 'left')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 101])
+  :call yuki#ensure#window#at(box2.winid, [1, 81])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+Box2 with border.
+  :let box1 = yuki#float#create()
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(100)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_right(box1, 'left')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 101])
+  :call yuki#ensure#window#at(box2.winid, [1, 79])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name
+
+
+Both with borders.
+  :let box1 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box1')
+  |.height(10)
+  |.width(20)
+  |.right(100)
+  |.open()
+
+  :let box2 = yuki#float#create()
+  |.border('single')
+  |.buf_name('box2')
+  |.height(10)
+  |.width(20)
+  |.align_right(box1, 'left')
+  |.open()
+
+  :call yuki#ensure#window#at(box1.winid, [1, 101])
+  :call yuki#ensure#window#at(box2.winid, [1, 79])
+  :exec "bw ". box1._buf_name
+  :exec "bw ". box2._buf_name

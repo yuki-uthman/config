@@ -1,8 +1,13 @@
 " nnoremap rm :call delete(expand('%')) \| bdelete!<CR>
 
-command! -nargs=* -complete=file -bang Delete :call Delete("<args>", "<bang>")
+command! -nargs=* Delete :call Delete("<args>")
 
-function! Delete(name, bang)
+function! s:Eatchar(pat)
+   let c = nr2char(getchar(0))
+   return (c =~ a:pat) ? '' : c
+endfunc
+
+function! Delete(name)
   if a:name 
     call delete(a:name)
   else 
@@ -11,5 +16,6 @@ function! Delete(name, bang)
   bdelete!
 endfunction
 
-cnoreabbrev <expr> delete  (getcmdtype() ==# ':' && getcmdline() ==# 'delete')  ? 'Delete'  : 'delete'
-" cnoreabbrev delete Delete <C-R>=expand("%:t")<CR>
+autocmd CmdwinEnter * inoreabbrev <silent> <buffer> <expr> d "Delete\<C-R>=<SID>Eatchar(' ')\<CR>"
+
+cnoreabbrev <expr> d  (getcmdtype() ==# ':' && getcmdline() ==# 'd')  ? 'Delete'  : 'delete'
