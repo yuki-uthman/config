@@ -16,3 +16,4 @@ ranger
 tmux/plugins/
 tmuxinator/
 vifminfo
+nvim/config/packs/bitly.vim
