@@ -1,13 +1,14 @@
 
-runtime config/general/general.vim
-runtime config/general/mapping.vim
-runtime config/general/abbreviation.vim
-runtime config/general/colors.vim
-runtime config/general/tmux.vim
+runtime OPT general.vim
+runtime OPT mapping.vim
+runtime OPT abbreviation.vim
+runtime OPT colors.vim
 
-" packages 
-runtime config/packs/minpac.vim
+" minpac 
+runtime OPT minpac.vim
 
+" packer
+lua require('plugins')
 
 lua<<EOF
 require'lightspeed'.setup { 
@@ -15,5 +16,4 @@ require'lightspeed'.setup {
     full_inclusive_prefix_key = '<tab>',
 }
 EOF
-
 
