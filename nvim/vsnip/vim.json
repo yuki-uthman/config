@@ -1,0 +1,52 @@
+{
+  "function": {
+    "prefix": ["f", "func", "function"],
+    "body": [
+      "function! ${1:s:name}(${2:args}) abort",
+      "\t$3",
+      "endfunc",
+      "$0"
+    ],
+    "description": "function template"
+  },
+
+
+  "if": {
+    "prefix": ["if"],
+    "body": [ 
+      "if ${1:condition}", 
+      "\t${2}",
+      "endif"
+    ],
+    "description": "if statement"
+  },
+
+  "if/else": {
+    "prefix": ["ife"],
+    "body": [ 
+      "if ${1:condition}", 
+      "\t${2}",
+      "else",
+      "\t${3}",
+      "endif"
+    ],
+    "description": "if/else statement"
+  },
+
+  "variable": {
+    "prefix": ["let"],
+    "body": [ 
+      "let ${1:var} = ${2:value}"
+    ],
+    "description": "variable"
+  },
+
+
+  "autocmd": {
+    "prefix": ["au"],
+    "body": [ "autocmd $TM_SELECTED_TEXT" ],
+    "description": "autocmd template"
+  }
+}
+
+
