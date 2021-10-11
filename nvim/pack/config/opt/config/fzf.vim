@@ -2,6 +2,8 @@
 
 let g:fzf_command_prefix = 'FZF'
 
+packadd fzf.vim
+
 nnoremap <C-F> <Nop>
 
 nnoremap <C-F><C-B> :FZFBuffers<CR>
@@ -9,6 +11,28 @@ nnoremap <C-F><C-L> :FZFBLines<CR>
 nnoremap <C-F><C-F> :FZFFiles<CR>
 nnoremap <C-F><C-G> :FZFRg<CR>
 nnoremap <C-F><C-J> :FZFJumps<CR>
+
+" inoremap <C-F><C-P> <Cmd>call fzf#vim#complete#path("find . -path '*/\.*' -prune -o -type f -print -o -type l -print \| sed 's:^..::'")<CR>
+
+let s:paths = [ 
+      \'~/.config', 
+      \'~/.local',
+      \'~/Youtube',
+      \'~/Programming',
+      \]
+
+" let s:paths = [ '/usr' ]
+
+command! FZFcd call fzf#run(fzf#wrap({
+      \'source': 'find ' . join(s:paths),
+      \'sink' : 'cd',
+      \'down': '20%'}))
+
+
+
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
 
 
 function! GetJumps()

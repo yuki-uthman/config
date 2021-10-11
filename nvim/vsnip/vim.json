@@ -1,8 +1,25 @@
 {
-  "function": {
-    "prefix": ["f", "func", "function"],
+
+  "curly braces": {
+    "prefix": ["{"],
     "body": [
-      "function! ${1:s:name}(${2:args}) abort",
+      "#{$1}"
+    ],
+    "description": "curly braces"
+  },
+
+  "curly braces with space": {
+    "prefix": ["{{"],
+    "body": [
+      "#{ $1 }"
+    ],
+    "description": "curly braces with spaces"
+  },
+
+  "function": {
+    "prefix": ["func"],
+    "body": [
+      "function! ${1:s:name}($2) abort",
       "\t$3",
       "endfunc",
       "$0"
@@ -41,6 +58,25 @@
     "description": "variable"
   },
 
+  "while": {
+    "prefix": ["while"],
+    "body": [ 
+      "while ${1:condition}",
+      "\t${2}",
+      "endwhile"
+    ],
+    "description": "while loop"
+  },
+
+  "for": {
+    "prefix": ["for"],
+    "body": [ 
+      "for ${1:var} in ${2:list}",
+      "\t${3}",
+      "endfor"
+    ],
+    "description": "for loop"
+  },
 
   "autocmd": {
     "prefix": ["au"],

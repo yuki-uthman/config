@@ -5,8 +5,8 @@ nnoremap <buffer> <silent> <leader>c :Codi!! ruby<CR>
 nnoremap <buffer> <leader>r :!ruby %<esc>
 " let b:undo_ftplugin = b:undo_ftplugin . "unmap <buffer> <LocalLeader>r"
 
-inoremap <buffer> ; :
-inoremap <buffer> : ;
+" inoremap <buffer> ; :
+" inoremap <buffer> : ;
 
 
 packadd vim-ruby

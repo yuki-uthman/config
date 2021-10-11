@@ -1,19 +1,22 @@
 
+packadd vim-vsnip
+packadd vim-vsnip-integ
+
 let g:vsnip_snippet_dir = expand('~/.config/nvim/vsnip')
 
 " Expand
-imap <expr> <C-I>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-I>'
-" smap <expr> <C-L>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-L>'
+imap <expr> <Tab>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<Tab>'
+smap <expr> <Tab>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<Tab>'
 
 " Expand or jump
-imap <expr> <C-J>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-J>'
-smap <expr> <C-J>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-J>'
+" imap <expr> <C-J>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-J>'
+" smap <expr> <C-J>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-J>'
 
 " Jump forward or backward
-" imap <expr> <C-J> vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-J>'
-" smap <expr> <C-J> vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-J>'
-imap <expr> <C-K> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-K>'
-smap <expr> <C-K> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-K>'
+imap <expr> <C-F> vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-F>'
+smap <expr> <C-F> vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-F>'
+imap <expr> <C-B> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-B>'
+smap <expr> <C-B> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-B>'
 
 " Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
 " See https://github.com/hrsh7th/vim-vsnip/pull/50

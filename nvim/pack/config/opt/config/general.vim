@@ -13,7 +13,7 @@ set path+=~/.config/nvim/after/ftplugin/
 set path+=~/.config/nvim/config/general/
 set path+=~/.config/nvim/pack/config/opt/config/
 set path+=~/.config/nvim/plugin/
-set path+=~/.config/nvim/snippets/
+set path+=~/.config/nvim/vsnip/
 
 " set directories for Rails
 set path+=$PWD/app/**
@@ -26,9 +26,10 @@ set wildignore+=**/.git/**
 
 set dictionary+=~/.config/nvim/dict/words
 set dictionary+=~/.config/nvim/dict/words_cap
+set dictionary+=~/.config/nvim/dict/info
 
 set thesaurus+=~/.config/nvim/dict/thesaurus
-set thesaurus+=~/.config/nvim/dict/mthesaur.txt
+" set thesaurus+=~/.config/nvim/dict/mthesaur.txt
 
 function! s:thesaurus()
     let s:saved_ut = &ut
@@ -44,7 +45,6 @@ endfunction
 
 nnoremap <expr> <leader>t <SID>thesaurus()
 
-
 set clipboard=unnamed
 set clipboard=unnamedplus
 set expandtab
@@ -58,7 +58,7 @@ set nospell
 set noswapfile
 set nowrap
 set number
-set relativenumber
+set norelativenumber
 set scrolloff=0
 set shiftwidth=2
 " set smartindent
@@ -66,8 +66,11 @@ set splitbelow
 set splitright
 set tabstop=2
 set timeoutlen=400
-" set completeopt=menuone,noselect
+set completeopt=menu
 set signcolumn=number
+
+" this is the default here for reminder
+set formatoptions=tcqj
 
 set ignorecase
 set smartcase

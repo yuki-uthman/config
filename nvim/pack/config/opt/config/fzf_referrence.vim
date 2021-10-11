@@ -26,10 +26,10 @@ let g:fzf_action = {
 " imap <c-x><c-f> <plug>(fzf-complete-path)
 " imap <c-x><c-l> <plug>(fzf-complete-line)
 
-" inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
 
 " Replace the default dictionary completion with fzf-based fuzzy completion
-" inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
+inoremap <expr> <c-q> fzf#vim#complete('cat /usr/share/dict/words')
 
 " Word completion with custom spec with popup layout option
 " inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.8, 'xoffset': 1 }})
@@ -96,19 +96,17 @@ command! -bang -nargs=* Rgf
 " You can format with fnamemodify
 let s:paths = [ '~/.config', 
                   \ '~/.local',
-                  \ '~/.vim',
-                  \ '~/.custom',
-                  \ '~/LaunchSchool',
                   \ '~/Youtube',
                   \ '~/Programming',
-                  \ '~/ubuntu',
                   \ '~/VimWiki', ]
 
 let s:home_dir = 'find $HOME -maxdepth 1 -type d'
 
 " let g:netrw_winsize = 20
-command! FZFcd call fzf#run(fzf#wrap({'source': 'find ' . join(s:paths) . ' -type d;' ,
-                                      \ 'sink' : 'cd' }))
+" command! FZFcd call fzf#run(fzf#wrap({'source': 'find ' . join(s:paths) . ' -type d;' ,
+command! FZFcd call fzf#run(fzf#wrap({'source': 'find ' . join(s:paths) ,
+                                      \ 'sink' : 'cd' ,
+                                      \'down': '20%'}))
 
 
 command! FZFVifm call fzf#run(fzf#wrap({'source': 'find ' . join(s:paths) . ' -type d;' . s:home_dir,

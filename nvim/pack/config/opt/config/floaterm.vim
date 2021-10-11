@@ -5,3 +5,6 @@ let g:floaterm_opener = 'edit'
 " let g:floaterm_title = 'edit'
 
 nnoremap \ :FloatermNew vifm<CR>
+
+packadd vim-floaterm
+

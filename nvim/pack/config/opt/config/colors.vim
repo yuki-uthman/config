@@ -17,7 +17,7 @@ set background=dark
 " colorscheme badwolf
 " colorscheme challenger_deep
 " colorscheme desert-night
-colorscheme deus
+" colorscheme deus
 " colorscheme dracula
 " colorscheme embark
 " colorscheme gruvbox
@@ -70,6 +70,17 @@ colorscheme deus
 " "   Default: 237
 " " let g:seoul256_background = 234
 " " colorscheme seoul256
+
+let g:everforest_background = 'medium'
+packadd everforest
+colorscheme everforest
+
+" github
+" packadd github-nvim-theme
+" let g:github_function_style = "italic"
+" let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
+" colorscheme github_dimmed
+
 
 " " Ayu
 " " let ayucolor="light"  " for light version of theme

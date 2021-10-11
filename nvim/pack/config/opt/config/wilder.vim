@@ -2,11 +2,11 @@ packadd wilder.nvim
 
 call wilder#enable_cmdline_enter()
 set wildcharm=<Tab>
-cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-cmap <expr> <C-N> wilder#in_context() ? wilder#next() : "\<C-N>"
-cmap <expr> <C-J> wilder#in_context() ? wilder#next() : "\<C-J>"
-cmap <expr> <C-P> wilder#in_context() ? wilder#previous() : "\<C-P>"
-cmap <expr> <C-K> wilder#in_context() ? wilder#previous() : "\<C-K>"
+" cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+" cmap <expr> <C-N> wilder#in_context() ? wilder#next() : "\<C-N>"
+cnoremap <expr> <C-J> wilder#in_context() ? wilder#next() : "\<C-N>"
+" cmap <expr> <C-P> wilder#in_context() ? wilder#previous() : "\<C-P>"
+cnoremap <expr> <C-K> wilder#in_context() ? wilder#previous() : "\<C-P>"
 call wilder#set_option('modes', [':'])
 
 
@@ -47,5 +47,36 @@ call wilder#set_option('pipeline', [
       \     }),
       \   ),
       \ ])
+
+" call wilder#setup({
+"       \ 'modes': [':', '/', '?'],
+"       \ 'next_key': '<C-W>',
+"       \ 'previous_key': '<S-Tab>',
+"       \ 'accept_key': '<Down>',
+"       \ 'reject_key': '<Up>',
+"       \ })
+
+cnoremap <C-T> <C-\>e(<SID>toggle())<CR>
+
+
+function! s:toggle() abort
+  let cmdlineBeforeCursor = strpart(getcmdline(), 0, getcmdpos() - 1)
+  
+  call wilder#toggle()
+
+  if wilder#in_context()
+    call wilder#next()
+
+  endif
+
+  call setcmdpos(strlen(cmdlineBeforeCursor) + 1)
+  return cmdlineBeforeCursor
+
+endfunc
+
+augroup wilder_command_window
+    autocmd!
+    autocmd CmdwinEnter * nnoremap <expr> <C-T> <SID>toggle()
+augroup END
 
 

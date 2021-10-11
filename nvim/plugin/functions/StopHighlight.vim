@@ -3,6 +3,7 @@ noremap! <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 
 fu! HlSearch()
     let s:pos = match(getline('.'), @/, col('.') - 1) + 1
+    " echom s:pos . ' == ' . col('.') v:hlsearch
     if s:pos != col('.')
         call StopHL()
     endif
@@ -16,8 +17,8 @@ fu! StopHL()
     endif
 endfu
 
-augroup SearchHighlight
-au!
-    au CursorMoved * call HlSearch()
-    au InsertEnter * call StopHL()
-augroup end
+" augroup SearchHighlight
+" au!
+"     au CursorMoved * call HlSearch()
+"     au InsertEnter * call StopHL()
+" augroup end
