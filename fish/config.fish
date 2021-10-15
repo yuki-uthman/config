@@ -6,6 +6,7 @@ fish_add_path ~/.config/fish/bin
 
 # use curl from Homebrew
 fish_add_path /usr/local/opt/curl/bin
+fish_add_path /usr/bin
 
 # asdf
 source /usr/local/opt/asdf/asdf.fish
@@ -25,7 +26,7 @@ alias scratch='nvim -c "ZetNew "'(date +"%d/%B/%Y")'" :scratchpad"'
 
 alias gstatus='nvim -c Git'
 alias v='vifm'
-alias mv_screenshots='v ~/.zettel ~/Desktop'
+alias mv_screenshots='v . ~/Desktop'
 alias now='nvim ~/.zettel/now.md'
 alias edit_deadlines='nvim ~/.zettel/deadlines.txt'
 
