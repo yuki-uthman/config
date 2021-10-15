@@ -11,9 +11,9 @@ karabiner
 mutt
 now.md
 nvim/.netrwhist
-nvim/pack/
 ranger
 tmux/plugins/
 tmuxinator/
 vifminfo
-nvim/config/packs/bitly.vim
+nvim/pack/config/opt/config/bitly.vim
+
