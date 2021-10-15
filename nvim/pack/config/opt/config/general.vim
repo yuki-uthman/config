@@ -5,16 +5,16 @@ let g:python_host_prog  = '/usr/bin/python'
 set rtp+=~/.fzf
 
 " set config files directories 
-set path+=~/.config/nvim/
+set path+=~/.config/nvim/*.vim
 set path+=~/.config/nvim/lua/
 set path+=~/.config/nvim/lua/**/*
-set path+=~/.config/nvim/pack/mine/opt/**/*
-set path+=~/.config/nvim/after/ftplugin/
-set path+=~/.config/nvim/config/general/
-set path+=~/.config/nvim/pack/config/opt/config/
-set path+=~/.config/nvim/plugin/
+set path+=~/.config/nvim/pack/local/opt/**/*
+set path+=~/.local/share/nvim/site/pack/local/opt/**/*
+set path+=~/.config/nvim/pack/config/opt/config
+set path+=~/.config/nvim/plugin/*.vim
 set path+=~/.config/nvim/vsnip/
 
+" {{{ ruby
 " set directories for Rails
 set path+=$PWD/app/**
 set path+=$PWD/db/**
@@ -24,7 +24,10 @@ set path+=$PWD/test/**
 set wildignore+=**/node_modules/** 
 set wildignore+=**/.git/** 
 
+" }}}
+
 set dictionary+=~/.config/nvim/dict/words
+set dictionary+=/usr/share/dict/words
 set dictionary+=~/.config/nvim/dict/words_cap
 set dictionary+=~/.config/nvim/dict/info
 

@@ -1,6 +1,8 @@
 
 require'nvim-treesitter.configs'.setup {
+
   ensure_installed = {"vim", "lua", "rust", "ruby"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+
   highlight = {
     enable = true,              -- false will disable the whole extension
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
@@ -13,10 +15,10 @@ require'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = ",,",
-      node_incremental = ",f",
+      init_selection = "g,",
+      node_incremental = "<C-K>",
+      node_decremental = "<C-J>",
       scope_incremental = ",s",
-      node_decremental = ",d",
     },
   },
 
@@ -85,5 +87,11 @@ require'nvim-treesitter.configs'.setup {
 
   },
 
-
 }
+
+vim.api.nvim_exec([[
+  set foldmethod=expr
+  set foldexpr=nvim_treesitter#foldexpr()
+]], true)
+
+

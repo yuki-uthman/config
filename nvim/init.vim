@@ -13,6 +13,8 @@ runtime OPT autopairs.vim
 runtime OPT cmdregisters.vim
 runtime OPT words_search.vim
 
+lua require 'utility'
+
 " }}}
 
 " {{{ github
@@ -21,7 +23,7 @@ runtime OPT cutlass.vim
 runtime OPT decho.vim
 runtime OPT floaterm.vim
 runtime OPT fzf.vim
-" runtime OPT nvim-fzf.vim
+packadd fzf-lua
 runtime OPT lightspeed.vim
 runtime OPT maximizer.vim
 runtime OPT netrw.vim
@@ -46,12 +48,16 @@ runtime OPT wilder.vim
 " treesitter
 runtime OPT nvim-treesitter.vim
 
+packadd fzf-lsp.nvim
+packadd nvim-lspfuzzy
+lua require('lspfuzzy').setup {}
 
 " }}}
 
 " {{{ My plugin
 runtime OPT n_flasher.vim
 runtime OPT vimpad.vim
+runtime OPT fzf-dictionary.vim
 
 packadd vim-scroller
 packadd vim-star-flasher

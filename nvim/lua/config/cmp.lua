@@ -71,7 +71,6 @@ cmp.setup {
       completeopt = 'menu,menuone,noinsert'
     },
 
-
     mapping = {
         ['<Down>'] = cmp.mapping.scroll_docs(2),
         ['<Up>'] = cmp.mapping.scroll_docs(-2),
@@ -111,7 +110,6 @@ cmp.setup {
           end
         end, { "i", "s", }),
 
-
         ["<Tab>"] = cmp.mapping(function(fallback)
           if vim.fn["vsnip#available"]() == 1 then
             feedkey("<Plug>(vsnip-expand)", "")
@@ -134,20 +132,23 @@ cmp.setup {
 
         ["<C-K>"] = cmp.mapping(function(fallback)
           if vim.fn.pumvisible() == 1 then
-            cmp.select_prev_item()
+            -- cmp.select_prev_item()
+            feedkey("<C-P>", "n")
 
           elseif has_words_before() then
-            vim.fn['OpenDictionary']()
-
-          else
-            fallback()
+            feedkey("<Plug>(fzf-dictionary-open)", "")
 
           end
-        end, { "i", "s" }
-        ),
+        end, { "i", "s" }),
 
         ["<C-O>"] = cmp.mapping(function(fallback)
           if has_words_before() then
+            cmp.setup.buffer {
+
+              sources = {
+                {name = 'look'}
+              }
+            }
             cmp.complete()
           end
 

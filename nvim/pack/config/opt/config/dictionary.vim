@@ -7,7 +7,11 @@ endfunction
 
 function! OpenDictionary() abort
 
-  let cmd = "rg -I '' " .. join(split(&dictionary, ','))
+  let word = s:get_previous_word()
+
+  " -I no file name 
+  " -s case-sensitive
+  let cmd = "rg -I --case-sensitive '" .. word .. "' " .. join(split(&dictionary, ','))
 
   let height = 8
   let width = 20
@@ -16,13 +20,21 @@ function! OpenDictionary() abort
   let col = wincol()
   let yoffset =  ( line - 1.0 ) / (&lines - height)
   
-  let len = len(s:get_previous_word())
+  let len = len(word)
   let xoffset =  ( col - 3.0 - len ) / (&columns - width)
 
   let reverse = v:false
   if yoffset > 1
     let reverse = v:true
     let yoffset =  ( line - height - 0.0 ) / (&lines - height)
+  endif
+
+  " +i case sensitive flag for fzf
+  " let options = ['+i']
+  let options = []
+
+  if reverse
+    call extend(options, ['--layout=default'] )
   endif
 
   let window = #{
@@ -34,12 +46,9 @@ function! OpenDictionary() abort
 
   let dict = #{
         \source: cmd,
-        \window: window
+        \window: window,
+        \options: options
         \}
-
-  if reverse
-    call extend(dict, #{options: '--layout=default'} )
-  endif
 
    call fzf#vim#complete(cmd, dict)
 endfunc
