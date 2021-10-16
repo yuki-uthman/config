@@ -9,53 +9,13 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-local check_back_space = function()
-    local col = vim.fn.col(".") - 1
-    return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
-end
-
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(
     vim.api.nvim_replace_termcodes(key, true, true, true),
     mode, true)
 end
 
--- vim.cmd [[packadd lspkind-nvim]]
--- vim.cmd [[packadd cmp-tabnine]]
-
--- local source_mapping = {
--- 	cmp_tabnine = "[TN]",
--- }
-
--- local tabnine = require('cmp_tabnine.config')
--- tabnine:setup({
---         max_lines = 1000;
---         max_num_results = 20;
---         sort = true;
--- 	run_on_every_keystroke = true;
--- 	snippet_placeholder = '🚀';
--- })
-
--- local lspkind = require 'lspkind'
-
 cmp.setup {
-
-    -- formatting = {
-    --   format = function(entry, vim_item)
-    --     vim_item.kind = lspkind.presets.default[vim_item.kind]
-    --     local menu = source_mapping[entry.source.name]
-    --     if entry.source.name == 'cmp_tabnine' then
-    --       if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-    --         menu = entry.completion_item.data.detail
-    --       end
-    --       vim_item.kind = '⚡️'
-    --     end
-    --     vim_item.menu = menu
-    --     return vim_item
-    --   end
-    -- },
-
-
 
     formatting = {
         format = function(entry, vim_item)
@@ -205,9 +165,3 @@ cmp.setup {
 
 }
 
--- Autopairs
--- require("nvim-autopairs.completion.cmp").setup({
---     map_cr = true,
---     map_complete = true,
---     auto_select = true
--- })
