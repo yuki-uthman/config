@@ -8,6 +8,14 @@
 
 " {{{ Normal
 
+" {{{ Disable 
+
+nnoremap s <Nop>
+nnoremap <C-e> <Nop>
+nnoremap <C-y> <Nop>
+
+" }}}
+
 " => Jump {{{
 
 " nnoremap <expr> ; getcharsearch().forward ? ';' : ','
@@ -54,9 +62,6 @@ nnoremap <nowait> <silent> _ :resize -1<CR>
 " move window up/down/right/left
 nnoremap <C-k> <C-y>
 nnoremap <C-j> <C-e>
-
-nnoremap <C-e> <Nop>
-nnoremap <C-y> <Nop>
 
 " nnoremap <c-l> :normal! zl<CR>zlzl
 " nnoremap <c-h> :normal! zh<CR>zhzh

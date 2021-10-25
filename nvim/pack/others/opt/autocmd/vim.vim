@@ -1,6 +1,4 @@
 
-" echom "entered vim file"
-
 " fold based on marker 
 setlocal foldmethod=marker
 
@@ -24,6 +22,8 @@ packadd vim-lookup
 
 runtime config/packs/decho.vim
 packadd decho
+
+
 
 " packadd vim-markbar
 

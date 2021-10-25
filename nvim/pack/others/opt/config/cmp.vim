@@ -1,5 +1,5 @@
 " cmp 
-packadd nvim-cmp
+packadd nvim-cmp.new
 
 " cmp source
 packadd cmp-nvim-lsp

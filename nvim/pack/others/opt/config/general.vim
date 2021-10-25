@@ -27,7 +27,6 @@ set wildignore+=**/.git/**
 " }}}
 
 set dictionary+=~/.config/nvim/dict/words
-set dictionary+=/usr/share/dict/words
 set dictionary+=~/.config/nvim/dict/words_cap
 set dictionary+=~/.config/nvim/dict/info
 

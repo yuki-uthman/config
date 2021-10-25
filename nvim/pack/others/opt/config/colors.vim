@@ -54,9 +54,9 @@ set background=dark
 " " colorscheme monokai
 
 " " Gruvbox
-" " packadd gruvbox
-" " let g:gruvbox_contrast_dark='medium'
-" " colorscheme gruvbox
+" packadd gruvbox
+" let g:gruvbox_contrast_dark='medium'
+" colorscheme gruvbox
 
 " " Sonokai
 " " packadd sonokai
@@ -71,9 +71,10 @@ set background=dark
 " " let g:seoul256_background = 234
 " " colorscheme seoul256
 
-let g:everforest_background = 'medium'
-packadd everforest
-colorscheme everforest
+" everforest
+" let g:everforest_background = 'medium'
+" packadd everforest
+" colorscheme everforest
 
 " github
 " packadd github-nvim-theme
@@ -91,6 +92,9 @@ colorscheme everforest
 " Tokyonight.nvim
 " let g:tokyonight_style = "storm"
 " let g:tokyonight_italic_functions = 1
-
 " packadd tokyonight.nvim
 " colorscheme tokyonight
+
+" Palenight.nvim
+packadd palenight.nvim
+colorscheme palenight

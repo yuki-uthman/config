@@ -35,10 +35,4 @@ packadd vim-medieval
 
 packadd vim-textobj-url
 
-lua require('cmp').setup.buffer { 
-\   sources = {
-\     { name = 'buffer' },
-\     { name = 'look' },
-\   },
-\ }
-
+lua require('config/markdown')

@@ -1,4 +1,5 @@
 
+
 function! s:words(...) abort
   
   let words = copy(a:000)
@@ -12,7 +13,8 @@ function! s:words(...) abort
   let string = '\V\(\^\s\*\zs\.\*'
   let string ..= join(words, '\.\{-}')
   let string ..= '\.\*\)\|'
-
+  
+  " TODO permutations not only reverse
   let words = reverse(words)
   " let string ..= '\(\^\.\*'
   " let string ..= '\(\^\s\*\zs\.\*'

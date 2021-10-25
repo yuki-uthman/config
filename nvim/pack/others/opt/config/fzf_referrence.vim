@@ -43,17 +43,6 @@ inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
 
-" You can keep selecting the words inside FZF
-" The first word would be capitalized
-" period would be added after the last word chosen
-inoremap <expr> <c-x><c-s> fzf#vim#complete({
-  \ 'source':  'cat /usr/share/dict/words',
-  \ 'reducer': function('<sid>make_sentence'),
-  \ 'options': '--multi --reverse --margin 10%,0',
-  \ 'left':    20})
-
-
-
 " Custom
 
 command! -bang -nargs=* Rg
@@ -135,6 +124,28 @@ function! s:make_sentence(lines)
   return substitute(join(a:lines), '^.', '\=toupper(submatch(0))', '').'.'
 endfunction
 
+" You can keep selecting the words inside FZF
+" The first word would be capitalized
+" period would be added after the last word chosen
+inoremap <expr> <c-q> fzf#vim#complete({
+  \ 'source':  'cat /usr/share/dict/words',
+  \ 'reducer': function('<sid>make_sentence'),
+  \ 'options': '--multi --reverse --margin 10%,0',
+  \ 'down':    13})
+
+function! s:make_sentence(lines)
+  return substitute(join(a:lines), '^.', '\=toupper(submatch(0))', '').'.'
+endfunction
+                                                            
+function! Tab() abort
+  call feedkeys("\<tab>\<C-u>", "n")
+endfunc
+
+inoremap <tab> <cmd>call Tab()<CR>
+
+
+" inoremap <expr> <c-q> fzf#vim#complete('cat /usr/share/dict/words')
+
 " Better command history with q:
 " command! CmdHist call fzf#vim#command_history({'right': '40'})
 " nnoremap q: :CmdHist<CR>
@@ -165,4 +176,7 @@ endfunction
 " endfunction
 
 " inoremap <silent> <tab> <c-o>:call TabComplete()<cr>
+
+
+
 

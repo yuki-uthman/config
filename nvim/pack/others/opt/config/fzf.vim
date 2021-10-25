@@ -52,3 +52,23 @@ command! FZFJumps call fzf#run(fzf#wrap({
         \ 'sink': function('GoToJump')}))
 
 " /Users/Yuki/.config/nvim/pack/minpac/start/fzf.vim/doc/fzf-vim.txt:108
+
+
+function! s:fzf_help() abort
+  let list = split(globpath(&rtp, 'doc/*.txt'))
+
+  let cmd = "rg -I '' " .. join(list)
+
+  let dict = #{
+        \source: cmd,
+        \sink: 'edit'}
+
+  call fzf#run(dict)
+  
+endfunc
+
+
+
+
+
+

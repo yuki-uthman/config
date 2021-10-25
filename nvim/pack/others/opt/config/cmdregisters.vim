@@ -15,10 +15,11 @@ function! s:open() abort
 
   let cmd = getcmdline()
 
-  call feedkeys("\<Esc>", 'n')
+  call feedkeys("\<C-U>\<C-C>", 'n')
 
   let height = len(s:registers)
   let s:float = float#create()
+        \.as_scratch()
         \.size(height, 0.7)
         \.align_bottom()
         \.right(0.5)
@@ -42,4 +43,5 @@ function! s:close(id) abort
 endfunc
 
 cnoremap <C-R> <Cmd>call <SID>open()<CR>
+
 
