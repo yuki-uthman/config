@@ -1,7 +1,7 @@
 
 let s:float = {}
 let s:cmdreg_timer = 0
-let s:registers = [0, 1, 2, 'a', 'b', 'c']
+let s:registers = ['b', 'f', 's']
 
 function! s:format(index, value) abort
   return ' ' .. a:value .. ' :' .. getreg(a:value)
@@ -20,7 +20,8 @@ function! s:open() abort
   let height = len(s:registers)
   let s:float = float#create()
         \.as_scratch()
-        \.size(height, 0.7)
+        \.border('double')
+        \.size(height, 0.5)
         \.align_bottom()
         \.right(0.5)
         \.open()
@@ -28,6 +29,8 @@ function! s:open() abort
   let formatted = map(copy(s:registers), function('s:format'))
 
   call s:float.write(0, formatted)
+
+  set winhighlight=Normal:Pmenu
 
   call feedkeys(':'.. cmd .."\<C-R>", 'n')
 
