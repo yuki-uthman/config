@@ -1,10 +1,20 @@
 
 let s:float = {}
 let s:cmdreg_timer = 0
-let s:registers = ['b', 'f', 's']
+let s:registers = ['n', 'b', 'f']
 
 function! s:format(index, value) abort
-  return ' ' .. a:value .. ' :' .. getreg(a:value)
+  return ' @' .. a:value .. ' = |' .. getreg(a:value) .. '| '
+endfunc
+
+function! s:width(list) abort
+  let max = 0
+  for item in a:list
+    if strlen(item) > max
+      let max = strlen(item)
+    end
+  endfor
+  return max
 endfunc
 
 function! s:open() abort
@@ -18,15 +28,19 @@ function! s:open() abort
   call feedkeys("\<C-U>\<C-C>", 'n')
 
   let height = len(s:registers)
+
+  let formatted = map(copy(s:registers), function('s:format'))
+  let width = s:width(formatted)
+
   let s:float = float#create()
         \.as_scratch()
         \.border('double')
-        \.size(height, 0.5)
+        \.size(height, width)
         \.align_bottom()
-        \.right(0.5)
+        \.align_right()
+        \.left(3)
         \.open()
 
-  let formatted = map(copy(s:registers), function('s:format'))
 
   call s:float.write(0, formatted)
 

@@ -1,97 +1,75 @@
 
-command! PackUpdate call PackInit() | call minpac#update()
-command! PackClean  call PackInit() | call minpac#clean()
+command! MinUpdate call s:minpac_init() | call minpac#update()
+command! MinClean  call s:minpac_init() | call minpac#clean()
 
-function! PackInit() abort
+function! s:minpac_init() abort
 
   packadd minpac
 
   call minpac#init({'dir': expand('~/.local/share/nvim/site')})
 
-  " tpope
-  call minpac#add('tpope/vim-commentary')
-  call minpac#add('tpope/vim-endwise' , { 'type' : 'opt' })
-  call minpac#add('tpope/vim-scriptease' , { 'type' : 'opt' })
-  call minpac#add('tpope/vim-fugitive')
-  call minpac#add('tpope/vim-surround')
-  call minpac#add('tpope/vim-unimpaired')
-  call minpac#add('tpope/vim-repeat')
-
-  " Editor
-  call minpac#add('dense-analysis/ale', { 'type' : 'opt' } )
-  call minpac#add('easymotion/vim-easymotion', { 'type' : 'opt' })
-  call minpac#add('junegunn/fzf.vim')
-  call minpac#add('junegunn/vim-easy-align', { 'type' : 'opt' })
-  call minpac#add('junegunn/vim-peekaboo')
-  call minpac#add('machakann/vim-highlightedyank')
-  call minpac#add('machakann/vim-swap')
-  call minpac#add('metakirby5/codi.vim', { 'type' : 'opt' } )
-  call minpac#add('preservim/tagbar')
-  call minpac#add('vim-test/vim-test', { 'type' : 'opt' } )
-  call minpac#add('wellle/targets.vim', { 'type' : 'opt' })
-  call minpac#add('gelguy/wilder.nvim', { 'type' : 'opt' })
-  call minpac#add('ggandor/lightspeed.nvim', { 'type' : 'opt' })
-  call minpac#add('romainl/vim-cool', { 'type' : 'opt' })
-  call minpac#add('szw/vim-maximizer', { 'type' : 'opt' })
-  call minpac#add('voldikss/vim-floaterm', { 'type' : 'opt' })
-
-  " Text Object
-  call minpac#add('kana/vim-textobj-user')
-  call minpac#add('leonB/vim-textobj-url', { 'type' : 'opt' })
-
-  " Library
-  call minpac#add('google/vim-maktaba', { 'type' : 'opt' })
-  call minpac#add('LucHermitte/lh-vim-lib', {'type' : 'opt' })
-  call minpac#add('LucHermitte/lh-brackets', {'type' : 'opt' })
-  call minpac#add('vim-jp/vital.vim', {'type' : 'opt' })
-  call minpac#add('inkarkat/vim-ingo-library', {'type' : 'opt' })
-  call minpac#add('mattn/webapi-vim', {'type' : 'opt' })
-  call minpac#add('sillybun/vim-async', { 'type' : 'opt' })
-
-  " Vimscript
-  call minpac#add('junegunn/vader.vim', { 'type' : 'opt' })
-
-  " Various searcher
-  call minpac#add('tomtom/tselectbuffer_vim', {'type' : 'opt' })
-  call minpac#add('pechorin/any-jump.vim', {'type' : 'opt' })
-  call minpac#add('mhinz/vim-lookup', {'type' : 'opt' })
-  call minpac#add('Shougo/denite.nvim', {'type' : 'opt' })
-  call minpac#add('kien/ctrlp.vim', {'type' : 'opt' })
-
-  " Chris Toomey
-  call minpac#add('inkarkat/vim-ReplaceWithRegister', { 'type' : 'opt' })
-  call minpac#add('svermeulen/vim-cutlass', { 'type' : 'opt' })
-  call minpac#add('christoomey/vim-tmux-navigator')
-  call minpac#add('christoomey/vim-tmux-runner')
-
-  " snippets
-  " call minpac#add('garbas/vim-snipmate')
-  " call minpac#add('MarcWeber/vim-addon-mw-utils')
-  " call minpac#add('tomtom/tlib_vim')
-  call minpac#add('hrsh7th/vim-vsnip', { 'type' : 'opt' })
-
-  " Ruby
-  call minpac#add('tpope/vim-rails', { 'type' : 'opt' })
-  call minpac#add('vim-ruby/vim-ruby', { 'type' : 'opt' })
-  call minpac#add('nelstrom/vim-textobj-rubyblock', { 'type' : 'opt' })
-
-  " Rust
-  call minpac#add('rust-lang/rust.vim', { 'type' : 'opt' })
-
-  " Javascript
-  call minpac#add('yuezk/vim-js', { 'type' : 'opt' })
-
-  " Dart
-  call minpac#add('dart-lang/dart-vim-plugin')
-
-  " HTML & CSS
-  call minpac#add('mattn/emmet-vim', { 'type' : 'opt' })
-  call minpac#add('chrisbra/Colorizer')
-
-  " Markdown
-  call minpac#add('junegunn/goyo.vim', { 'type' : 'opt' })
-  call minpac#add('gpanders/vim-medieval', { 'type' : 'opt' })
-
+  call minpac#add('BetterLua.vim', #{ type : 'opt'})
+  call minpac#add('Decho', #{ type: 'opt'})
+  call minpac#add('any-jump.vim', #{ type : 'opt'})
+  call minpac#add('cmp-buffer', #{ type : 'opt'})
+  call minpac#add('cmp-nvim-lsp', #{ type : 'opt'})
+  call minpac#add('cmp-nvim-lua', #{ type : 'opt'})
+  call minpac#add('cmp-path', #{ type : 'opt'})
+  call minpac#add('cmp-vsnip', #{ type : 'opt'})
+  call minpac#add('codi.vim', #{ type : 'opt'})
+  call minpac#add('everforest', #{ type : 'opt'})
+  call minpac#add('float.nvim', #{ type : 'opt'})
+  call minpac#add('fzf-lsp.nvim', #{ type : 'opt'})
+  call minpac#add('fzf.vim', #{ type : 'opt'})
+  call minpac#add('goyo.vim', #{ type : 'opt'})
+  call minpac#add('lspkind-nvim', #{ type : 'opt'})
+  call minpac#add('lua-dev.nvim', #{ type : 'opt'})
+  call minpac#add('nvim-cmp', #{ type : 'opt'})
+  call minpac#add('nvim-colorizer.lua', #{ type : 'opt'})
+  call minpac#add('nvim-fzf', #{ type : 'opt'})
+  call minpac#add('nvim-lspconfig', #{ type : 'opt'})
+  call minpac#add('nvim-lspfuzzy', #{ type : 'opt'})
+  call minpac#add('nvim-luapad', #{ type : 'opt'})
+  call minpac#add('nvim-treesitter', #{ type : 'opt'})
+  call minpac#add('nvim-treesitter-textobjects', #{ type : 'opt'})
+  call minpac#add('nvim-treesitter-textsubjects', #{ type : 'opt'})
+  call minpac#add('registers.nvim', #{ type : 'opt'})
+  call minpac#add('tagbar', #{ type : 'opt'})
+  call minpac#add('targets.vim', #{ type : 'opt'})
+  call minpac#add('vim-ReplaceWithRegister', #{ type : 'opt'})
+  call minpac#add('vim-async', #{ type : 'opt'})
+  call minpac#add('vim-commentary', #{ type : 'opt'})
+  call minpac#add('vim-cool', #{ type : 'opt'})
+  call minpac#add('vim-cutlass', #{ type : 'opt'})
+  call minpac#add('vim-easy-align', #{ type : 'opt'})
+  call minpac#add('vim-easymotion', #{ type : 'opt'})
+  call minpac#add('vim-endwise', #{ type : 'opt'})
+  call minpac#add('vim-floaterm', #{ type : 'opt'})
+  call minpac#add('vim-fugitive', #{ type : 'opt'})
+  call minpac#add('vim-highlightedyank', #{ type : 'opt'})
+  call minpac#add('vim-js', #{ type : 'opt'})
+  call minpac#add('vim-lookup', #{ type : 'opt'})
+  call minpac#add('vim-lua', #{ type : 'opt'})
+  call minpac#add('vim-maktaba', #{ type : 'opt'})
+  call minpac#add('vim-maximizer', #{ type : 'opt'})
+  call minpac#add('vim-medieval', #{ type : 'opt'})
+  call minpac#add('vim-peekaboo', #{ type : 'opt'})
+  call minpac#add('vim-rails', #{ type : 'opt'})
+  call minpac#add('vim-repeat', #{ type : 'opt'})
+  call minpac#add('vim-ruby', #{ type : 'opt'})
+  call minpac#add('vim-scriptease', #{ type : 'opt'})
+  call minpac#add('vim-surround', #{ type : 'opt'})
+  call minpac#add('vim-swap', #{ type : 'opt'})
+  call minpac#add('vim-test', #{ type : 'opt'})
+  call minpac#add('vim-textobj-rubyblock', #{ type : 'opt'})
+  call minpac#add('vim-textobj-url', #{ type : 'opt'})
+  call minpac#add('vim-textobj-user', #{ type : 'opt'})
+  call minpac#add('vim-tmux-navigator', #{ type : 'opt'})
+  call minpac#add('vim-tmux-runner', #{ type : 'opt'})
+  call minpac#add('vim-unimpaired', #{ type : 'opt'})
+  call minpac#add('vim-vsnip', #{ type : 'opt'})
+  call minpac#add('vim-vsnip-integ', #{ type : 'opt'})
+  call minpac#add('wilder.nvim', #{ type : 'opt'})
 
 endfunction
 

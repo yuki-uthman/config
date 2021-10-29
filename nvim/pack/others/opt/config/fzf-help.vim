@@ -13,7 +13,7 @@ function! s:sink(line) abort
   return 
 endfunc
 
-function! s:fzf_help() abort
+function! s:fzf_help(cword) abort
 
   let list = split(globpath(&rtp, 'doc/*.txt'))
 
@@ -29,7 +29,7 @@ function! s:fzf_help() abort
 
   let word = expand('<cword>')
 
-  if !empty(word)
+  if !empty(word) && a:cword
     let options ..= ' --query ' ..word
   end
 
@@ -63,5 +63,4 @@ function! s:fzf_help() abort
   call fzf#run(spec)
 endfunc
 
-
-nnoremap H :call <SID>fzf_help()<CR>
+nnoremap H :call <SID>fzf_help(0)<CR>

@@ -1,4 +1,3 @@
-vim.cmd [[runtime OPT dictionary.vim]]
 local cmp = require('cmp')
 
 local has_words_before = function()
@@ -34,41 +33,31 @@ cmp.setup {
     mapping = {
         ['<Down>'] = cmp.mapping.scroll_docs(2),
         ['<Up>'] = cmp.mapping.scroll_docs(-2),
-
-        ["<CR>"] = cmp.mapping(function(fallback)
-          if vim.fn.complete_info().selected == -1 then
-
-            if vim.fn.pumvisible() == 1 then
-              -- feedkey("<C-E>", "n")
-              cmp.close()
-            end
-
-            feedkey("<C-G>u", "n")
-            feedkey("<CR>", "n")
-            feedkey("<Plug>DiscretionaryEnd", "")
-
-          else
-            cmp.confirm()
-
-          end
-        end, { "i", "s", }),
-
+    
         ["<C-M>"] = cmp.mapping(function(fallback)
-          if vim.fn.complete_info().selected == -1 then
-            if vim.fn.pumvisible() == 1 then
-              -- feedkey("<C-E>", "n")
-              cmp.close()
-            end
-
-            feedkey("<C-G>u", "n")
-            feedkey("<CR>", "n")
-            feedkey("<Plug>DiscretionaryEnd", "")
+          local selected = cmp.core.view:get_selected_entry()
+          if selected then
+            cmp.confirm({ select = true })
 
           else
-            cmp.confirm()
+            feedkey("<C-g>u<CR>", "n")
+            feedkey("<Plug>DiscretionaryEnd", "")
 
           end
+
         end, { "i", "s", }),
+
+        ["<C-F>"] = cmp.mapping(function(fallback)
+          local selected = cmp.core.view:get_selected_entry()
+          if selected then
+            cmp.confirm({ select = true })
+
+          else
+            feedkey("<C-F>", "n")
+
+          end
+
+        end, { "i" }),
 
         ["<Tab>"] = cmp.mapping(function(fallback)
           if vim.fn["vsnip#available"]() == 1 then
@@ -82,6 +71,7 @@ cmp.setup {
                   {name = 'nvim_lsp'}
                 }
               }
+
               cmp.complete()
             else
               feedkey("<Tab>", "n")
@@ -90,10 +80,11 @@ cmp.setup {
           end
         end, { "i", "s" }),
 
+        ["<C-J>"] = cmp.mapping.select_next_item(),
         ["<C-K>"] = cmp.mapping(function(fallback)
-          if vim.fn.pumvisible() == 1 then
-            -- cmp.select_prev_item()
-            feedkey("<C-P>", "n")
+          if cmp.visible() then
+            cmp.select_prev_item()
+            -- feedkey("<C-P>", "n")
 
           elseif has_words_before() then
             feedkey("<Plug>(fzf-dictionary-open)", "")
@@ -101,30 +92,18 @@ cmp.setup {
           end
         end, { "i", "s" }),
 
-        ["<C-O>"] = cmp.mapping(function(fallback)
-          if has_words_before() then
-            cmp.setup.buffer {
-
-              sources = {
-                {name = 'look'}
-              }
-            }
-            cmp.complete()
-          end
-
-        end, { "i", "s" }
-        ),
-
-        -- ["<C-Q>"] = cmp.mapping(function(fallback)
+        -- ["<C-O>"] = cmp.mapping(function(fallback)
         --   if has_words_before() then
-        --     fzf.open_dict()
+        --     cmp.setup.buffer {
 
-        --   else
-        --     fzf.open_dict()
-
+        --       sources = {
+        --         {name = 'look'}
+        --       }
+        --     }
+        --     cmp.complete()
         --   end
 
-        -- end, { "i" }
+        -- end, { "i", "s" }
         -- ),
 
         ["<C-N>"] = cmp.mapping(function(fallback)
@@ -139,22 +118,6 @@ cmp.setup {
         end, { "i", "s" }
         ),
 
-
-        ["<C-P>"] = cmp.mapping(function(fallback)
-          if vim.fn.pumvisible() == 1 then
-            cmp.select_prev_item()
-
-          elseif has_words_before() then
-            feedkey("<C-X>", "n")
-            feedkey("<C-F>", "n")
-          else
-            feedkey("<C-P>", "n")
-
-          end
-        end, { "i", "s" }
-        ),
-
-
       },
 
     snippet = {
@@ -162,6 +125,12 @@ cmp.setup {
         vim.fn["vsnip#anonymous"](args.body)
       end,
     },
+
+    experimental = {
+      native_menu = false,
+      ghost_text = true,
+    },
+
 
 }
 

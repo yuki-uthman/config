@@ -120,13 +120,19 @@
                 [:semicolon [:!Osemicolon]]
 
                 ;; next pane
-                [:n [:!Ts :o]]
+                [:i [:!Ts :o]]
                 ;; previous pane
-                [:p [:!Ts :i]]
+                [:o [:!Ts :i]]
+
+                ;; pane
+                ;;[:y :!Oh]
+                ;;[:u :!Oj]
+                ;;[:i :!Ok]
+                ;;[:o :!Ol]
 
                 ;; split
                 [:backslash [:!Ts :!Tv] :terminal]
-                [:hyphen [:!Ts :!Th] :terminal]
+                [:hyphen [:!Ts :!Tn] :terminal]
 
                 ;; close pane
                 [:c :!Oc :terminal]
@@ -178,6 +184,10 @@
 
         {:des "symbol mode"
         :rules [:z-layer
+
+                ;; for zettel keybinding
+                [:o [:z :o]]
+                [:n [:z :n]]
 
                 ;; =
                 [:j :equal_sign]

@@ -5,20 +5,15 @@ let g:python_host_prog  = '/usr/bin/python'
 set rtp+=~/.fzf
 
 " set config files directories 
-set path+=~/.config/nvim/*.vim
-set path+=~/.config/nvim/lua/
-set path+=~/.config/nvim/lua/**/*
-set path+=~/.config/nvim/pack/local/opt/**/*
+set path=~/.config/nvim/**
+set path+=~/.config/nvim/**/*
 set path+=~/.local/share/nvim/site/pack/local/opt/**/*
-set path+=~/.config/nvim/pack/config/opt/config
-set path+=~/.config/nvim/plugin/*.vim
-set path+=~/.config/nvim/vsnip/
 
 " {{{ ruby
 " set directories for Rails
-set path+=$PWD/app/**
-set path+=$PWD/db/**
-set path+=$PWD/test/**
+" set path+=$PWD/app/**
+" set path+=$PWD/db/**
+" set path+=$PWD/test/**
 
 " ignore node_modules in rails project
 set wildignore+=**/node_modules/** 

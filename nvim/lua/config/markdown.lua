@@ -9,22 +9,13 @@ cmp.setup.buffer{
     },
     completeopt = 'menu,menuone,noselect',
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
-    keyword_length = 4,
+    keyword_length = 1,
   },
 
-
-  comparators = {
-    cmp.config.compare.length,
-    cmp.config.compare.score,
-    cmp.config.compare.offset,
-    cmp.config.compare.exact,
-    cmp.config.compare.kind,
-    cmp.config.compare.sort_text,
-    cmp.config.compare.order,
-  },
+  -- preselect = types.cmp.PreselectMode.Item,
 
   sources = {
-    {name = 'look'}
+    {name = 'buffer'}
   }
 }
 

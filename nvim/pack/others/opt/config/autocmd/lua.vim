@@ -2,7 +2,6 @@
 set completeopt=menu,menuone
 setlocal formatoptions-=o
 
-
 nnoremap <buffer> <leader>r :luafile %<esc>
 
 packadd nvim-luapad

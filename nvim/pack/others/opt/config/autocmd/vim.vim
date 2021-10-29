@@ -1,6 +1,7 @@
 
 " fold based on marker 
 setlocal foldmethod=marker
+setlocal formatoptions-=o
 
 " save and run vim file 
 nnoremap <silent><buffer> <leader>r :so %<CR>
@@ -17,10 +18,7 @@ function! s:show_documentation()
 endfunction
 
 
-runtime config/packs/lookup.vim
-packadd vim-lookup
-
-runtime config/packs/decho.vim
+runtime OPT lookup.vim
 packadd decho
 
 

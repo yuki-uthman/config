@@ -1,0 +1,1 @@
+/Users/Yuki/.fzf/shell/key-bindings.fish
