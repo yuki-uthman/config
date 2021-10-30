@@ -1,0 +1,14 @@
+
+name: codewars
+root: ~/Programming/rust/codewars
+
+windows:
+  - main:
+      layout: main-horizontal
+      panes:
+        - nvim
+        - cargo test
+  - bench: 
+  - test: nvim test.rs
+  - snippet: nvim ~/.config/nvim/snippets/rust.snippets
+  - tx: nvim ~/.config/tmuxinator/codewars.yml

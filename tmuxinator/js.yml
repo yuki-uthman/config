@@ -1,0 +1,15 @@
+# /Users/Yuki/.config/tmuxinator/js.yml
+
+name: js
+root: ~/Programming/launch_school/JS101/small_problems/03_easy
+
+windows:
+  - editor:
+      panes:
+        - 
+  - test:
+      layout: main-horizontal
+      panes:
+        - 
+        -
+

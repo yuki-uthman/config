@@ -1,0 +1,16 @@
+# /Users/Yuki/.config/tmuxinator/blog.yml
+
+name: blog
+root: ~/Programming/mamp/clone
+
+windows: 
+  - main:
+      layout: even-horizontal
+      panes:
+        -
+        -
+
+  - live-server:
+      - 
+
+

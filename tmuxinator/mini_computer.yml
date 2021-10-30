@@ -1,0 +1,25 @@
+name: mini_computer
+root: ~/Programming/ruby/gems/mini_computer
+
+windows:
+  - editor:
+      layout: even-horizontal
+      panes:
+        - cd lib;vifm .
+        - cd spec;vifm .
+
+  - gemspec: nvim mini_computer.gemspec
+
+  - snippets: nvim ~/.config/nvim/snippets/ruby.snippets
+
+  - guard: bundle exec guard
+
+  - pry: 
+      layout: main-horizontal
+      panes: 
+        - nvim pry.rb
+        - pry
+
+  - git:
+      pane:
+        - git status

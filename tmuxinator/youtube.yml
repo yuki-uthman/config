@@ -1,0 +1,32 @@
+name: youtube
+root: ~/
+
+windows:
+<% if @args[0] %>
+  - first:
+      root: ~/.local/share/nvim/site/pack/<%= @args[0] %>
+      panes:
+        -
+
+  - second:
+      root: ~/.local/share/nvim/site/pack/<%= @args[0] %>
+      panes:
+        -
+
+<% else %>
+  - first:
+      root: ~/.local/share/nvim/site/pack
+      panes:
+        -
+
+  - second:
+      root: ~/.local/share/nvim/site/pack
+      panes:
+        -
+
+<% end %>
+
+  - reference:
+      root: ~/.local/share/nvim/site/pack/reference/opt
+      panes:
+        - 

@@ -1,0 +1,28 @@
+# /Users/Yuki/.config/tmuxinator/matrix.yml
+
+name: matrix
+root: ~/Programming/rust/matrix
+
+windows:
+  - editor:
+      layout: main-horizontal
+      panes:
+        - 
+        - 
+
+  - codewars: 
+      root: ~/Programming/rust/codewars
+
+  - euler: 
+      root: ~/Programming/rust/euler
+
+  - test: 
+
+  - snippet: 
+      root: ~/.config/nvim/snippets
+      panes: 
+        -
+  - tx: 
+      root: ~/.config/tmuxinator
+      panes: 
+        - 

@@ -1,0 +1,14 @@
+# /Users/Yuki/.config/tmuxinator/default.yml
+
+name: server
+root: ~/Programming/rust/server
+
+windows:
+  - editor:
+      panes:
+        - 
+  - server:
+      panes:
+        - 
+        -
+
