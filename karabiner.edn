@@ -201,6 +201,12 @@
                 ;; _
                 [:semicolon :!Shyphen]
 
+                ;; >
+                [:period :!Speriod]
+
+                ;; <
+                [:comma :!Scomma]
+
                ]
         }
 
