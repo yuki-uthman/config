@@ -1,5 +1,5 @@
 " cmp 
-packadd nvim-cmp.new
+packadd nvim-cmp
 
 " cmp source
 packadd cmp-nvim-lsp
@@ -24,6 +24,8 @@ augroup END
 " autocmd BufLeave * lua require'cmp'.setup { 
 "       \ sources = {}
 "       \}
+
+
 
 
 " autocmd FileType vim lua require'cmp'.setup.buffer {

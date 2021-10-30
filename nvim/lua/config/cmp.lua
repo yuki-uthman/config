@@ -46,7 +46,7 @@ cmp.setup {
           end
 
         end, { "i", "s", }),
-
+        
         ["<C-F>"] = cmp.mapping(function(fallback)
           local selected = cmp.core.view:get_selected_entry()
           if selected then
@@ -82,7 +82,9 @@ cmp.setup {
 
         ["<C-J>"] = cmp.mapping.select_next_item(),
         ["<C-K>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
+          -- put(cmp.core.view:_get_entries_view())
+          -- put(cmp.get_selected_entry())
+          if cmp.get_selected_entry() then
             cmp.select_prev_item()
             -- feedkey("<C-P>", "n")
 
