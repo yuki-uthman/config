@@ -18,4 +18,4 @@ endfunction
 
 autocmd CmdwinEnter * inoreabbrev <silent> <buffer> <expr> d "Delete\<C-R>=<SID>Eatchar(' ')\<CR>"
 
-cnoreabbrev <expr> d  (getcmdtype() ==# ':' && getcmdline() ==# 'd')  ? 'Delete'  : 'delete'
+cnoreabbrev <expr> del  (getcmdtype() ==# ':' && getcmdline() ==# 'del')  ? 'Delete'  : 'del'
