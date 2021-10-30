@@ -70,6 +70,7 @@ lua require'colorizer'.setup()
 runtime OPT n_flasher.vim
 runtime OPT vimpad.vim
 runtime OPT fzf-dictionary.vim
+runtime OPT fzf-thesaurus.vim
 runtime OPT fzf-help.vim
 
 packadd vim-scroller
