@@ -70,7 +70,7 @@ lua require'colorizer'.setup()
 runtime OPT n_flasher.vim
 runtime OPT vimpad.vim
 runtime OPT fzf-dictionary.vim
-runtime OPT fzf-thesaurus.vim
+runtime OPT fzf-define.vim
 runtime OPT fzf-help.vim
 
 packadd vim-scroller
@@ -93,19 +93,18 @@ packadd zettel
 
 augroup vim
     autocmd!
-    " autocmd Filetype vim -> runtime/ftplugin/vim.vim runs the last
-    " the following runs
-    " lookup.vim -> autocmd/vim.vim -> ftplugin/vim.vim
+    " with autocmd Filetype -> you cannot control the order
     " autocmd Filetype vim runtime OPT lookup.vim
     " autocmd Filetype vim runtime OPT autocmd/vim.vim
+    " lookup.vim -> autocmd/vim.vim -> ftplugin/vim.vim
     
-    " autocmd BufEnter -> you can control the order
-    " the following runs
-    " ftplugin/vim.vim -> lookup.vim -> autocmd/vim.vim 
+    " with autocmd BufEnter -> you can control the order
     autocmd BufEnter *.vim doautocmd Filetype vim
     autocmd BufEnter *.vim runtime OPT lookup.vim
-    autocmd BufEnter *.vim runtime OPT autocmd/vim.vim
+    autocmd BufEnter *.vim runtime OPT ftplugin/vim.vim
     autocmd BufEnter *.vim lua require 'lsp.vim'
+
+    " ftplugin/vim.vim -> lookup.vim -> autocmd/vim.vim 
 augroup END
 
 augroup lua
@@ -114,7 +113,8 @@ augroup lua
     " autocmd BufEnter *.lua packadd vim-lua
     autocmd BufEnter *.lua packadd BetterLua.vim
     autocmd BufEnter *.lua doautocmd Filetype lua
-    autocmd BufEnter *.lua runtime OPT autocmd/lua.vim
+    autocmd BufEnter *.lua runtime OPT ftplugin/lua.vim
+    autocmd BufEnter *.lua lua require 'lsp.lua'
 
     " to override some of the syntax highlighting
     autocmd BufEnter *.lua runtime OPT syntax/lua.vim
@@ -122,13 +122,16 @@ augroup END
 
 augroup ruby
     autocmd!
-    autocmd Filetype ruby runtime OPT autocmd/ruby.vim
+    autocmd BufEnter *.rb doautocmd Filetype markdown
+    autocmd BufEnter *.rb runtime OPT ftplugin/ruby.vim
 augroup END
 
 augroup markdown
     autocmd!
-    autocmd Filetype markdown runtime OPT autocmd/markdown.vim
-    autocmd Filetype markdown runtime OPT fzf-dictionary.vim
+    autocmd BufEnter *.md doautocmd Filetype markdown
+    autocmd BufEnter *.md runtime OPT ftplugin/markdown.vim
+    autocmd BufEnter *.md runtime OPT fzf-thesaurus.vim
+    autocmd BufEnter *.md lua require 'config.markdown'
 augroup END
 
 

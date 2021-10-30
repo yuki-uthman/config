@@ -27,12 +27,3 @@ setlocal textwidth=80
 setlocal fo=want
 setlocal conceallevel=2
 
-runtime config/packs/goyo.vim
-packadd goyo.vim
-
-runtime config/packs/medieval.vim
-packadd vim-medieval
-
-packadd vim-textobj-url
-
-lua require('config/markdown')

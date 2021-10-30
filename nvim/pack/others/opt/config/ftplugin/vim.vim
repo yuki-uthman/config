@@ -18,7 +18,6 @@ function! s:show_documentation()
 endfunction
 
 
-runtime OPT lookup.vim
 packadd decho
 
 
