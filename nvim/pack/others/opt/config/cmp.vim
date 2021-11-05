@@ -7,9 +7,6 @@ packadd cmp-nvim-lua
 packadd cmp-buffer
 packadd cmp-vsnip
 packadd cmp-look
-packadd cmp-path
-packadd cmp-spell
-packadd cmp-tabnine
 
 lua require('config/cmp')
 

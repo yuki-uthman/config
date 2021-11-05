@@ -17,7 +17,7 @@ set background=dark
 " colorscheme badwolf
 " colorscheme challenger_deep
 " colorscheme desert-night
-" colorscheme deus
+colorscheme deus
 " colorscheme dracula
 " colorscheme embark
 " colorscheme gruvbox
@@ -96,5 +96,5 @@ set background=dark
 " colorscheme tokyonight
 
 " Palenight.nvim
-packadd palenight.nvim
-colorscheme palenight
+" packadd palenight.nvim
+" colorscheme palenight

@@ -90,7 +90,7 @@ nnoremap <silent> <Leader>bd :Bclose<CR>
 
 nnoremap cd :cd %:p:h<CR>
 
-nnoremap ,c :find init.vim<CR>
+" nnoremap ,c :find init.vim<CR>
 nnoremap ,s :so ~/.config/nvim/init.vim<CR>
 
 

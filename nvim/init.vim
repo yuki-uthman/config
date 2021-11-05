@@ -29,7 +29,7 @@ runtime OPT decho.vim
 runtime OPT floaterm.vim
 runtime OPT fzf.vim
 " runtime OPT lightspeed.vim
-runtime OPT maximizer.vim
+" runtime OPT maximizer.vim
 runtime OPT netrw.vim
 runtime OPT tmux.vim
 runtime OPT unimpaired.vim
@@ -46,16 +46,35 @@ packadd vim-scriptease
 packadd vim-textobj-user
 packadd vim-textobj-url
 
-" auto complete
-runtime OPT cmp.vim
-runtime OPT lsp.vim
-runtime OPT wilder.vim
+" auto comple
+" runtime OPT cmp.vim
+" runtime OPT lsp.vim
+" runtime OPT wilder.vim
 
 " treesitter
-runtime OPT nvim-treesitter.vim
+" runtime OPT nvim-treesitter.vim
 
-packadd nvim-colorizer.lua
-lua require'colorizer'.setup()
+" packadd nvim-colorizer.lua
+" lua require'colorizer'.setup()
+
+" telescope
+packadd plenary.nvim
+packadd telescope.nvim
+packadd telescope-fzf-native.nvim
+packadd telescope-fzy-native.nvim
+packadd nvim-neoclip.lua
+
+" lua require 'config.telescope.setup'
+lua require 'config.telescope.youtube'
+lua require 'config.neoclip'
+
+nnoremap ,,f <cmd>lua require('config.telescope').edit_neovim()<CR>
+nnoremap ,,g <cmd>lua require('config.telescope').grep_nvim_config()<CR>
+
+nnoremap <S-H> <cmd>lua require('config.telescope').help_grep()<CR>
+nnoremap ,f <cmd>lua require('config.telescope').find_files()<CR>
+nnoremap ,g <cmd>lua require('config.telescope').grep_string()<CR>
+" nnoremap " :Telescope neoclip<CR>
 
 " learning lua
 " packadd fzf-lua.local
@@ -67,25 +86,25 @@ lua require'colorizer'.setup()
 " }}}
 
 " {{{ my plugin
-runtime OPT n_flasher.vim
-runtime OPT vimpad.vim
-runtime OPT fzf-dictionary.vim
-runtime OPT fzf-define.vim
-runtime OPT fzf-help.vim
+" runtime OPT n_flasher.vim
+" runtime OPT vimpad.vim
+" runtime OPT fzf-dictionary.vim
+" runtime OPT fzf-define.vim
+" runtime OPT fzf-help.vim
 
-packadd vim-scroller
-packadd vim-star-flasher
-packadd vim-cursor-flasher
+" packadd vim-scroller
+" packadd vim-star-flasher
+" packadd vim-cursor-flasher
 
 
 " offline
 packadd buffers
 packadd dictionary
 packadd files
-packadd float.nvim
-packadd vim-maktaba
-packadd vim-yuki-library
-packadd zettel
+" packadd float.nvim
+" packadd vim-maktaba
+" packadd vim-yuki-library
+packadd vim-zet
 
 " }}}
 
@@ -102,7 +121,7 @@ augroup vim
     autocmd BufEnter *.vim doautocmd Filetype vim
     autocmd BufEnter *.vim runtime OPT lookup.vim
     autocmd BufEnter *.vim runtime OPT ftplugin/vim.vim
-    autocmd BufEnter *.vim lua require 'lsp.vim'
+    " autocmd BufEnter *.vim lua require 'lsp.vim'
 
     " ftplugin/vim.vim -> lookup.vim -> autocmd/vim.vim 
 augroup END
@@ -114,7 +133,7 @@ augroup lua
     autocmd BufEnter *.lua packadd BetterLua.vim
     autocmd BufEnter *.lua doautocmd Filetype lua
     autocmd BufEnter *.lua runtime OPT ftplugin/lua.vim
-    autocmd BufEnter *.lua lua require 'lsp.lua'
+    " autocmd BufEnter *.lua lua require 'lsp.lua'
 
     " to override some of the syntax highlighting
     autocmd BufEnter *.lua runtime OPT syntax/lua.vim
@@ -131,7 +150,7 @@ augroup markdown
     autocmd BufEnter *.md doautocmd Filetype markdown
     autocmd BufEnter *.md runtime OPT ftplugin/markdown.vim
     autocmd BufEnter *.md runtime OPT fzf-thesaurus.vim
-    autocmd BufEnter *.md lua require 'config.markdown'
+    " autocmd BufEnter *.md lua require 'config.markdown'
 augroup END
 
 
