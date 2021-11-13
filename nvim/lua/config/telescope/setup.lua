@@ -36,7 +36,7 @@ require("telescope").setup {
 
     mappings = {
       i = {
-        ["<esc>"] = actions.close,
+        -- ["<esc>"] = actions.close,
         ["<c-j>"] = actions.move_selection_next,
         ["<c-k>"] = actions.move_selection_previous,
         ["<Down>"] = actions.preview_scrolling_down,
@@ -58,7 +58,7 @@ require("telescope").setup {
 }
 
 require('telescope').load_extension('fzf')
-require('telescope').load_extension('neoclip')
+-- require('telescope').load_extension('neoclip')
 
 -- git submodule update --init --recursive
 -- require('telescope').load_extension('fzy_native')

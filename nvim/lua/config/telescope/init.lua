@@ -1,12 +1,13 @@
 local action_state = require "telescope.actions.state"
-local actions = require "telescope.actions"
-local conf = require("telescope.config").values
-local finders = require "telescope.finders"
-local make_entry = require "telescope.make_entry"
-local pickers = require "telescope.pickers"
-local previewers = require "telescope.previewers"
-local sorters = require "telescope.sorters"
-local themes = require "telescope.themes"
+local actions      = require "telescope.actions"
+local conf         = require("telescope.config").values
+local finders      = require "telescope.finders"
+local make_entry   = require "telescope.make_entry"
+local pickers      = require "telescope.pickers"
+local previewers   = require "telescope.previewers"
+local sorters      = require "telescope.sorters"
+local themes       = require "telescope.themes"
+local builtin      = require "telescope.builtin"
 
 local M = {}
 
@@ -44,6 +45,15 @@ local M = {}
 --     prompt_position = "top",
 --   },
 -- }
+
+
+function M.colors()
+  local opts = {
+    enable_preview = true
+  }
+
+  builtin.colorscheme(opts)
+end
 
 function M.edit_neovim()
   local opts_with_preview, opts_without_preview
@@ -221,7 +231,9 @@ function M.grep_nvim_config(opts)
   local opts = opts or {}
 
   local input = ask("Grep: ")
-  opts.entry_maker = opts.entry_maker or make_entry.gen_from_vimgrep(opts)
+
+  -- opts.entry_maker = opts.entry_maker or make_entry.gen_from_vimgrep(opts)
+  opts.entry_maker = custom_entry()
 
   opts.layout_strategy = 'vertical'
   opts.layout_config = {
@@ -233,7 +245,7 @@ function M.grep_nvim_config(opts)
 
   pickers.new(opts, {
 
-    prompt_title = "Seaching \"" .. input .. "\"",
+    prompt_title = "Seaching \"" .. input .. "\" in nvim/config",
 
     -- separate the command from the options
     -- each options should also be seprated!
@@ -250,8 +262,6 @@ function M.grep_nvim_config(opts)
                   -- otherwise it thinks the search-dirs as the search string
           vim.fn.expand("~/.config/nvim"),    -- current directory
     }, opts),
-    -- sorter = sorters.get_generic_fuzzy_sorter(opts),
-    -- sorter = require("telescope.sorters").get_fzy_sorter(opts),
     previewer = conf.grep_previewer(opts),
     sorter = conf.generic_sorter(opts),
   }):find()
@@ -265,7 +275,9 @@ function M.grep_string(opts)
   local opts = opts or {}
 
   local input = ask("Grep: ")
-  opts.entry_maker = opts.entry_maker or make_entry.gen_from_vimgrep(opts)
+
+  -- opts.entry_maker = opts.entry_maker or make_entry.gen_from_vimgrep(opts)
+  opts.entry_maker = custom_entry()
 
   opts.layout_strategy = 'vertical'
   opts.layout_config = {
@@ -274,6 +286,8 @@ function M.grep_string(opts)
     preview_cutoff = 1,
     preview_height = 0.7,
   }
+
+  opts.entry_maker = custom_entry()
 
   pickers.new(opts, {
 
