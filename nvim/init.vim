@@ -47,12 +47,12 @@ packadd vim-textobj-user
 packadd vim-textobj-url
 
 " auto comple
-" runtime OPT cmp.vim
-" runtime OPT lsp.vim
+runtime OPT cmp.vim
+runtime OPT lsp.vim
 " runtime OPT wilder.vim
 
 " treesitter
-" runtime OPT nvim-treesitter.vim
+runtime OPT nvim-treesitter.vim
 
 " packadd nvim-colorizer.lua
 " lua require'colorizer'.setup()
@@ -61,19 +61,20 @@ packadd vim-textobj-url
 packadd plenary.nvim
 packadd telescope.nvim
 packadd telescope-fzf-native.nvim
-packadd telescope-fzy-native.nvim
-packadd nvim-neoclip.lua
+" packadd telescope-fzy-native.nvim
+" packadd nvim-neoclip.lua
 
 " lua require 'config.telescope.setup'
 lua require 'config.telescope.youtube'
-lua require 'config.neoclip'
+" lua require 'config.neoclip'
 
-nnoremap ,,f <cmd>lua require('config.telescope').edit_neovim()<CR>
-nnoremap ,,g <cmd>lua require('config.telescope').grep_nvim_config()<CR>
+nnoremap <leader>c <cmd>lua require('config.telescope').edit_neovim()<CR>
+nnoremap <leader>g <cmd>lua require('config.telescope').grep_nvim_config()<CR>
 
-nnoremap <S-H> <cmd>lua require('config.telescope').help_grep()<CR>
+nnoremap H <cmd>lua require('config.telescope').help_grep()<CR>
 nnoremap ,f <cmd>lua require('config.telescope').find_files()<CR>
 nnoremap ,g <cmd>lua require('config.telescope').grep_string()<CR>
+nnoremap ,c <cmd>lua require('config.telescope').colors()<CR>
 " nnoremap " :Telescope neoclip<CR>
 
 " learning lua
@@ -86,15 +87,15 @@ nnoremap ,g <cmd>lua require('config.telescope').grep_string()<CR>
 " }}}
 
 " {{{ my plugin
-" runtime OPT n_flasher.vim
+runtime OPT n_flasher.vim
 " runtime OPT vimpad.vim
-" runtime OPT fzf-dictionary.vim
-" runtime OPT fzf-define.vim
-" runtime OPT fzf-help.vim
+runtime OPT fzf-dictionary.vim
+runtime OPT fzf-define.vim
+runtime OPT fzf-help.vim
 
-" packadd vim-scroller
-" packadd vim-star-flasher
-" packadd vim-cursor-flasher
+packadd vim-scroller
+packadd vim-star-flasher
+packadd vim-cursor-flasher
 
 
 " offline
@@ -104,7 +105,7 @@ packadd files
 " packadd float.nvim
 " packadd vim-maktaba
 " packadd vim-yuki-library
-packadd vim-zet
+packadd zettel.nvim
 
 " }}}
 
