@@ -6,7 +6,6 @@ packadd cmp-nvim-lsp
 packadd cmp-nvim-lua
 packadd cmp-buffer
 packadd cmp-vsnip
-packadd cmp-look
 
 lua require('config/cmp')
 

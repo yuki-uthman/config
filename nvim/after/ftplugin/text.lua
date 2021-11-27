@@ -1,4 +1,3 @@
-vim.cmd [[packadd cmp-look]]
 
 local cmp = require('cmp')
 

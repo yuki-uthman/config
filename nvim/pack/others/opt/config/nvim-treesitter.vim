@@ -1,7 +1,7 @@
 
 packadd nvim-treesitter
-packadd nvim-treesitter-textsubjects
-packadd nvim-treesitter-textobjects
+" packadd nvim-treesitter-textsubjects
+" packadd nvim-treesitter-textobjects
 
 lua require 'config/nvim-treesitter'
 " lua require 'youtube/treesitter/quickstart'

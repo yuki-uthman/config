@@ -12,7 +12,10 @@ runtime OPT colors.vim
 runtime OPT cmdwin.vim
 runtime OPT echo.vim
 runtime OPT echo-highlight.vim
-runtime OPT autopairs.vim
+
+" runtime OPT minipairs.vim
+runtime OPT pairs.vim
+" runtime OPT autopairs.vim
 runtime OPT cmdregisters.vim
 runtime OPT words_search.vim
 runtime OPT align.vim
@@ -36,7 +39,7 @@ runtime OPT unimpaired.vim
 runtime OPT vsnip.vim
 runtime OPT easy-align.vim
 
-packadd vim-endwise
+" packadd vim-endwise
 packadd vim-fugitive
 packadd vim-surround
 packadd vim-repeat
@@ -46,9 +49,14 @@ packadd vim-scriptease
 packadd vim-textobj-user
 packadd vim-textobj-url
 
+" library
+packadd vim-maktaba
+" packadd float.nvim
+" packadd vim-yuki-library
+
 " auto comple
-runtime OPT cmp.vim
-runtime OPT lsp.vim
+" runtime OPT cmp.vim
+" runtime OPT lsp.vim
 " runtime OPT wilder.vim
 
 " treesitter
@@ -61,20 +69,17 @@ runtime OPT nvim-treesitter.vim
 packadd plenary.nvim
 packadd telescope.nvim
 packadd telescope-fzf-native.nvim
-" packadd telescope-fzy-native.nvim
-" packadd nvim-neoclip.lua
 
-" lua require 'config.telescope.setup'
-lua require 'config.telescope.youtube'
-" lua require 'config.neoclip'
+lua require 'config.telescope.setup'
+" lua require 'config.telescope.youtube'
 
-nnoremap <leader>c <cmd>lua require('config.telescope').edit_neovim()<CR>
-nnoremap <leader>g <cmd>lua require('config.telescope').grep_nvim_config()<CR>
+nnoremap ,c <cmd>lua require('config.telescope').edit_neovim()<CR>
+nnoremap ,g <cmd>lua require('config.telescope').grep_nvim_config()<CR>
 
-nnoremap H <cmd>lua require('config.telescope').help_grep()<CR>
-nnoremap ,f <cmd>lua require('config.telescope').find_files()<CR>
-nnoremap ,g <cmd>lua require('config.telescope').grep_string()<CR>
-nnoremap ,c <cmd>lua require('config.telescope').colors()<CR>
+" nnoremap H <cmd>lua require('config.telescope').help_grep()<CR>
+nnoremap <leader>f <cmd>lua require('config.telescope').find_files()<CR>
+nnoremap <leader>g <cmd>lua require('config.telescope').grep_string()<CR>
+nnoremap <leader>c <cmd>lua require('config.telescope').colors()<CR>
 " nnoremap " :Telescope neoclip<CR>
 
 " learning lua
@@ -83,6 +88,8 @@ nnoremap ,c <cmd>lua require('config.telescope').colors()<CR>
 " packadd nvim-fzf
 " packadd nvim-lspfuzzy.local
 " lua require('lspfuzzy').setup {}
+
+lua require 'config.hop'
 
 " }}}
 
@@ -102,9 +109,6 @@ packadd vim-cursor-flasher
 packadd buffers
 packadd dictionary
 packadd files
-" packadd float.nvim
-" packadd vim-maktaba
-" packadd vim-yuki-library
 packadd zettel.nvim
 
 " }}}

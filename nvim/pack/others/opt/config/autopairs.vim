@@ -1,4 +1,3 @@
-
 inoremap        (  ()<Left>
 inoremap        ((  (
 inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
@@ -23,7 +22,7 @@ inoremap <expr> " strpart(getline('.'), col('.')-1, 1) == "\"" ? "\<Right>" : "\
 
 let parethesis   = #{left: "(", right: ")"}
 let bracket      = #{left: "[", right: "]"}
-let curly = #{left: "{", right: "}"}
+let curly        = #{left: "{", right: "}"}
 let tag          = #{left: "<", right: ">"}
 let single_quote = #{left: "'", right: "'"}
 let double_quote = #{left: '"', right: '"'}
