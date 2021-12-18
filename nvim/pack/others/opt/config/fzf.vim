@@ -1,39 +1,27 @@
 
-
+let g:fzf_preview_window = ['up:80%:hidden', 'ctrl-/']
 let g:fzf_command_prefix = 'FZF'
 
 packadd fzf.vim
 
-nnoremap <C-F> <Nop>
+nnoremap <leader>fb :FZFBuffers<CR>
+nnoremap <leader>fl :FZFBLines<CR>
+nnoremap <leader>ff :FZFFiles<CR>
+nnoremap <leader>fg :FZFRg<CR>
+nnoremap <leader>fj :FZFJumps<CR>
 
-nnoremap <C-F><C-B> :FZFBuffers<CR>
-nnoremap <C-F><C-L> :FZFBLines<CR>
-nnoremap <C-F><C-F> :FZFFiles<CR>
-nnoremap <C-F><C-G> :FZFRg<CR>
-nnoremap <C-F><C-J> :FZFJumps<CR>
-
-" inoremap <C-F><C-P> <Cmd>call fzf#vim#complete#path("find . -path '*/\.*' -prune -o -type f -print -o -type l -print \| sed 's:^..::'")<CR>
-
-let s:paths = [ 
-      \'~/.config', 
+let s:paths = [
+      \'~/.config',
       \'~/.local',
       \'~/Youtube',
       \'~/Programming',
       \]
 
-" let s:paths = [ '/usr' ]
-
 command! FZFcd call fzf#run(fzf#wrap({
       \'source': 'find ' . join(s:paths),
       \'sink' : 'cd',
-      \'down': '20%'}))
-
-
-
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
+      \'down': '20%'}
+      \))
 
 function! GetJumps()
   redir => cout
@@ -53,7 +41,6 @@ command! FZFJumps call fzf#run(fzf#wrap({
 
 " /Users/Yuki/.config/nvim/pack/minpac/start/fzf.vim/doc/fzf-vim.txt:108
 
-
 function! s:fzf_help() abort
   let list = split(globpath(&rtp, 'doc/*.txt'))
 
@@ -64,7 +51,6 @@ function! s:fzf_help() abort
         \sink: 'edit'}
 
   call fzf#run(dict)
-  
 endfunc
 
 
