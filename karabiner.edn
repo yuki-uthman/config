@@ -30,6 +30,7 @@
  :layers    {
              :tab-layer {:key :tab}
              :dot-layer {:key :period}
+             :comma-layer {:key :comma}
              :v-layer {:key :v}
              :x-layer {:key :x}
              :z-layer {:key :z}
@@ -95,7 +96,12 @@
                ]}
 
         {:des "pane mode"
-        :rules [:s-mode
+        :rules [:z-layer
+
+                ;; for zettel keybinding
+                [:o [:z :o]]
+                [:n [:z :n]]
+
                 [:h :!Oh]
                 [:j :!Oj]
                 [:k :!Ok]
@@ -183,62 +189,38 @@
         }
 
         {:des "symbol mode"
-        :rules [:z-layer
+        :rules [:comma-layer
 
-                ;; for zettel keybinding
-                [:o [:z :o]]
-                [:n [:z :n]]
+                ;; {}
+                [:w :!Sopen_bracket]
+                [:q :!Sclose_bracket]
+
+                ;; ()
+                [:r :!S9]
+                [:e :!S0]
 
                 ;; =
-                [:j :equal_sign]
+                [:f :equal_sign]
 
                 ;; +
-                [:k :!Sequal_sign]
+                [:d :!Sequal_sign]
 
                 ;; -
-                [:l :hyphen]
+                [:s :hyphen]
 
                 ;; _
-                [:semicolon :!Shyphen]
+                [:a :!Shyphen]
 
                 ;; >
-                [:period :!Speriod]
+                ;;[:period :!Speriod]
 
                 ;; <
-                [:comma :!Scomma]
+                ;;[:comma :!Scomma]
 
                ]
         }
 
-
-        {:des "swap symbol"
-        :rules [
-                ; [:1 :!S1]
-                ; [:2 :!S2]
-                ; [:3 :!S3]
-                ; [:4 :!S4]
-                ; [:5 :!S5]
-                ; [:6 :!S6]
-                ; [:7 :!S7]
-                ; [:8 :!S8]
-
-                ; [:!S1 :1]
-                ; [:!S2 :2]
-                ; [:!S3 :3]
-                ; [:!S4 :4]
-                ; [:!S5 :5]
-                ; [:!S6 :6]
-                ; [:!S7 :7]
-                ; [:!S8 :8]
-
-                ;;[:9 :!S9]
-                ;;[:0 :!S0]
-                ;;[:hyphen :!Shyphen]
-
-               ]
-        }
-
-        {:des "Firefox" 
+        {:des "Firefox"
          :rules [
 
                  [:!Tj :down_arrow :firefox]
@@ -253,7 +235,7 @@
                  [:!Ssemicolon :semicolon]]}
 
 
-        {:des "j and k and enter keys" 
+        {:des "j and k and enter keys"
          :rules [
 
                  [:!Tj :!Tn :!terminal]
@@ -265,10 +247,10 @@
         {:des "delete words with c-w"
          :rules [
                  [:!Tw :!Odelete_or_backspace :!terminal]
-                 
+
                  ]
-         
-         
+
+
          }
 
         {:des "mac mode"
@@ -281,9 +263,9 @@
                   ;; change application
                   [:j :!Ctab]
                   [:k :!!tab]
-                 
+
                  ]
-         
+
          }
 
 
@@ -338,24 +320,24 @@
         {:des   "alfred"
          :rules [;; set f16 as the trigger key of alfred
                  ;; press h + l will trigger alfred and set "in-alfred" to 1
-                 [[:h :j] [:f16 ["in-alfred" 1]]]
+                 ;;[[:h :j] [:f16 ["in-alfred" 1]]]
 
-                 :in-alfred ;; when "in-alfred" is 1
+                 ;;:in-alfred ;; when "in-alfred" is 1
 
                  ;; press enter will select one alfred result and set "in-alfred" to 0
-                 [:##return_or_enter [:return_or_enter ["in-alfred" 0]]]
+                 ;;[:##return_or_enter [:return_or_enter ["in-alfred" 0]]]
 
                  ;; press esc will exit alfred and set "in-alfred" to 0
-                 [:##escape [:escape ["in-alfred" 0]]]
+                 ;;[:##escape [:escape ["in-alfred" 0]]]
 
                  ;; press ctrl + j will invoke down_arrow
-                 [:!Tj :down_arrow]
+                 ;;[:!Tj :down_arrow]
 
                  ;; press ctrl + k will invoke up_arrow
-                 [:!Tk :up_arrow]
+                 ;;[:!Tk :up_arrow]
 
                  ;; press ctrl + l will invoke return_or_enter and set "in-alfred" to 0
-                 [:!Tl [:return_or_enter ["in-alfred 0"]]]]}
+                 ;;[:!Tl [:return_or_enter ["in-alfred 0"]]]]}
 
 
        ] ;; main

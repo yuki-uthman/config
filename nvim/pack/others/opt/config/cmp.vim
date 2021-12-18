@@ -1,5 +1,5 @@
-" cmp 
-packadd nvim-cmp
+" cmp
+packadd nvim-cmp.old
 
 " cmp source
 packadd cmp-nvim-lsp
@@ -7,7 +7,7 @@ packadd cmp-nvim-lua
 packadd cmp-buffer
 packadd cmp-vsnip
 
-lua require('config/cmp')
+lua require('config.cmp')
 
 " disable in command-line window
 augroup disable_cmp
@@ -17,7 +17,7 @@ augroup disable_cmp
 augroup END
 
 " refresh sources every time
-" autocmd BufLeave * lua require'cmp'.setup { 
+" autocmd BufLeave * lua require'cmp'.setup {
 "       \ sources = {}
 "       \}
 

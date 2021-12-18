@@ -8,7 +8,7 @@
 
 " {{{ Normal
 
-" {{{ Disable 
+" {{{ Disable
 
 nnoremap s <Nop>
 nnoremap <C-e> <Nop>

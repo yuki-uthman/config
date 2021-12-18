@@ -2,37 +2,31 @@ name: pack
 
 windows:
 <% if @args[0] %>
-  - first:
-      root: ~/.local/share/nvim/site/pack/local/opt/<%= @args[0] %>
-      layout: even-horizontal
-      panes:
-        -
-        -
-
-  - second:
-      root: ~/.local/share/nvim/site/pack/local/opt/<%= @args[0] %>
-      panes:
-        -
-<% end %>
-
-  - library:
-      root: ~/.config/nvim/pack/mine/opt/vim-yuki-library
+  - main:
+      root: ~/.local/share/nvim/site/pack/github/opt/<%= @args[0] %>
       layout: main-horizontal
       panes:
-        - 
-        - 
-
-  - maktaba:
-      root: ~/.local/share/nvim/site/pack/packer/opt/vim-maktaba
-      layout: main-horizontal
-      panes:
-        - 
-        - 
+        -
+        -
 
   - vroom:
-      root: ~/.local/share/nvim/site/pack/packer/opt/vroom
+      root: ~/.local/share/nvim/site/pack/github/opt/<%= @args[0] %>/vroom
+      panes:
+        -
+
+<% end %>
+
+  - maktaba:
+      root: ~/.local/share/nvim/site/pack/github/opt/vim-maktaba
       layout: main-horizontal
       panes:
-        - 
+        -
+        -
+
+  - vroom:
+      root: ~/.local/share/nvim/site/pack/github/opt/vroom
+      layout: main-horizontal
+      panes:
+        -
         -
 

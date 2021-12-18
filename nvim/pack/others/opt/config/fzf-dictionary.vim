@@ -7,6 +7,6 @@
 
 packadd vim-fzf-dictionary
 
-
+imap <C-K> <Plug>(fzf-dictionary-open)
 
 
