@@ -32,7 +32,6 @@ runtime OPT cutlass.vim
 runtime OPT decho.vim
 runtime OPT floaterm.vim
 runtime OPT fzf.vim
-" runtime OPT maximizer.vim
 runtime OPT netrw.vim
 runtime OPT tmux.vim
 runtime OPT vsnip.vim
@@ -50,6 +49,7 @@ packadd vim-surround
 packadd vim-textobj-user
 packadd vim-unimpaired
 packadd vim-better-whitespace
+packadd vim-prettier
 
 " library
 packadd vim-maktaba
@@ -124,14 +124,14 @@ augroup vim
     " autocmd Filetype vim runtime OPT lookup.vim
     " autocmd Filetype vim runtime OPT autocmd/vim.vim
     " lookup.vim -> autocmd/vim.vim -> ftplugin/vim.vim
-    
+
     " with autocmd BufEnter -> you can control the order
     autocmd BufEnter *.vim doautocmd Filetype vim
     autocmd BufEnter *.vim runtime OPT lookup.vim
     autocmd BufEnter *.vim runtime OPT ftplugin/vim.vim
     " autocmd BufEnter *.vim lua require 'lsp.vim'
 
-    " ftplugin/vim.vim -> lookup.vim -> autocmd/vim.vim 
+    " ftplugin/vim.vim -> lookup.vim -> autocmd/vim.vim
 augroup END
 
 augroup lua
