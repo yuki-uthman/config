@@ -1,0 +1,117 @@
+{
+
+  "class": {
+    "prefix": ["class"],
+    "body": [
+        "class ${1:name} {",
+        "\t$2",
+        "}"
+    ],
+    "description": "class"
+  },
+
+  "constructor": {
+    "prefix": ["con"],
+    "body": [
+        "constructor(${1}) {${2}}"
+    ],
+    "description": "constructor"
+  },
+
+
+  "setter": {
+    "prefix": ["set"],
+    "body": [
+        "set ${1}(${2}) {this._${1} = ${2};}"
+    ],
+    "description": "setter"
+  },
+
+  "getter": {
+    "prefix": ["get"],
+    "body": [
+        "get ${1}() {return this._${1};}"
+    ],
+    "description": "getter"
+  },
+
+
+  "print": {
+    "prefix": ["p"],
+    "body": [
+      "console.log($1)"
+    ],
+    "description": "print in javascript"
+  },
+
+
+  "function": {
+    "prefix": ["func"],
+    "body": [
+      "function ${1:name}($2) {",
+      "\t$3",
+      "}",
+      "$0"
+    ],
+    "description": "function template"
+  },
+
+
+  "if": {
+    "prefix": ["if"],
+    "body": [ 
+      "if (${1:condition}) {", 
+      "\t${2}",
+      "}"
+    ],
+    "description": "if statement"
+  },
+
+  "if/else": {
+    "prefix": ["ife"],
+    "body": [ 
+      "if ${1:condition} then", 
+      "\t${2}",
+      "else",
+      "\t${3}",
+      "end"
+    ],
+    "description": "if/else statement"
+  },
+
+  "variable": {
+    "prefix": ["let"],
+    "body": [ 
+      "let ${1:var} = ${2:value}"
+    ],
+    "description": "variable"
+  },
+
+  "while": {
+    "prefix": ["while"],
+    "body": [ 
+      "while ${1:condition}",
+      "\t${2}",
+      "endwhile"
+    ],
+    "description": "while loop"
+  },
+
+  "for": {
+    "prefix": ["for"],
+    "body": [ 
+      "for ${1:var} in ${2:list}",
+      "\t${3}",
+      "endfor"
+    ],
+    "description": "for loop"
+  },
+
+  "autocmd": {
+    "prefix": ["au"],
+    "body": [ "autocmd $TM_SELECTED_TEXT" ],
+    "description": "autocmd template"
+  }
+}
+
+
