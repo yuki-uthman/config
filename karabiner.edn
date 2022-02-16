@@ -70,8 +70,14 @@
         }
 
         ; RK keyboard left ctrl and caps lock got switched
+        ; turn this on when using RK keyboard
         {:des "left ctrl to esc if pressed alone"
          :rules [[:##left_control :left_control nil {:alone :escape}]]
+        }
+
+        ;; turn this on when not using RK keyboard
+        {:des "caps_lock to esc if pressed alone, otherwise ctrl_left"
+         :rules [[:##caps_lock :left_control nil {:alone :escape}]]
         }
 
         {:des "tab to option as modifier"
