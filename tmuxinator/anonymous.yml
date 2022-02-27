@@ -1,6 +1,4 @@
 name: anonymous
-root: ~/
 
 windows:
   - main:
-      root: ~/

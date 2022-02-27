@@ -4,12 +4,6 @@ let g:fzf_command_prefix = 'FZF'
 
 packadd fzf.vim
 
-nnoremap <leader>fb :FZFBuffers<CR>
-nnoremap <leader>fl :FZFBLines<CR>
-nnoremap <leader>ff :FZFFiles<CR>
-nnoremap <leader>fg :FZFRg<CR>
-nnoremap <leader>fj :FZFJumps<CR>
-
 let s:paths = [
       \'~/.config',
       \'~/.local',
@@ -39,22 +33,14 @@ command! FZFJumps call fzf#run(fzf#wrap({
         \ 'source': GetJumps(),
         \ 'sink': function('GoToJump')}))
 
-" /Users/Yuki/.config/nvim/pack/minpac/start/fzf.vim/doc/fzf-vim.txt:108
 
-function! s:fzf_help() abort
-  let list = split(globpath(&rtp, 'doc/*.txt'))
+nnoremap <leader>fb :FZFBuffers<CR>
+nnoremap <leader>fl :FZFBLines<CR>
+nnoremap <leader>ff :FZFFiles<CR>
+nnoremap <leader>fj :FZFJumps<CR>
 
-  let cmd = "rg -I '' " .. join(list)
-
-  let dict = #{
-        \source: cmd,
-        \sink: 'edit'}
-
-  call fzf#run(dict)
-endfunc
-
-
-
-
-
+runtime OPT fzf-dictionary.vim
+runtime OPT fzf-define.vim
+runtime OPT fzf-help.vim
+runtime OPT fzf-rg.vim
 

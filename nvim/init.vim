@@ -97,12 +97,10 @@ lua require 'config.pairs'
 " }}}
 
 " {{{ my plugin
+
 runtime OPT n_flasher.vim
 runtime OPT cursor_flasher.vim
 " runtime OPT vimpad.vim
-runtime OPT fzf-dictionary.vim
-runtime OPT fzf-define.vim
-runtime OPT fzf-help.vim
 
 packadd vim-scroller
 packadd vim-star-flasher
