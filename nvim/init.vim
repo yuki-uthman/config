@@ -39,6 +39,7 @@ runtime OPT easy-align.vim
 runtime OPT due.vim
 
 packadd vim-endwise
+packadd quickfix-reflector.vim
 packadd targets.vim
 packadd vim-cool
 packadd vim-fugitive

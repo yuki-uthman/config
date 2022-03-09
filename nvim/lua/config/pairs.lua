@@ -1,13 +1,14 @@
 
 vim.cmd 'packadd vim-endwise'
-vim.cmd 'packadd pairs.nvim'
+vim.cmd 'packadd pairz.nvim'
 
--- require 'pairs'.setup()
+-- map C-H to BS
+-- remember it should be imap!
+vim.cmd 'imap <C-H> <BS>'
 
+local utils = require 'pairz.utils'
 
-local utils = require 'pairs.utils'
-
-require 'pairs'.setup {
+require 'pairz'.setup {
 
   fallback = {
     enter = function()

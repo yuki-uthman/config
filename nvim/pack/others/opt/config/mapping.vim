@@ -108,12 +108,6 @@ nnoremap Q :normal! n.<CR>
 
 " {{{ Insert
 
-" exit insert mode
-" inoremap <C-c> <ESC>
-
-" Use Ctrl-O as Enter
-" inoremap <C-o> <C-j>
-
 " whole line completion
 " inoremap <C-L> <C-X><C-L>
 
@@ -125,8 +119,8 @@ cnoremap <C-K> <C-P>
 
 
 func! s:eatchar(pat)
-   let c = nr2char(getchar(0))       
-   return (c =~ a:pat) ? '' : c      
+   let c = nr2char(getchar(0))
+   return (c =~ a:pat) ? '' : c
 endfunc
 
 " iabbrev < <><Left>
