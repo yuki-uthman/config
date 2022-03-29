@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+starting_dir = ARGV.empty? ? "~" : ARGV[0]
+
+# you can only ignore top directories under /Users/Yuki
+# try increasing the depth
+directories = `find #{starting_dir} -maxdepth 1 -type d`.split(/\n/)
+
+# remove the current directory
+directories.shift
+
+# remove exceptions
+ignores = []
+File.open("#{Dir.home}/.gitignore") do |file|
+  ignores = file.readlines.map(&:chomp)
+end
+
+directories.reject! do |dir|
+  ignores.any? do |to_ignore|
+    # TODO
+    # use pattern matching instead of include?
+    dir.include? to_ignore
+  end
+end
+
+# puts directories
+
+# do not use _home_directories
+# problems with space in file name
+dir = `find #{directories.join(" ")} -type d -print 2> /dev/null | fzf-tmux +m -p -w 80% -h 80%`
+puts dir
+

@@ -217,7 +217,7 @@
                 [:s :hyphen]
 
                 ;; _
-                [:a :!Shyphen]
+                [:g :!Shyphen]
 
                 ;; >
                 ;;[:period :!Speriod]

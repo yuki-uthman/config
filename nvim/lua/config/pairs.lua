@@ -7,9 +7,15 @@ vim.cmd 'packadd pairz.nvim'
 vim.cmd 'imap <C-H> <BS>'
 
 local utils = require 'pairz.utils'
+local core  = require 'pairz.core'
 
 require 'pairz'.setup {
 
+  pairz = {
+    global = {
+      ["["] = core:new { left = "[", right = "]" }
+    },
+  },
   fallback = {
     enter = function()
       utils.feedkey("<CR>", "n")

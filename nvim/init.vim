@@ -21,6 +21,7 @@ runtime OPT words_search.vim
 runtime OPT align.vim
 runtime OPT rtp.vim
 runtime OPT vroom.vim
+runtime OPT rg.vim
 
 lua require 'utility'
 
@@ -28,6 +29,7 @@ lua require 'utility'
 
 " {{{ github
 runtime OPT commentary.vim
+runtime OPT codi.vim
 runtime OPT cutlass.vim
 runtime OPT decho.vim
 runtime OPT floaterm.vim
@@ -54,12 +56,12 @@ packadd vim-prettier
 
 " library
 packadd vim-maktaba
-" packadd float.nvim
-" packadd vim-yuki-library
+packadd float.nvim
+packadd vim-yuki-library
 
 " auto comple
 " runtime OPT cmp.vim
-" runtime OPT lsp.vim
+runtime OPT lsp.vim
 " runtime OPT wilder.vim
 
 " treesitter
@@ -101,8 +103,9 @@ lua require 'config.pairs'
 
 runtime OPT n_flasher.vim
 runtime OPT cursor_flasher.vim
-" runtime OPT vimpad.vim
+runtime OPT vimpad.vim
 
+packadd jest.nvim
 packadd vim-scroller
 packadd vim-star-flasher
 

@@ -11,8 +11,8 @@
 " {{{ Disable
 
 nnoremap s <Nop>
-nnoremap <C-e> <Nop>
-nnoremap <C-y> <Nop>
+" nnoremap <C-e> <Nop>
+" nnoremap <C-y> <Nop>
 
 " }}}
 
