@@ -4,11 +4,11 @@
          :default true
 
          :sim     50    ;; simultaneous_threshold_milliseconds (def: 50)
-                         ;; if keydown event for two different keys are pressed within :sim ms, the keypresses are considered simultaneous
-         :delay   1    ;; to_delayed_action_delay_milliseconds (def: 500)
+                        ;; if keydown event for two different keys are pressed within :sim ms, the keypresses are considered simultaneous
+         :delay   1     ;; to_delayed_action_delay_milliseconds (def: 500)
                         ;; after :delay ms, the key press is considered to be delayed (TODO WHAT IS THIS??)
          :alone   200   ;; to_if_alone_timeout_milliseconds (def: 1000)
-                         ;; if keyup event comes within :alone ms from keydown, the key is not just pressed but held
+                        ;; if keyup event comes within :alone ms from keydown, the key is not just pressed but held
          :held    500   ;; to_if_held_down_threshold_milliseconds (def: 500)
                         ;; key is fired twice when :held ms is elapsed (otherwise seen as a hold command) (TODO WHAT IS THIS??)
               }
@@ -61,13 +61,18 @@
          :rules [[:##return_or_enter :right_control nil {:alone :return_or_enter}]]
         }
 
-        {:des "quote to ctrl as modifier"
-         :rules [[:##quote :right_control nil {:alone :quote}]]
+        {:des "semicolon to ctrl as modifier"
+         :rules [[:##semicolon :right_control nil {:alone :semicolon}]]
         }
 
-        {:des "slash to shift"
-         :rules [[:##slash :right_shift nil {:alone :slash}]]
+        ; {:des "slash to shift"
+        ;  :rules [[:##slash :right_shift nil {:alone :slash}]]
+        ; }
+
+        {:des "period to shift"
+         :rules [[:##period :right_shift nil {:alone :period}]]
         }
+
 
         ; RK keyboard left ctrl and caps lock got switched
         ; turn this on when using RK keyboard
@@ -104,18 +109,26 @@
         {:des "pane mode"
         :rules [:z-layer
 
-                ;; for zettel keybinding
-                [:o [:z :o]]
-                [:n [:z :n]]
-
+                ;; moving betwween panes
                 [:h :!Oh]
                 [:j :!Oj]
                 [:k :!Ok]
                 [:l :!Ol]
 
+                ;; zoom
                 [:spacebar :!Tspacebar]
 
+                ;; vim alternate file #
                 [:semicolon [:!Tsemicolon]]
+
+                ;; vim zettel keybinding
+                [:o [:z :o]]
+                [:n [:z :n]]
+
+                ;; vim move current line up/down
+                [:t [:z :t]]
+                [:b [:z :b]]
+                [:m [:z :m]]
 
                ]}
 
@@ -123,75 +136,30 @@
         :rules [:x-layer
 
                 ;; change session with j & k
-                [:j [:!Ts :n]]
-                [:k [:!Ts :p]]
+                [:j [:!Tb :!S0]]
+                [:k [:!Tb :!S9]]
 
                 ;; change window with h & l
-                [:l :!On :terminal]
-                [:h :!Op :terminal]
+                [:l [:!Tb :n] :terminal]
+                [:h [:!Tb :p] :terminal]
 
                 ;; alternative window
-                [:semicolon [:!Osemicolon]]
-
-                ;; next pane
-                [:i [:!Ts :o]]
-                ;; previous pane
-                [:o [:!Ts :i]]
-
-                ;; pane
-                ;;[:y :!Oh]
-                ;;[:u :!Oj]
-                ;;[:i :!Ok]
-                ;;[:o :!Ol]
+                ; [:semicolon [:!Tb :l] :terminal]
 
                 ;; split
-                [:backslash [:!Ts :!Tv] :terminal]
-                [:hyphen [:!Ts :!Tn] :terminal]
+                [:backslash [:!Tb :!S5] :terminal]
+                [:hyphen [:!Tb :!Squote] :terminal]
 
                 ;; close pane
-                [:c :!Oc :terminal]
+                [:c [:!Tb :x] :terminal]
 
                 ;; kill session
                 [:z :!Ox :terminal]
-
-                ;; reload tmux
-                [:r :!Or :terminal]
-
 
                 ;; firefox next/previous tab
                 [:h :!CSopen_bracket :firefox]
                 [:l :!CSclose_bracket :firefox]
 
-
-               ]
-        }
-
-
-        {:des "numbers mode"
-        :rules [:z-layer
-                ; [:u :1]
-                ; [:i :2]
-                ; [:o :3]
-                ; [:j :4]
-                ; [:k :5]
-                ; [:l :6]
-                ; [:n :7]
-                ; [:m :8]
-                ; [:comma :9]
-
-                ; [:h :delete_or_backspace]
-              ]
-        }
-
-        {:des "motion mode"
-        :rules [:f-mode
-
-                ;; vim motion
-                [:h :!S6]
-                [:l :!S4]
-
-                [:k :!Sopen_bracket]
-                [:j :!Sclose_bracket]
 
                ]
         }
@@ -217,13 +185,20 @@
                 [:s :hyphen]
 
                 ;; _
-                [:g :!Shyphen]
+                [:a :!Shyphen]
 
-                ;; >
-                ;;[:period :!Speriod]
+                ;; switch the numbers row to symbols
+                [:1 :!S1]
+                [:2 :!S2]
+                [:3 :!S3]
+                [:4 :!S4]
+                [:5 :!S5]
+                [:6 :!S6]
+                [:7 :!S7]
+                [:8 :!S8]
+                [:9 :!S9]
+                [:0 :!S0]
 
-                ;; <
-                ;;[:comma :!Scomma]
 
                ]
         }
@@ -238,9 +213,9 @@
 
                  ]}
 
-        {:des "swap : and ;"
-         :rules [[:#Psemicolon :!Ssemicolon]
-                 [:!Ssemicolon :semicolon]]}
+        ; {:des "swap : and ;"
+        ;  :rules [[:#Psemicolon :!Ssemicolon]
+        ;          [:!Ssemicolon :semicolon]]}
 
 
         {:des "j and k and enter keys"
