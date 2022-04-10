@@ -1,3 +1,6 @@
+nnoremap ; :
+nnoremap q; q:
+
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-p> <Up>

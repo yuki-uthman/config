@@ -4,7 +4,7 @@ xnoremap m d
 
 nnoremap mm dd
 
-nnoremap M m
+" nnoremap M m
 
 packadd vim-cutlass
 

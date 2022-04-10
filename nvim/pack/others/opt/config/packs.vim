@@ -3,7 +3,7 @@ runtime macros/matchit.vim
 " runtime OPT ale.vim
 " runtime OPT easy-align.vim
 " runtime OPT easymotion.vim
-" runtime OPT emmet.vim
+runtime OPT emmet.vim
 " runtime OPT vim-test.vim
 " runtime OPT coc.vim
 runtime OPT codi.vim

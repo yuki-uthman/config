@@ -13,9 +13,6 @@ runtime OPT cmdwin.vim
 runtime OPT echo.vim
 runtime OPT echo-highlight.vim
 
-" runtime OPT minipairs.vim
-" runtime OPT pairs.vim
-" runtime OPT autopairs.vim
 " runtime OPT cmdregisters.vim
 runtime OPT words_search.vim
 runtime OPT align.vim
@@ -27,7 +24,7 @@ lua require 'utility'
 
 " }}}
 
-" {{{ github
+" {{{ plugins
 runtime OPT commentary.vim
 runtime OPT codi.vim
 runtime OPT cutlass.vim
@@ -39,8 +36,8 @@ runtime OPT tmux.vim
 runtime OPT vsnip.vim
 runtime OPT easy-align.vim
 runtime OPT due.vim
+runtime OPT emmet.vim
 
-packadd vim-endwise
 packadd quickfix-reflector.vim
 packadd targets.vim
 packadd vim-cool
@@ -54,15 +51,17 @@ packadd vim-unimpaired
 packadd vim-better-whitespace
 packadd vim-prettier
 
-" library
-packadd vim-maktaba
-packadd float.nvim
-packadd vim-yuki-library
+" auto pairs
+" runtime OPT minipairs.vim
+" runtime OPT pairs.vim
+" runtime OPT autopairs.vim
+lua require 'config.pairz'
 
-" auto comple
+" auto complete
+runtime OPT coc.vim
 " runtime OPT cmp.vim
-runtime OPT lsp.vim
 " runtime OPT wilder.vim
+runtime OPT lsp.vim
 
 " treesitter
 runtime OPT nvim-treesitter.vim
@@ -70,37 +69,7 @@ runtime OPT nvim-treesitter.vim
 " packadd nvim-colorizer.lua
 " lua require'colorizer'.setup()
 
-" telescope
-" packadd plenary.nvim
-" packadd telescope.nvim
-" packadd telescope-fzf-native.nvim
-
-" lua require 'config.telescope.setup'
-" lua require 'config.telescope.youtube'
-
-" nnoremap ,c <cmd>lua require('config.telescope').edit_neovim()<CR>
-" nnoremap ,g <cmd>lua require('config.telescope').grep_nvim_config()<CR>
-
-" nnoremap H <cmd>lua require('config.telescope').help_grep()<CR>
-" nnoremap <leader>f <cmd>lua require('config.telescope').find_files()<CR>
-" nnoremap <leader>g <cmd>lua require('config.telescope').grep_string()<CR>
-" nnoremap <leader>c <cmd>lua require('config.telescope').colors()<CR>
-" nnoremap " :Telescope neoclip<CR>
-
-" learning lua
-" packadd fzf-lua.local
-" packadd fzf-action.local
-" packadd nvim-fzf
-" packadd nvim-lspfuzzy.local
-" lua require('lspfuzzy').setup {}
-
-lua require 'config.hop'
-lua require 'config.pairs'
-
-" }}}
-
-" {{{ my plugin
-
+runtime OPT hop.vim
 runtime OPT n_flasher.vim
 runtime OPT cursor_flasher.vim
 runtime OPT vimpad.vim
@@ -109,6 +78,10 @@ packadd jest.nvim
 packadd vim-scroller
 packadd vim-star-flasher
 
+" library
+packadd vim-maktaba
+packadd float.nvim
+packadd vim-yuki-library
 
 " offline
 packadd buffers
@@ -128,9 +101,9 @@ augroup vim
     " lookup.vim -> autocmd/vim.vim -> ftplugin/vim.vim
 
     " with autocmd BufEnter -> you can control the order
-    autocmd BufEnter *.vim doautocmd Filetype vim
+    autocmd BufEnter *.vim doautocmd Filetype vim " default ftplugin/vim.vim
     autocmd BufEnter *.vim runtime OPT lookup.vim
-    autocmd BufEnter *.vim runtime OPT ftplugin/vim.vim
+    autocmd BufEnter *.vim runtime OPT ftplugin/vim.vim " custom ftplugin/vim.vim
     " autocmd BufEnter *.vim lua require 'lsp.vim'
 
     " ftplugin/vim.vim -> lookup.vim -> autocmd/vim.vim
@@ -151,7 +124,7 @@ augroup END
 
 augroup ruby
     autocmd!
-    autocmd BufEnter *.rb doautocmd Filetype markdown
+    autocmd BufEnter *.rb doautocmd Filetype ruby
     autocmd BufEnter *.rb runtime OPT ftplugin/ruby.vim
 augroup END
 

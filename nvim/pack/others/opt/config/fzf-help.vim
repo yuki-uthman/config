@@ -63,4 +63,4 @@ function! s:fzf_help(cword) abort
   call fzf#run(spec)
 endfunc
 
-nnoremap H :call <SID>fzf_help(0)<CR>
+nnoremap <leader>fh :call <SID>fzf_help(0)<CR>

@@ -59,12 +59,19 @@ nnoremap <nowait> <silent> - :vertical resize -5<CR>
 nnoremap <nowait> <silent> + :resize +1<CR>
 nnoremap <nowait> <silent> _ :resize -1<CR>
 
-" move window up/down/right/left
+" move window up/down/
 nnoremap <C-k> <C-y>
 nnoremap <C-j> <C-e>
 
+" right/left
 " nnoremap <c-l> :normal! zl<CR>zlzl
 " nnoremap <c-h> :normal! zh<CR>zhzh
+
+" move current line up/down
+nnoremap zb zb4<C-e>
+nnoremap zt zt4<C-y>
+nnoremap zm zz<C-e>
+
 
 " Use alt + w to swtich window
 tnoremap <ESC> <ESC>
@@ -90,7 +97,7 @@ nnoremap <silent> <Leader>bd :Bclose<CR>
 
 nnoremap cd :cd %:p:h<CR>
 
-" nnoremap ,c :find init.vim<CR>
+nnoremap ,c :find init.vim<CR>
 nnoremap ,s :so ~/.config/nvim/init.vim<CR>
 
 

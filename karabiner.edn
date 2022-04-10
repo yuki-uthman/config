@@ -39,7 +39,9 @@
  :simlayers {
              :a-mode {:key :a}
              :f-mode {:key :f}
+             :d-mode {:key :d}
              :j-mode {:key :j}
+             :k-mode {:key :k}
              :m-mode {:key :m}
              :o-mode {:key :o}
              :p-mode {:key :p}
@@ -48,6 +50,7 @@
              :v-mode {:key :v}
              :w-mode {:key :w}
              :z-mode {:key :z}
+             :spacebar-mode {:key :spacebar}
             }
 
  :main [
@@ -106,6 +109,58 @@
 
                ]}
 
+        {:des "use d as ctrl"
+         :rules [:d-mode
+
+                 [:j :!Tj]
+                 [:k :!Tk]
+
+
+
+
+
+                 ]}
+
+        {:des "use space as symbol layer"
+         :rules [:spacebar-mode
+
+                  ;; {}
+                  [:o :!Sopen_bracket]
+                  [:p :!Sclose_bracket]
+
+                  ;; ()
+                  ; [:q :!S9]
+                  ; [:r :!S0]
+
+                  ;; =
+                  [:f :equal_sign]
+
+                  ;; +
+                  [:d :!Sequal_sign]
+
+                  ;; -
+                  [:s :hyphen]
+
+                  ;; _
+                  [:a :!Shyphen]
+
+                  ;; switch the numbers row to symbols
+                  [:a :!S1]
+                  [:s :!S2]
+                  [:d :!S3]
+                  [:f :!S4]
+                  [:g :!S5]
+                  [:h :!S6]
+                  [:j :!S7]
+                  [:k :!S8]
+                  [:l :!S9]
+                  [:semicolon :!S0]
+
+
+
+                 ]}
+
+
         {:des "pane mode"
         :rules [:z-layer
 
@@ -136,22 +191,22 @@
         :rules [:x-layer
 
                 ;; change session with j & k
-                [:j [:!Tb :!S0]]
-                [:k [:!Tb :!S9]]
+                [:j [:!Tz :!S0]]
+                [:k [:!Tz :!S9]]
 
                 ;; change window with h & l
-                [:l [:!Tb :n] :terminal]
-                [:h [:!Tb :p] :terminal]
+                [:l [:!Tz :n] :terminal]
+                [:h [:!Tz :p] :terminal]
 
                 ;; alternative window
-                ; [:semicolon [:!Tb :l] :terminal]
+                ; [:semicolon [:!Tz :l] :terminal]
 
                 ;; split
-                [:backslash [:!Tb :!S5] :terminal]
-                [:hyphen [:!Tb :!Squote] :terminal]
+                [:backslash [:!Tz :!S5] :terminal]
+                [:hyphen [:!Tz :!Squote] :terminal]
 
                 ;; close pane
-                [:c [:!Tb :x] :terminal]
+                [:c [:!Tz :x] :terminal]
 
                 ;; kill session
                 [:z :!Ox :terminal]

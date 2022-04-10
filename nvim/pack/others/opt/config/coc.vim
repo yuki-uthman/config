@@ -63,4 +63,5 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
+let g:coc_start_at_startup = v:false
 packadd coc.nvim
